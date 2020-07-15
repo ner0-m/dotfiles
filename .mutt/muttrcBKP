@@ -1,0 +1,43 @@
+folder-hook 'account.com.gmail.frankyapp94' 'source ~/.mutt/account.com.gmail.frankyapp94'
+folder-hook 'account.net.gmx.frank.david' 'source ~/.mutt/account.net.gmx.frank.david'
+folder-hook 'account.net.gmx.dev.mail' 'source ~/.mutt/account.net.gmx.dev.mail'
+
+#Default account
+source ~/.mutt/account.net.gmx.dev.mail
+
+#Macros for switching accounts
+
+macro index <F12> '<sync-mailbox><enter-command>source ~/.mutt/account.com.gmail.frankyapp94<enter><change-folder>!<enter>'
+macro index <F11> '<sync-mailbox><enter-command>source ~/.mutt/account.net.gmx.frank.david<enter><change-folder>!<enter>'
+macro index <F10> '<sync-mailbox><enter-command>source ~/.mutt/account.net.gmx.dev.mail<enter><change-folder>!<enter>'
+
+#Set default text editor
+set editor = "$EDITOR"
+
+#-- -- -- -- Basic Config{{{
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+set ssl_starttls = yes
+set ssl_force_tls = yes
+set imap_check_subscribed
+#set hostname = gmail.com
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+#set record = "+[GMail]/Sent Mail"
+set move = no
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
+#} } }
+
+source color.muttrc
