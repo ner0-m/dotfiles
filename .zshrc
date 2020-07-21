@@ -78,6 +78,7 @@ plugins=(
 	copydir
 	copyfile
 	cp
+        dotbare 
 )
 
 	# User configuration
@@ -139,4 +140,11 @@ prompt_context() {
 }
  
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
+ 
+ 
+# alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
+export DOTBARE_DIR="$HOME/.dotfiles"
+export DOTBARE_TREE="$HOME"
+ 
+ 
+ 
