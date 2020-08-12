@@ -390,8 +390,8 @@ set ruler
 " ================ Handle Pandoc more ealsy ==========================
  
 " Compile and open output
-map <leader>G :w! \| !comp <c-r>%<CR><CR>
-map <leader>o :!opout <c-r>%<CR><CR>
+nnoremap <leader><leader>g :w! \| !comp <c-r>%<CR><CR>
+nnoremap <leader>o :!opout <c-r>%<CR><CR>
  
 " ================ Buffer switching ==========================
 

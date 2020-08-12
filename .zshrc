@@ -120,6 +120,7 @@ source /usr/share/fzf/completion.zsh
 
 export EDITOR='nvim'
 alias vim='nvim'
+export READER='okular' 
 
 # Functions
 
