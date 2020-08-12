@@ -387,6 +387,12 @@ set formatoptions-=cro
 " Show the line and column number of the cursor position
 set ruler 
  
+" ================ Handle Pandoc more ealsy ==========================
+ 
+" Compile and open output
+map <leader>G :w! \| !comp <c-r>%<CR><CR>
+map <leader>o :!opout <c-r>%<CR><CR>
+ 
 " ================ Buffer switching ==========================
 
 nnoremap <leader>bf :bfirst<CR> 
