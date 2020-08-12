@@ -87,6 +87,9 @@ Plug 'sheerun/vim-polyglot'
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
+" Clang format
+Plug 'rhysd/vim-clang-format'
+ 
 " Plug 'w0rp/ale'
  
 " function! BuildYCM(info)
