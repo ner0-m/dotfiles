@@ -23,9 +23,9 @@ thunar --daemon &
 ### uncomment next line and comment pcmanfm above
 sleep 1; nitrogen --restore &
 
-### launch tint2 and polybar
+sleep 1; manjaro-polybar-session &
 sleep 1; manjaro-tint2-session &
-sleep 1; polybar -c $HOME/.config/polybar/config openbox-bar &
+sleep 1; manjaro-polybar-session &
 
 ### launch conky
 manjaro-conky-session &

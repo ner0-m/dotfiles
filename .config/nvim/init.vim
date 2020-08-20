@@ -62,8 +62,8 @@ Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
 Plug 'easymotion/vim-easymotion'
  
 " Multi line tools 
-Plug 'terryma/vim-multiple-cursors'
- 
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 " Markdown helpers
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -217,6 +217,7 @@ noremap O O <Esc>
 
 " mapping that opens .vimrc in a split for quick editing
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader><leader>ev :split $MYVIMRC<CR>
 " mapping that sources the vimrc in the current file
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
@@ -387,6 +388,9 @@ set formatoptions-=cro
 " Show the line and column number of the cursor position
 set ruler 
  
+" Add triple slash as documentation 
+autocmd Filetype c,cpp set comments^=:///
+ 
 " ================ Handle Pandoc more ealsy ==========================
  
 " Compile and open output
@@ -423,7 +427,7 @@ syntax on                 " required
 autocmd Filetype * AnyFoldActivate
 let g:anyfold_identify_comments=2
 let g:anyfold_fold_comments=1 
-set foldlevel=3
+set foldlevel=6
 hi Folded term=NONE cterm=NONE
 
 " ################ vim-textmanip ##########################
@@ -638,7 +642,7 @@ let g:clang_format#command = 'clang-format-8'
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format_on_insert_leave = 0
 
-" shortcuts for autoformatting the entire file: Ctrl+j
+" shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType c,cpp,cu,cuh inoremap <buffer><C-f> <Esc>:ClangFormat<CR>a
 autocmd FileType c,cpp,cu,cuh nnoremap <buffer><C-f> <Esc>:ClangFormat<CR>
 
@@ -818,3 +822,10 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+ 
+" Highlight stuff
+autocmd CursorHold * silent call CocActionAsync('highlight')
+ 
+:color delek 
+" Set font color of Error sign to white 
+:hi! CocErrorSign guifg=#ffffff 

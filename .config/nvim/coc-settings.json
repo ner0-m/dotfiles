@@ -11,5 +11,6 @@
                 "buildDirectory": "build"
             }
         } 
-    }
+    },
+    "coc.preferences.colorSupport": true 
 }

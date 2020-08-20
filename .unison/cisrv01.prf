@@ -1,0 +1,18 @@
+# Roots of the syncrhonization
+root = /home/david/cisrv01
+root = ssh://frank@cisrv01.ciip.in.tum.de/elsa
+# ssh://frank@cisrv01.ciip.in.tum.de/els
+# Paths to synchronize
+path = elsa/
+path = tools/
+path = benchmarks/
+path = cmake/
+path = docs/
+path = examples/
+path = edf/
+path = thirdparty/ 
+ 
+# Some paths to ignore
+ignore = Path build/*
+ignore = Path build-*/*
+ 
