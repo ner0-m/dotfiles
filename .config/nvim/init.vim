@@ -391,6 +391,10 @@ set ruler
 " Add triple slash as documentation 
 autocmd Filetype c,cpp set comments^=:///
  
+" Set conceallevel, to show e.g. links in markdown 
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+ 
 " ================ Handle Pandoc more ealsy ==========================
  
 " Compile and open output
