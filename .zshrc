@@ -142,6 +142,13 @@ prompt_context() {
  
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
  
+
+# Check if plug.vim is found, if not install it
+if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+ 
  
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
