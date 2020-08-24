@@ -9,7 +9,6 @@ path = benchmarks/
 path = cmake/
 path = docs/
 path = examples/
-path = edf/
 path = thirdparty/ 
  
 # Some paths to ignore
