@@ -350,6 +350,15 @@ iab tihs this
 iab mian main
 iab funciton function
 iab funcition function
+ 
+" Add dictionaries 
+set dictionary+=/usr/share/dict/british-english 
+set dictionary+=/usr/share/dict/british 
+set dictionary+=/usr/share/dict/american-english 
+set dictionary+=/usr/share/dict/american 
+set dictionary+=/usr/share/dict/words 
+set dictionary+=/usr/share/dict/german 
+set dictionary+=/usr/share/dict/ngerman
 
 " ================ Misc =============================
 
