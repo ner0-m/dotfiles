@@ -1,6 +1,6 @@
 # Roots of the syncrhonization
 root = /home/david/recsrv03
-root = ssh://frankd@recsrv03.ciip.in.tum.de/elsa
+root = ssh://recsrv03/elsa
  
 # Paths to synchronize
 path = ./
