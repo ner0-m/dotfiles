@@ -5,7 +5,7 @@
 DEFAULT_USER=`whoami`
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=$HOME/.oh-my-zsh/
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -149,6 +149,8 @@ if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
  
+# Set caps to excape 
+setxkbmap -option caps:swapescape
  
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
