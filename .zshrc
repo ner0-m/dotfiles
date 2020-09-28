@@ -150,11 +150,8 @@ if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
 fi
  
 # Set caps to excape 
-setxkbmap -option caps:swapescape
+setxkbmap -option caps:escape
  
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
 export DOTBARE_TREE="$HOME"
- 
- 
- 
