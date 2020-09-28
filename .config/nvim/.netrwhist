@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =6
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/david/.config/alacritty'
 let g:netrw_dirhist_6='/home/david/test-book/content'
 let g:netrw_dirhist_5='/home/david/cisrv01'
 let g:netrw_dirhist_4='/home/david/cisrv01/benchmarks'
@@ -9,4 +10,3 @@ let g:netrw_dirhist_1='/home/david/cisrv01'
 let g:netrw_dirhist_0='/home/david/cisrv01/benchmarks'
 let g:netrw_dirhist_9='/home/david/cisrv01'
 let g:netrw_dirhist_8='/home/david/cisrv01/elsa/projectors'
-let g:netrw_dirhist_7='/home/david/cisrv01/elsa'
