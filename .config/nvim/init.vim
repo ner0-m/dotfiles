@@ -370,6 +370,9 @@ set dictionary+=/usr/share/dict/ngerman
 
 " ================ Misc =============================
 
+" Map Q to q => leave with :Q
+command! -bar -bang Q quit<bang>
+ 
 " highlight matching braces
 set showmatch
 
