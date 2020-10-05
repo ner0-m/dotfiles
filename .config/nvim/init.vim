@@ -7,7 +7,9 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 
 " fuzzy file, buffer etc. finder 
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
  
 " search for code and edit it in-place 
 Plug 'dyng/ctrlsf.vim'
@@ -16,7 +18,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'fholgado/minibufexpl.vim'
  
 " display tags in a window order by scope 
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+" Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
  
 " switch from headers to source files 
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
@@ -32,31 +34,28 @@ Plug 'plasticboy/vim-markdown'
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
  
-" UltiSnips
-Plug 'SirVer/ultisnips'
- 
 " Undo Tree 
 Plug 'sjl/gundo.vim'
  
 " Move lines 
 Plug 't9md/vim-textmanip'
- 
-" Insert [], () and \"\" in pairs 
-" Plug 'jiangmiao/auto-pairs'
 
 " Fold plugin 
 Plug 'pseewald/anyfold'
- 
+
 " surround vim
 Plug 'tpope/vim-surround'
  
-Plug 'kana/vim-operator-user'
+" Plug 'kana/vim-operator-user'
  
 " Select close text object 
 Plug 'gcmt/wildfire.vim'
  
 " Pull in C++ function prototypes into implementation files 
-Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
+" Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
+ 
+" UltiSnips
+" Plug 'SirVer/ultisnips'
 
 " easy motion
 Plug 'easymotion/vim-easymotion'
@@ -65,8 +64,14 @@ Plug 'easymotion/vim-easymotion'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Markdown helpers
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+ 
+" Git Plugins 
+" Plug 'itchyny/vim-gitbranch'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-rhubarb'
+" Plug 'mhinz/vim-signify'
  
 " ================ View plugins ======================
  
@@ -90,6 +95,7 @@ Plug 'rhysd/vim-clang-format'
  
  " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp-status.nvim'
 
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
@@ -125,7 +131,7 @@ set colorcolumn=120
 " ================ Color settings======================
  
 " Theme 
-:color delek 
+:color delek
  
 " Set font color of Error sign to white 
 :hi! CocErrorSign guifg=#ffffff 
@@ -437,12 +443,6 @@ vnoremap <leader>bp :bprevious<CR>
  
 " ================ Plugins ==========================
  
-" ################ UtilSnips ##########################
- 
-let g:UltiSnipsExpandTrigger="<tab>"  " use <Tab> to trigger autocompletion
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
- 
 " ################ vim-anyfold ##########################
 
 filetype plugin indent on " required
@@ -480,28 +480,76 @@ xmap <F10> <Plug>(textmanip-toggle-mode)
  
 " ################ ultisnips ##########################
 
-let g:UltiSnipsSnippetDirectories=["mysnippets"]
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+" let g:UltiSnipsSnippetDirectories=["mysnippets"]
+" let g:UltiSnipsExpandTrigger="<leader><tab>"
+" let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
  
 " ################ Statusline ##########################
 
 " Always show window statuses
 set laststatus=2
 
-" Statusline style
-set statusline=
-set statusline+=%7*\[%n]                                  "buffernr
-set statusline+=%1*\ %<%F\                                "File+path
-set statusline+=%2*\ %y\                                  "FileType
-set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
-set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
-set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..) 
-set statusline+=%8*\ %=\ row:%l/%L\ (%p%%)\             "Rownumber/total (%)
-set statusline+=%9*\ col:%c\                            "Colnr
-set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+" status bar colors
+au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
+au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
 
+" Status line
+" default: set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
+
+" Status Line Custom
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'Normal·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+set laststatus=2
+set noshowmode
+set statusline=
+set statusline+=%0*\ %n\                                 " Buffer number
+set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+set statusline+=%3*│                                     " Separator
+set statusline+=%2*\ %Y\                                 " FileType
+set statusline+=%3*│                                     " Separator
+set statusline+=%2*\ %{''.(&fenc!=''?&fenc:&enc).''}     " Encoding
+set statusline+=\ (%{&ff})                               " FileFormat (dos/unix..)
+set statusline+=%=                                       " Right Side
+set statusline+=%2*\ col:\ %02v\                         " Colomn number
+set statusline+=%3*│                                     " Separator
+set statusline+=%1*\ ln:\ %02l/%L\ (%3p%%)\              " Line number / total lines, percentage of document
+set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
+
+hi User1 ctermfg=007 ctermbg=239 guibg=#4e4e4e guifg=#adadad
+hi User2 ctermfg=007 ctermbg=236 guibg=#303030 guifg=#adadad
+hi User3 ctermfg=236 ctermbg=236 guibg=#303030 guifg=#303030
+hi User4 ctermfg=239 ctermbg=239 guibg=#4e4e4e guifg=#4e4e4e
+
+ function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+  endif
+  return ''
+endfunction
+
+set statusline+=\ %{LspStatus()}
  
 " ################ Wildfire.vim #########################
  
@@ -510,47 +558,47 @@ vmap <C-SPACE> <Plug>(wildfire-water)
  
 " ################ tagbar #########################
 
-inoremap <F8> <esc>:TagbarToggle<cr>
-nnoremap <F8> :TagbarToggle<cr>
+" inoremap <F8> <esc>:TagbarToggle<cr>
+" nnoremap <F8> :TagbarToggle<cr>
 
-let tagbar_left=1
-let tagbar_width=32
-let g:tagbar_sort = 0
-let g:tagbar_compact=1
-let g:tagbar_type_cpp = {
- \ 'ctagstype' : 'c++',
- \ 'kinds'     : [
-     \ 'c:classes:0:1',
-     \ 'd:macros:0:1',
-     \ 'e:enumerators:0:0', 
-     \ 'f:functions:0:1',
-     \ 'g:enumeration:0:1',
-     \ 'l:local:0:1',
-     \ 'm:members:0:1',
-     \ 'n:namespaces:0:1',
-     \ 'p:functions_prototypes:0:1',
-     \ 's:structs:0:1',
-     \ 't:typedefs:0:1',
-     \ 'u:unions:0:1',
-     \ 'v:global:0:1',
-     \ 'x:external:0:1'
- \ ],
- \ 'sro'        : '::',
- \ 'kind2scope' : {
-     \ 'g' : 'enum',
-     \ 'n' : 'namespace',
-     \ 'c' : 'class',
-     \ 's' : 'struct',
-     \ 'u' : 'union'
- \ },
- \ 'scope2kind' : {
-     \ 'enum'      : 'g',
-     \ 'namespace' : 'n',
-     \ 'class'     : 'c',
-     \ 'struct'    : 's',
-     \ 'union'     : 'u'
- \ }
-\ }
+" let tagbar_left=1
+" let tagbar_width=32
+" let g:tagbar_sort = 0
+" let g:tagbar_compact=1
+" let g:tagbar_type_cpp = {
+"  \ 'ctagstype' : 'c++',
+"  \ 'kinds'     : [
+"      \ 'c:classes:0:1',
+"      \ 'd:macros:0:1',
+"      \ 'e:enumerators:0:0',
+"      \ 'f:functions:0:1',
+"      \ 'g:enumeration:0:1',
+"      \ 'l:local:0:1',
+"      \ 'm:members:0:1',
+"      \ 'n:namespaces:0:1',
+"      \ 'p:functions_prototypes:0:1',
+"      \ 's:structs:0:1',
+"      \ 't:typedefs:0:1',
+"      \ 'u:unions:0:1',
+"      \ 'v:global:0:1',
+"      \ 'x:external:0:1'
+"  \ ],
+"  \ 'sro'        : '::',
+"  \ 'kind2scope' : {
+"      \ 'g' : 'enum',
+"      \ 'n' : 'namespace',
+"      \ 'c' : 'class',
+"      \ 's' : 'struct',
+"      \ 'u' : 'union'
+"  \ },
+"  \ 'scope2kind' : {
+"      \ 'enum'      : 'g',
+"      \ 'namespace' : 'n',
+"      \ 'class'     : 'c',
+"      \ 'struct'    : 's',
+"      \ 'union'     : 'u'
+"  \ }
+" \ }
  
 
 " ################ vim-fswitch #########################
@@ -597,22 +645,34 @@ endif
 " set colorcolumn=+1
 " endif
  
-" ################ ctrlp #########################
+" ################ FZF #########################
    
- " Disable output, vcs, archive, rails, temp and backup files
-set wildignore+=*.o,*.out,*.obj,.git,*.pyc,*.class
-set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
-set wildignore+=*.swp,*~,._*
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-
-let g:ctrlp_map = '<C-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|vendor/bundle/*\|vendor/cache/*\|public\|spec)$',
-  \ 'file': '\v\.(exe|so|dll|swp|log|jpg|png|json)$',
-  \ }
+nmap <C-P> :FZF<CR> 
  
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = ''
+
+" Always enable preview window on the right with 60% width
+let g:fzf_preview_window = 'right:60%' 
+ 
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x' 
+ 
+" Use 30% of the bottom to show FZF results 
+let g:fzf_layout = { 'down': '~30%' }
+  
+" Use escpe to exit the FZF window 
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>" 
+   
 " ################ NERDTree #########################
 
 " shift+i (show hidden files)
@@ -706,30 +766,7 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 
-" LSP configureation 
-" https://github.com/neovim/nvim-lspconfig#clangd
-:lua << END
-
--- require'nvim_lsp'.clangd.setup{}
- 
--- nvim_lsp object
-local nvim_lsp = require'nvim_lsp'
-
--- function to attach completion and diagnostics
--- when setting up lsp
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
-end
-
--- Enable clangd
-nvim_lsp.clangd.setup({ on_attach=on_attach })
- 
- 
--- Enable cmake LSP
-nvim_lsp.cmake.setup{} 
- 
-END
+lua require("lsp") 
  
 " Code navigation shortcuts
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>

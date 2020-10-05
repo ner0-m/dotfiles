@@ -155,3 +155,10 @@ setxkbmap -option caps:escape
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
 export DOTBARE_TREE="$HOME"
+ 
+# asliases for FZF to use fd instead of find 
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Cache directory for CPM https://github.com/TheLartians/CPM.cmake 
+export CPM_SOURCE_CACHE=$HOME/.cache/CPM
