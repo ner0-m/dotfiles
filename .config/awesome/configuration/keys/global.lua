@@ -65,9 +65,11 @@ awful.key({ modkey }, "ö",
     end,
     {description = "focus right", group = "client"}),
        
+-- Show Rofi menu 
 awful.key({modkey}, 'r', function() _G.awesome.spawn(apps.default.rofi) end,
           {description = 'show rofi menu', group = 'awesome'}),
        
+-- Minimize all clients 
 awful.key({modkey}, 'd', function()
     local flag = false
     for _, c in ipairs(mouse.screen.selected_tag:clients()) do
@@ -79,47 +81,59 @@ awful.key({modkey}, 'd', function()
     end
 end, {description = 'minimize all clients', group = 'awesome'}),
  
+-- Jump to urgend window 
 awful.key({modkey}, 'u', awful.client.urgent.jumpto,
           {description = 'jump to urgent client', group = 'client'}),
        
+-- Next and previous window
 awful.key({altkey}, 'Tab', function()
-    -- awful.client.focus.history.previous()
     awful.client.focus.byidx(1)
     if _G.client.focus then _G.client.focus:raise() end
 end, {description = 'Switch to next window', group = 'client'}),
  
 awful.key({altkey, 'Shift'}, 'Tab', function()
-    -- awful.client.focus.history.previous()
     awful.client.focus.byidx(-1)
     if _G.client.focus then _G.client.focus:raise() end
 end, {description = 'Switch to previous window', group = 'client'}),
--- Programms
+ 
+-- Lock screen
 awful.key({modkey, 'Control'}, 'l', function() awful.spawn(apps.default.lock) end,
           {description = 'Lock the screen', group = 'awesome'}),
+       
+-- Print 
 awful.key({'Control', 'Shift'}, 'Print', function()
     awful.util.spawn_with_shell(apps.default.delayed_screenshot)
 end, {
     description = 'Mark an area and screenshot it 10 seconds later (clipboard)',
     group = 'screenshots (clipboard)'
-}), awful.key({altkey}, 'Print', function()
+}), 
+
+awful.key({altkey}, 'Print', function()
     awful.util.spawn_with_shell(apps.default.screenshot)
 end, {
     description = 'Take a screenshot of your active monitor and copy it to clipboard',
     group = 'screenshots (clipboard)'
-}), awful.key({'Control'}, 'Print', function()
+}), 
+
+awful.key({'Control'}, 'Print', function()
     awful.util.spawn_with_shell(apps.default.region_screenshot)
 end, {
     description = 'Mark an area and screenshot it to your clipboard',
     group = 'screenshots (clipboard)'
 }),
+ 
+-- Programs 
 awful.key({modkey}, 'c', function() awful.util.spawn(apps.default.editor) end,
           {description = 'open a text/code editor', group = 'launcher'}),
+       
 awful.key({modkey}, 'b', function() awful.util.spawn(apps.default.browser) end,
           {description = 'open a browser', group = 'launcher'}),
+       
 -- Open private browser/brave
 awful.key({modkey}, 'p',
           function() awful.util.spawn_with_shell('brave-browser') end,
           {description = 'Open Brave', group = 'launcher'}),
+       
 -- Standard program
 awful.key({modkey}, 't',
           function() awful.util.spawn_with_shell(apps.default.terminal) end,
@@ -134,9 +148,9 @@ awful.key({modkey, 'Shift'}, 'p', function() _G.exit_screen_show() end,
           {description = 'end session menu', group = 'awesome'}),
        
 -- Change size of pane 
-awful.key({altkey, 'Shift'}, 'j', function() awful.tag.incmwfact(0.05) end,
+awful.key({altkey, 'Shift'}, 'ö', function() awful.tag.incmwfact(0.05) end,
           {description = 'increase master width factor', group = 'layout'}),
-awful.key({altkey, 'Shift'}, 'ö', function() awful.tag.incmwfact(-0.05) end,
+awful.key({altkey, 'Shift'}, 'j', function() awful.tag.incmwfact(-0.05) end,
           {description = 'decrease master width factor', group = 'layout'}),
 awful.key({altkey, 'Shift'}, 'k', function() awful.client.incwfact(0.05) end,
           {description = 'decrease master height factor', group = 'layout'}),
@@ -200,31 +214,49 @@ awful.key({}, 'XF86MonBrightnessUp',
 awful.key({}, 'XF86MonBrightnessDown',
           function() awful.spawn('xbacklight -dec 10') end,
           {description = '-10%', group = 'hotkeys'}), -- ALSA volume control
-awful.key({}, 'XF86AudioRaiseVolume', function()
-    awful.spawn('amixer -D pulse sset Master 5%+')
-    _G.update_volume()
-end, {description = 'volume up', group = 'hotkeys'}),
-awful.key({}, 'XF86AudioLowerVolume', function()
-    awful.spawn('amixer -D pulse sset Master 5%-')
-    _G.update_volume()
-end, {description = 'volume down', group = 'hotkeys'}),
-awful.key({}, 'XF86AudioMute', function()
-    awful.spawn('amixer -D pulse set Master 1+ toggle')
-    _G.update_volume()
-end, {description = 'toggle mute', group = 'hotkeys'}),
-awful.key({}, 'XF86AudioNext', function()
-    --
-end, {description = 'toggle mute', group = 'hotkeys'}),
-awful.key({}, 'XF86PowerDown', function()
-    --
-end, {description = 'toggle mute', group = 'hotkeys'}),
-awful.key({}, 'XF86PowerOff', function() _G.exit_screen_show() end,
-          {description = 'toggle mute', group = 'hotkeys'}),
  
--- Setup keys for stop, start, next, previous (Lollypop specific)
-awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.Lollypop /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause", false) end),
-awful.key({ }, "XF86AudioNext", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.Lollypop /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next", false) end),
-awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.Lollypop /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous", false) end),
+---[[ Audio control 
+awful.key({}, 'XF86AudioRaiseVolume', function()
+    awful.spawn('playerctl --player=playerctld volume 0.05+')
+    _G.update_volume()
+end, {description = 'Volume Up', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioLowerVolume', function()
+    awful.spawn('playerctl --player=playerctld volume 0.05-')
+    _G.update_volume()
+end, {description = 'Volume Down', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioMute', function()
+    -- This work on the console but not here, but whatever don't really need it 
+    awful.spawn('pactl set-sink-mute "$(pactl info | grep "Default Sink" | cut -d " " -f3)" toggle') 
+    _G.update_volume()
+end, {description = 'toggle mute', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioNext', function()
+    awful.util.spawn("playerctl --player=playerctld next") 
+end, {description = 'Next Song', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioPrev', function()
+    awful.util.spawn("playerctl --player=playerctld previous") 
+end, {description = 'Next Song', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioPlay', function()
+    awful.util.spawn("playerctl --player=playerctld play-pause") 
+end, {description = 'Play/Pause Music', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86AudioStop', function()
+    awful.util.spawn("playerctl --player=playerctld stop") 
+end, {description = 'Stop Music', group = 'hotkeys'}),
+--]]
+ 
+-- Power down 
+awful.key({}, 'XF86PowerDown', function() end, 
+          {description = 'Power Down', group = 'hotkeys'}),
+ 
+-- Power off 
+awful.key({}, 'XF86PowerOff', function() _G.exit_screen_show() end,
+          {description = 'Power Off', group = 'hotkeys'}),
+ 
 -- Screen management
 awful.key({modkey}, 'o', awful.client.movetoscreen,
           {description = 'move window to next screen', group = 'client'}),

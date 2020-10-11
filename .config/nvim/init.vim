@@ -173,17 +173,9 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
-" ================ Folds ============================
-
-" set foldmethod=marker   "fold based on marker
-" set foldmarker={,}
-" set foldnestmax=3       "deepest fold is 3 levels
-" set nofoldenable        "dont fold by default
- 
- 
 " ================ Scrolling =========================
 
-" Start scrolling when we're 8 lines away from margins
+" Start scrolling when we're 16 lines away from margins
 set scrolloff=16
 
 " ================ Encoding =========================
@@ -232,6 +224,7 @@ noremap O O <Esc>
 " mapping that opens .vimrc in a split for quick editing
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader><leader>ev :split $MYVIMRC<CR>
+ 
 " mapping that sources the vimrc in the current file
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
@@ -347,6 +340,7 @@ nnoremap <F3> :set hlsearch!<CR>
 
 " fix slow scrolling that occurs when using mouse and relative numbers
 set lazyredraw
+ 
 " vim timeout (forgot why I need this or if I do at all)
 set ttyfast
 set ttimeoutlen=10
@@ -722,7 +716,7 @@ set softtabstop=2
 " ################ Clang format #####################
 
 " Clang format - auto formatting
-let g:clang_format#command = 'clang-format-8'
+let g:clang_format#command = 'clang-format'
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format_on_insert_leave = 0
 
@@ -794,6 +788,10 @@ call sign_define("LspDiagnosticsErrorSign", {"text" : "✖", "texthl" : "LspDiag
 call sign_define("LspDiagnosticsWarningSign", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
 call sign_define("LspDiagnosticsInformationSign", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
 call sign_define("LspDiagnosticsHintSign", {"text" : "➤", "texthl" : "LspDiagnosticsHint"})
+ 
+" dignostic-nvim
+let g:diagnostic_enable_virtual_text = 1
+ 
  
  " Visualize diagnostics
 " let g:diagnostic_enable_virtual_text = 1
