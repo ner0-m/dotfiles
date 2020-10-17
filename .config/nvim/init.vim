@@ -54,9 +54,6 @@ Plug 'gcmt/wildfire.vim'
 " Pull in C++ function prototypes into implementation files 
 " Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
  
-" UltiSnips
-" Plug 'SirVer/ultisnips'
-
 " easy motion
 Plug 'easymotion/vim-easymotion'
  
@@ -72,6 +69,12 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-rhubarb'
 " Plug 'mhinz/vim-signify'
+
+" Snippet stuff
+Plug 'SirVer/ultisnips'
+ 
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
  
 " ================ View plugins ======================
  
@@ -105,6 +108,11 @@ Plug 'nvim-lua/completion-nvim'
 
 " Diagnostic navigation and settings for built-in LSP
 Plug 'nvim-lua/diagnostic-nvim'
+ 
+" CMake pluging
+" Plug 'vhdirk/vim-cmake'
+Plug 'jansenm/vim-cmake'
+ 
  
 call plug#end()
 
@@ -436,6 +444,18 @@ nnoremap <leader>bp :bprevious<CR>
 vnoremap <leader>bp :bprevious<CR> 
  
 " ================ Plugins ==========================
+
+" ################ UtilSnips ############################
+ 
+" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger = '<c-g><c-g>'
+let g:UltiSnipsListSnippets="<F5>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-l>" 
+let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnippets']
+ 
+" If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
  
 " ################ vim-anyfold ##########################
 
@@ -750,7 +770,9 @@ let c_no_curly_error = 1
 
 " == LSP configuration =================================================
  
- " Set completeopt to have a better completion experience
+" setup completion-nvim 
+ 
+" Set completeopt to have a better completion experience
 " :help completeopt
 " menuone: popup even when there's only one match
 " noinsert: Do not insert text until a selection is made
@@ -759,41 +781,44 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing extra messages when using completion
 set shortmess+=c
+ 
+" Trigger completion with <Tab>
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>" 
+ 
+" Use UltiSnips as a completion engine 
+let g:completion_enable_snippet = 'UltiSnips'
 
 lua require("lsp") 
  
 " Code navigation shortcuts
-" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> H     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
  
-" Trigger completion with <Tab>
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
+" Not supported by clangd (maybe needed for others) 
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+ 
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
  
+" dignostic-nvim
+let g:diagnostic_enable_virtual_text = 1
+ 
+" Have nice symbold inline if there is an error 
 call sign_define("LspDiagnosticsErrorSign", {"text" : "✖", "texthl" : "LspDiagnosticsError"})
 call sign_define("LspDiagnosticsWarningSign", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
 call sign_define("LspDiagnosticsInformationSign", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
 call sign_define("LspDiagnosticsHintSign", {"text" : "➤", "texthl" : "LspDiagnosticsHint"})
  
-" dignostic-nvim
-let g:diagnostic_enable_virtual_text = 1
- 
- 
- " Visualize diagnostics
+" Visualize diagnostics
 " let g:diagnostic_enable_virtual_text = 1
 " let g:diagnostic_trimmed_virtual_text = '40'
  

@@ -14,8 +14,6 @@ require("collision") {
 -- Theme
 beautiful.init(require('theme'))
 
-beautiful.font = "ClearSans 13"
-
 -- Layout
 require('layout')
 

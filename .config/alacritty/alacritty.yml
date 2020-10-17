@@ -1,3 +1,12 @@
+env:
+  # TERM env customization. Default is xterm-256color
+  # Note: the default TERM value `xterm-256color` does not
+  # specify all features alacritty supports. This does pose
+  # a few issues with programs relying on terminfo and the
+  # `tput` command
+  TERM: xterm-256color
+  COLORTERM: truecolor
+   
 colors:
   # Default colors
   primary:
@@ -27,27 +36,37 @@ colors:
     cyan: "#56b6c2"
     white: "#ECEFF4"
 
-background_opacity: 1.0
+background_opacity: 1.00
 
 font:
   normal:
-    family: "Mono"
-    style: Regular
+    family: "monospace"
+    # family: "Source Code Pro"
+    # family: "Iosevka Light"
+    family: "Noto Sans Mono"
+    # family: "JetBrains Mono"
+    # family: "Fira Mono"
+    # family: "Fira Code"
+    # family: "Cascadia Code"
+    style: Regular 
   bold:
-    family: "Mono"
+    family: "Noto Sans Mono"
+    # family: "Mono"
     style: Bold
   italic:
-    family: "Mono"
+    family: "Noto Sans Mono"
+    # family: "Mono"
     style: Italic
   bold_italic:
-    family: "Mono"
+    family: "Noto Sans Mono"
+    # family: "Mono"
     style: Bold Italic
 
   # Point size
   size: 10.0
 
   offset:
-    x: 0
+    x: 1
     y: 0
   glyph_offset:
     x: 0
