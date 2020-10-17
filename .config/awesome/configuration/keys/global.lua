@@ -11,6 +11,14 @@ function poweroff_command()
     awful.spawn.with_shell('poweroff')
     awful.keygrabber.stop(_G.exit_screen_grabber)
 end
+ 
+ -- require("collision") {
+ --        --        Normal    Xephyr       Vim      G510
+ --        up    = { "Up"    , "&"        , "k"   , "F15" },
+ --        down  = { "Down"  , "KP_Enter" , "j"   , "F14" },
+ --        left  = { "Left"  , "#"        , "h"   , "F13" },
+ --        right = { "Right" , "\""       , "l"   , "F17" },
+ --    }
 
 -- Key bindings
 local globalKeys = awful.util.table.join( -- Hotkeys
@@ -40,30 +48,31 @@ awful.key({modkey}, 'a', function() awful.client.focus.byidx(-1) end,
           {description = 'focus previous by index', group = 'client'}),
        
 -- Change focus by direction 
-awful.key({ modkey }, "k", 
-    function()
-        awful.client.focus.global_bydirection("down")
-        if client.focus then client.focus:raise() end
-    end, 
-    {description = "focus down", group = "client"}),
-awful.key({ modkey }, "l",
-    function()
-        awful.client.focus.global_bydirection("up")
-        if client.focus then client.focus:raise() end
-    end,
-    {description = "focus up", group = "client"}),
-awful.key({ modkey }, "j",
-    function()
-        awful.client.focus.global_bydirection("left")
-        if client.focus then client.focus:raise() end
-    end,
-    {description = "focus left", group = "client"}),
-awful.key({ modkey }, "ö",
-    function()
-        awful.client.focus.global_bydirection("right")
-        if client.focus then client.focus:raise() end
-    end,
-    {description = "focus right", group = "client"}),
+-- This should now be done by collision 
+-- awful.key({ modkey }, "k",
+--     function()
+--         awful.client.focus.global_bydirection("down")
+--         if client.focus then client.focus:raise() end
+--     end,
+--     {description = "focus down", group = "client"}),
+-- awful.key({ modkey }, "l",
+--     function()
+--         awful.client.focus.global_bydirection("up")
+--         if client.focus then client.focus:raise() end
+--     end,
+--     {description = "focus up", group = "client"}),
+-- awful.key({ modkey }, "j",
+--     function()
+--         awful.client.focus.global_bydirection("left")
+--         if client.focus then client.focus:raise() end
+--     end,
+--     {description = "focus left", group = "client"}),
+-- awful.key({ modkey }, "ö",
+--     function()
+--         awful.client.focus.global_bydirection("right")
+--         if client.focus then client.focus:raise() end
+--     end,
+--     {description = "focus right", group = "client"}),
        
 -- Show Rofi menu 
 awful.key({modkey}, 'r', function() _G.awesome.spawn(apps.default.rofi) end,
@@ -97,8 +106,8 @@ awful.key({altkey, 'Shift'}, 'Tab', function()
 end, {description = 'Switch to previous window', group = 'client'}),
  
 -- Lock screen
-awful.key({modkey, 'Control'}, 'l', function() awful.spawn(apps.default.lock) end,
-          {description = 'Lock the screen', group = 'awesome'}),
+-- awful.key({modkey, 'Control'}, 'l', function() awful.spawn(apps.default.lock) end,
+--           {description = 'Lock the screen', group = 'awesome'}),
        
 -- Print 
 awful.key({'Control', 'Shift'}, 'Print', function()
@@ -148,27 +157,28 @@ awful.key({modkey, 'Shift'}, 'p', function() _G.exit_screen_show() end,
           {description = 'end session menu', group = 'awesome'}),
        
 -- Change size of pane 
-awful.key({altkey, 'Shift'}, 'ö', function() awful.tag.incmwfact(0.05) end,
-          {description = 'increase master width factor', group = 'layout'}),
-awful.key({altkey, 'Shift'}, 'j', function() awful.tag.incmwfact(-0.05) end,
-          {description = 'decrease master width factor', group = 'layout'}),
-awful.key({altkey, 'Shift'}, 'k', function() awful.client.incwfact(0.05) end,
-          {description = 'decrease master height factor', group = 'layout'}),
-awful.key({altkey, 'Shift'}, 'l', function() awful.client.incwfact(-0.05) end,
-          {description = 'increase master height factor', group = 'layout'}),
+-- awful.key({altkey, 'Shift'}, 'ö', function() awful.tag.incmwfact(0.05) end,
+--           {description = 'increase master width factor', group = 'layout'}),
+-- awful.key({altkey, 'Shift'}, 'j', function() awful.tag.incmwfact(-0.05) end,
+--           {description = 'decrease master width factor', group = 'layout'}),
+-- awful.key({altkey, 'Shift'}, 'k', function() awful.client.incwfact(0.05) end,
+--           {description = 'decrease master height factor', group = 'layout'}),
+-- awful.key({altkey, 'Shift'}, 'l', function() awful.client.incwfact(-0.05) end,
+--           {description = 'increase master height factor', group = 'layout'}),
  
 -- Change master clients
-awful.key({modkey, 'Shift'}, 'j', function() awful.tag.incnmaster(1, nil, true) end,
-          {description = 'increase the number of master clients', group = 'layout'}), 
-awful.key({modkey, 'Shift'}, 'ö', function() awful.tag.incnmaster(-1, nil, true) end,
-          {description = 'decrease the number of master clients', group = 'layout'}), 
+-- awful.key({modkey, 'Shift'}, 'j', function() awful.tag.incnmaster(1, nil, true) end,
+--           {description = 'increase the number of master clients', group = 'layout'}),
+-- awful.key({modkey, 'Shift'}, 'ö', function() awful.tag.incnmaster(-1, nil, true) end,
+--           {description = 'decrease the number of master clients', group = 'layout'}),
  
 -- Change number of columns 
-awful.key({modkey, 'Control'}, 'j', function() awful.tag.incncol(1, nil, true) end, 
-          {description = 'increase the number of columns', group = 'layout'}), 
-awful.key({modkey, 'Control'}, 'ö', function() awful.tag.incncol(-1, nil, true) end, 
-          {description = 'decrease the number of columns', group = 'layout'}),
+-- awful.key({modkey, 'Control'}, 'j', function() awful.tag.incncol(1, nil, true) end,
+--           {description = 'increase the number of columns', group = 'layout'}),
+-- awful.key({modkey, 'Control'}, 'ö', function() awful.tag.incncol(-1, nil, true) end,
+--           {description = 'decrease the number of columns', group = 'layout'}),
  
+-- Change layout 
 awful.key({modkey           }, 'space', function() awful.layout.inc(1) end,
           {description = 'select next', group = 'layout'}),
 awful.key({modkey, 'Shift'  }, 'space', function() awful.layout.inc(-1) end,

@@ -3,8 +3,18 @@ local awful = require('awful')
 require('awful.autofocus')
 local beautiful = require('beautiful')
 
+require("collision") {
+  --        Normal    Vim
+  up    = { "Up"    , "l" },
+  down  = { "Down"  , "k" },
+  left  = { "Left"  , "j" },
+  right = { "Right" , "ö" },
+}
+ 
 -- Theme
 beautiful.init(require('theme'))
+
+beautiful.font = "ClearSans 13"
 
 -- Layout
 require('layout')

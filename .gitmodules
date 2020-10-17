@@ -1,0 +1,6 @@
+[submodule ".config/awesome/test"]
+	path = .config/awesome/test
+	url = https://github.com/Elv13/collision
+[submodule ".config/awesome/collision"]
+	path = .config/awesome/collision
+	url = https://github.com/Elv13/collision
