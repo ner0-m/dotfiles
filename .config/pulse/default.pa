@@ -1,0 +1,5 @@
+.include /etc/pulse/default.pa
+
+# Set usb shit with eq as default
+load-module module-ladspa-sink sink_name=dsp sink_master=alsa_output.usb-Schiit_Audio_I_m_Fulla_Schiit-00.analog-stereo plugin=ladspa_dsp label=ladspa_dsp
+set-default-sink dsp
