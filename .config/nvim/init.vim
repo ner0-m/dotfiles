@@ -4,7 +4,7 @@ call plug#begin('~/.config/nvim/bundle')
 " ================ Navigation plugins ======================
  
 " nerd tree
-Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 
 " fuzzy file, buffer etc. finder 
 " Plug 'ctrlpvim/ctrlp.vim'
@@ -12,10 +12,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
  
 " search for code and edit it in-place 
-Plug 'dyng/ctrlsf.vim'
- 
-" buffer explorer that takes very little screen space 
-Plug 'fholgado/minibufexpl.vim'
+" Plug 'dyng/ctrlsf.vim'
  
 " display tags in a window order by scope 
 " Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -24,24 +21,21 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
 
 " Close buffer without the window
-Plug 'qpkorr/vim-bufkill' 
+Plug 'qpkorr/vim-bufkill'
  
 " ================ Edeting plugins ======================
  
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'godlygeek/tabular'
+" Plug 'plasticboy/vim-markdown'
  
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
  
 " Undo Tree 
-Plug 'sjl/gundo.vim'
+" Plug 'sjl/gundo.vim'
  
 " Move lines 
 Plug 't9md/vim-textmanip'
-
-" Fold plugin 
-Plug 'pseewald/anyfold'
 
 " surround vim
 Plug 'tpope/vim-surround'
@@ -49,7 +43,7 @@ Plug 'tpope/vim-surround'
 " Plug 'kana/vim-operator-user'
  
 " Select close text object 
-Plug 'gcmt/wildfire.vim'
+" Plug 'gcmt/wildfire.vim'
  
 " Pull in C++ function prototypes into implementation files 
 " Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
@@ -58,7 +52,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'easymotion/vim-easymotion'
  
 " Multi line tools 
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Markdown helpers
 " Plug 'SirVer/ultisnips'
@@ -76,6 +70,9 @@ Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
  
+" Tag side bar 
+Plug 'liuchengxu/vista.vim'
+ 
 " ================ View plugins ======================
  
 " indentLine
@@ -86,10 +83,20 @@ Plug 'airblade/vim-gitgutter'
 
 " ================ Color plugins ======================
  
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
-Plug 'colepeters/spacemacs-theme.vim'
-Plug 'sheerun/vim-polyglot'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasr/molokai'
+" Plug 'colepeters/spacemacs-theme.vim'
+" Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter' 
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'romgrk/doom-one.vim'
+ 
+" ================ Tab manager =========================
+ 
+" Plug 'humiaozuzu/tabbar'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/lib.kom'
+Plug 'romgrk/barbar.nvim'
  
 " ================ Linting plugins ======================
  
@@ -110,12 +117,9 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/diagnostic-nvim'
  
 " CMake pluging
-" Plug 'vhdirk/vim-cmake'
 Plug 'jansenm/vim-cmake'
  
- 
 call plug#end()
-
 
 " ================ Ctrl + S to save ======================
 
@@ -139,7 +143,9 @@ set colorcolumn=120
 " ================ Color settings======================
  
 " Theme 
-:color delek
+" :color delek
+set termguicolors  
+:color doom-one
  
 " Set font color of Error sign to white 
 :hi! CocErrorSign guifg=#ffffff 
@@ -462,12 +468,16 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnippets']
 filetype plugin indent on " required
 syntax enable             " required
  
-autocmd Filetype * AnyFoldActivate
-let g:anyfold_identify_comments=2
-let g:anyfold_fold_comments=1 
-set foldlevel=6
+" This uses treesitters fold mechanism, it works way better than anyfold 
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+ 
+set foldlevel=5
 hi Folded term=NONE cterm=NONE
-
+ 
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+ 
 " ################ vim-textmanip ##########################
  
 xmap <Space>d <Plug>(textmanip-duplicate-down)
@@ -491,13 +501,6 @@ nmap <A-ö> <Plug>(textmanip-move-right)
 " toggle insert/replace with <F10>
 nmap <F10> <Plug>(textmanip-toggle-mode)
 xmap <F10> <Plug>(textmanip-toggle-mode)
- 
-" ################ ultisnips ##########################
-
-" let g:UltiSnipsSnippetDirectories=["mysnippets"]
-" let g:UltiSnipsExpandTrigger="<leader><tab>"
-" let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
  
 " ################ Statusline ##########################
 
@@ -570,51 +573,6 @@ set statusline+=\ %{LspStatus()}
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
  
-" ################ tagbar #########################
-
-" inoremap <F8> <esc>:TagbarToggle<cr>
-" nnoremap <F8> :TagbarToggle<cr>
-
-" let tagbar_left=1
-" let tagbar_width=32
-" let g:tagbar_sort = 0
-" let g:tagbar_compact=1
-" let g:tagbar_type_cpp = {
-"  \ 'ctagstype' : 'c++',
-"  \ 'kinds'     : [
-"      \ 'c:classes:0:1',
-"      \ 'd:macros:0:1',
-"      \ 'e:enumerators:0:0',
-"      \ 'f:functions:0:1',
-"      \ 'g:enumeration:0:1',
-"      \ 'l:local:0:1',
-"      \ 'm:members:0:1',
-"      \ 'n:namespaces:0:1',
-"      \ 'p:functions_prototypes:0:1',
-"      \ 's:structs:0:1',
-"      \ 't:typedefs:0:1',
-"      \ 'u:unions:0:1',
-"      \ 'v:global:0:1',
-"      \ 'x:external:0:1'
-"  \ ],
-"  \ 'sro'        : '::',
-"  \ 'kind2scope' : {
-"      \ 'g' : 'enum',
-"      \ 'n' : 'namespace',
-"      \ 'c' : 'class',
-"      \ 's' : 'struct',
-"      \ 'u' : 'union'
-"  \ },
-"  \ 'scope2kind' : {
-"      \ 'enum'      : 'g',
-"      \ 'namespace' : 'n',
-"      \ 'class'     : 'c',
-"      \ 'struct'    : 's',
-"      \ 'union'     : 'u'
-"  \ }
-" \ }
- 
-
 " ################ vim-fswitch #########################
  
 nmap <silent> <leader>fs :FSHere<cr>
@@ -639,25 +597,6 @@ let g:multi_cursor_next_key            = '<C-n>'
 let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
- 
-" ################ gundo #########################
-
-let g:gundo_prefer_python3 = 1
-  
-nnoremap <Leader>ud :GundoToggle<CR>
-  
-" set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
-
-if !strlen(finddir('~/.vim/undofiles'))
-echo "undofiles[~/.vim/undofiles] not found. Now it's being created. Press ENTER or type command to continue."
-!mkdir -p ~/.vim/undofiles
-endif
-
-" if v:version >= 703
-" set undodir=~/.vim/undofiles
-" set undofile
-" set colorcolumn=+1
-" endif
  
 " ################ FZF #########################
    
@@ -767,6 +706,48 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_concepts_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let c_no_curly_error = 1
+ 
+" == nvim-treesitter ====================================================
+
+lua require("treesitter") 
+ 
+" == vist configuration =================================================
+
+" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+" let g:vista_icon_indent = ["▸ ", ""]
+
+" == barbar configuration =================================================
+  
+" Magic buffer-picking mode
+nnoremap <silent> <C-d> :BufferPick<CR>
+ 
+" Sort automatically by...
+nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+ 
+" Move to previous/next
+nnoremap <silent>    <A-,> :BufferPrevious<CR>
+nnoremap <silent>    <A-.> :BufferNext<CR>
+ 
+" Re-order to previous/next
+nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+nnoremap <silent>    <A->> :BufferMoveNext<CR>
+ 
+" Goto buffer in position...
+nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+nnoremap <silent>    <A-9> :BufferLast<CR>
+ 
 
 " == LSP configuration =================================================
  
@@ -796,7 +777,7 @@ nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -842,3 +823,5 @@ autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 " Enable type inlay hints
 " autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
 " \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
+
+ 
