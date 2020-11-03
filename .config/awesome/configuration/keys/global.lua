@@ -238,7 +238,9 @@ awful.key({}, 'XF86AudioMute', function()
 end, {description = 'Toggle Mute Audio', group = 'hotkeys'}),
  	
 awful.key({}, 'XF86Tools', function()
-    awful.util.spawn("pacmd list-sources | grep -oP 'index: \\d+' | awk '{ print $2 }' | xargs -I{} pactl set-source-mute {} toggle") 
+    -- awful.util.spawn("bash /home/david/.local/bin/mute-microphones")
+    -- awful.util.spawn("bash echo $USER")
+    awful.util.spawn("bash " .. os.getenv("HOME") .. "/.local/bin/mute-microphones") 
 end, {description = 'Toggle Mute Microphone', group = 'hotkeys'}),
  
 awful.key({}, 'XF86AudioNext', function()

@@ -48,6 +48,7 @@ awful.screen.connect_for_each_screen(function(s)
         end
     end
 end)
+ 
 
 -- Signal function to execute when a new client appears.
 _G.client.connect_signal('manage', function(c)
