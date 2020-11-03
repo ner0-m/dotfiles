@@ -12,14 +12,6 @@ function poweroff_command()
     awful.keygrabber.stop(_G.exit_screen_grabber)
 end
  
- -- require("collision") {
- --        --        Normal    Xephyr       Vim      G510
- --        up    = { "Up"    , "&"        , "k"   , "F15" },
- --        down  = { "Down"  , "KP_Enter" , "j"   , "F14" },
- --        left  = { "Left"  , "#"        , "h"   , "F13" },
- --        right = { "Right" , "\""       , "l"   , "F17" },
- --    }
-
 -- Key bindings
 local globalKeys = awful.util.table.join( -- Hotkeys
 awful.key({modkey}, 'F1', hotkeys_popup.show_help,
@@ -217,13 +209,16 @@ awful.key({modkey}, 'z', function() _G.toggle_quake() end,
     end,
     {description = 'show weather', group = 'widgets'}
   ),--]]
--- Brightness
-awful.key({}, 'XF86MonBrightnessUp',
-          function() awful.spawn('xbacklight -inc 10') end,
-          {description = '+10%', group = 'hotkeys'}),
-awful.key({}, 'XF86MonBrightnessDown',
-          function() awful.spawn('xbacklight -dec 10') end,
-          {description = '-10%', group = 'hotkeys'}), -- ALSA volume control
+ 
+---[[ Brightness
+awful.key({}, 'XF86MonBrightnessUp', function()
+    awful.spawn('xbacklight -inc 10')
+end, {description = '+10%', group = 'hotkeys'}),
+ 
+awful.key({}, 'XF86MonBrightnessDown', function() 
+    awful.spawn('xbacklight -dec 10')
+end, {description = '-10%', group = 'hotkeys'}), 
+--]]  
  
 ---[[ Audio control 
 awful.key({}, 'XF86AudioRaiseVolume', function()
@@ -240,7 +235,11 @@ awful.key({}, 'XF86AudioMute', function()
     -- This work on the console but not here, but whatever don't really need it 
     awful.spawn('pactl set-sink-mute "$(pactl info | grep "Default Sink" | cut -d " " -f3)" toggle') 
     _G.update_volume()
-end, {description = 'toggle mute', group = 'hotkeys'}),
+end, {description = 'Toggle Mute Audio', group = 'hotkeys'}),
+ 	
+awful.key({}, 'XF86Tools', function()
+    awful.util.spawn("pacmd list-sources | grep -oP 'index: \\d+' | awk '{ print $2 }' | xargs -I{} pactl set-source-mute {} toggle") 
+end, {description = 'Toggle Mute Microphone', group = 'hotkeys'}),
  
 awful.key({}, 'XF86AudioNext', function()
     awful.util.spawn("playerctl --player=playerctld next") 

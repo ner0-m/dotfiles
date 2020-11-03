@@ -22,10 +22,11 @@ require('module.notifications')
 require('module.auto-start')
 require('module.decorate-client')
 require('module.quake-terminal')
--- Backdrop causes bugs on some gtk3 applications
--- require('module.backdrop')
 require('module.exit-screen')
 require('module.dashboard')
+
+-- Backdrop causes bugs on some gtk3 applications
+-- require('module.backdrop')
 
 -- Setup all configurations
 require('configuration.client')
