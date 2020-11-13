@@ -1,0 +1,3 @@
+#! /bin/bash
+ 
+ssh -l h039vaa localhost -p 9999

@@ -1,0 +1,4 @@
+#! /bin/bash
+
+# Filter by the ssh command and then get the process ID from the output and then kill it
+ps aux | grep "[0-9][0-9] ssh -f -N -L 9999:skx.supermuc.lrz.de:22 lxhalle" | awk '{print $2}' | xargs kill -15 $1

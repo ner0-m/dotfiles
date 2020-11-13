@@ -1,0 +1,4 @@
+#! /bin/bash
+
+# Create an SSH tunnel 
+ssh -f -N -L 9999:skx.supermuc.lrz.de:22 lxhalle
