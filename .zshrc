@@ -1,5 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Add lua-fmt to path 
+export PATH=$PATH:$HOME/node_modules/lua-fmt/dist/bin/
 
 # set Default user
 DEFAULT_USER=`whoami`
