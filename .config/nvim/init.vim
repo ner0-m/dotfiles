@@ -73,6 +73,13 @@ Plug 'honza/vim-snippets'
 " Tag side bar 
 Plug 'liuchengxu/vista.vim'
  
+" Plug 'drmingdrmer/vim-indent-lua'
+Plug 'mhartington/formatter.nvim' 
+ 
+" Markdown + Pandoc 
+Plug 'vim-pandoc/vim-pandoc' 
+Plug 'vim-pandoc/vim-pandoc-syntax' 
+ 
 " ================ View plugins ======================
  
 " indentLine
@@ -87,9 +94,10 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'tomasr/molokai'
 " Plug 'colepeters/spacemacs-theme.vim'
 " Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter' 
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'romgrk/doom-one.vim'
+Plug 'mhartington/oceanic-next' 
  
 " ================ Tab manager =========================
  
@@ -113,9 +121,6 @@ Plug 'tjdevries/lsp_extensions.nvim'
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
-" Diagnostic navigation and settings for built-in LSP
-Plug 'nvim-lua/diagnostic-nvim'
- 
 " CMake pluging
 Plug 'jansenm/vim-cmake'
  
@@ -143,9 +148,12 @@ set colorcolumn=120
 " ================ Color settings======================
  
 " Theme 
-" :color delek
-set termguicolors  
-:color doom-one
+if (has("termguicolors"))
+  set termguicolors
+endif
+ 
+" :color doom-one
+colorscheme OceanicNext
  
 " Set font color of Error sign to white 
 :hi! CocErrorSign guifg=#ffffff 
@@ -211,13 +219,13 @@ let mapleader = ','
 noremap <C-c> "+y
  
 " paste
-noremap <C-v> "+p
+" noremap <C-v> "+p
  
 " cut
 noremap <C-x> "+d
  
 " paste in insert mode
-inoremap <C-v> <Esc>"+pa
+" inoremap <C-v> <Esc>"+pa
  
 " shift the movement keys by 1 to the right
 noremap j h
@@ -317,20 +325,6 @@ nnoremap <leader>wx <C-w>-
 " Width resize 
 nnoremap <leader>wf <C-w>>
 nnoremap <leader>wa <C-w><
- 
-" ================ Buffer navigation vim-bufkill ========================
-
-" delete buffer from list, without closing window 
-nnoremap <leader>bd :BD<cr>
-
-" move to next buffer
-nnoremap <leader>bn :BF<cr>
- 
-" move to previous buffer 
-nnoremap <leader>bp :BB<cr>
- 
-" alternate buffer 
-nnoremap <leader>ba :BA<cr> 
  
  
 " ================ Searching ========================
@@ -432,22 +426,8 @@ let g:vim_markdown_conceal_code_blocks = 0
 " ================ Handle Pandoc more ealsy ==========================
  
 " Compile and open output
-nnoremap <leader><leader>g :w! \| !comp <c-r>%<CR><CR>
-nnoremap <leader>o :!opout <c-r>%<CR><CR>
- 
-" ================ Buffer switching ==========================
-
-nnoremap <leader>bf :bfirst<CR> 
-vnoremap <leader>bf :bfirst<CR> 
- 
-nnoremap <leader>bl :blast<CR> 
-vnoremap <leader>bl :blast<CR> 
- 
-nnoremap <leader>bn :bnext<CR> 
-vnoremap <leader>bn :bnext<CR> 
- 
-nnoremap <leader>bp :bprevious<CR> 
-vnoremap <leader>bp :bprevious<CR> 
+" nnoremap <leader><leader>g :w! \| !comp <c-r>%<CR><CR>
+" nnoremap <leader>o :!opout <c-r>%<CR><CR>
  
 " ================ Plugins ==========================
 
@@ -468,12 +448,7 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnippets']
 filetype plugin indent on " required
 syntax enable             " required
  
-" This uses treesitters fold mechanism, it works way better than anyfold 
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
- 
-set foldlevel=5
-hi Folded term=NONE cterm=NONE
+set foldlevel=10
  
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -559,7 +534,7 @@ hi User2 ctermfg=007 ctermbg=236 guibg=#303030 guifg=#adadad
 hi User3 ctermfg=236 ctermbg=236 guibg=#303030 guifg=#303030
 hi User4 ctermfg=239 ctermbg=239 guibg=#4e4e4e guifg=#4e4e4e
 
- function! LspStatus() abort
+function! LspStatus() abort
   if luaeval('#vim.lsp.buf_get_clients() > 0')
     return luaeval("require('lsp-status').status()")
   endif
@@ -575,7 +550,7 @@ vmap <C-SPACE> <Plug>(wildfire-water)
  
 " ################ vim-fswitch #########################
  
-nmap <silent> <leader>fs :FSHere<cr>
+nmap <leader>fs :FSHere<cr>
  
 " ################ vim-gitgutter #########################
  
@@ -600,31 +575,11 @@ let g:multi_cursor_quit_key            = '<Esc>'
  
 " ################ FZF #########################
    
-nmap <C-P> :FZF<CR> 
+so ~/.config/nvim/plugins/fzf/init.vim 
  
-" Empty value to disable preview window altogether
-let g:fzf_preview_window = ''
-
-" Always enable preview window on the right with 60% width
-let g:fzf_preview_window = 'right:60%' 
+" ################ pandoc #########################
  
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
-
-" [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
-
-" [Commands] --expect expression for directly executing the command
-let g:fzf_commands_expect = 'alt-enter,ctrl-x' 
- 
-" Use 30% of the bottom to show FZF results 
-let g:fzf_layout = { 'down': '~30%' }
-  
-" Use escpe to exit the FZF window 
-tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>" 
+so ~/.config/nvim/plugins/pandoc/init.vim 
    
 " ################ NERDTree #########################
 
@@ -709,7 +664,7 @@ let c_no_curly_error = 1
  
 " == nvim-treesitter ====================================================
 
-lua require("treesitter") 
+lua require("treesitter-config")
  
 " == vist configuration =================================================
 
@@ -722,82 +677,28 @@ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 
 " == barbar configuration =================================================
   
-" Magic buffer-picking mode
-nnoremap <silent> <C-d> :BufferPick<CR>
- 
-" Sort automatically by...
-nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
-nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
- 
-" Move to previous/next
-nnoremap <silent>    <A-,> :BufferPrevious<CR>
-nnoremap <silent>    <A-.> :BufferNext<CR>
- 
-" Re-order to previous/next
-nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
-nnoremap <silent>    <A->> :BufferMoveNext<CR>
- 
-" Goto buffer in position...
-nnoremap <silent>    <A-1> :BufferGoto 1<CR>
-nnoremap <silent>    <A-2> :BufferGoto 2<CR>
-nnoremap <silent>    <A-3> :BufferGoto 3<CR>
-nnoremap <silent>    <A-4> :BufferGoto 4<CR>
-nnoremap <silent>    <A-5> :BufferGoto 5<CR>
-nnoremap <silent>    <A-6> :BufferGoto 6<CR>
-nnoremap <silent>    <A-7> :BufferGoto 7<CR>
-nnoremap <silent>    <A-8> :BufferGoto 8<CR>
-nnoremap <silent>    <A-9> :BufferLast<CR>
- 
+so ~/.config/nvim/plugins/barbar/init.vim
 
 " == LSP configuration =================================================
  
 " setup completion-nvim 
  
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
-set completeopt=menuone,noinsert,noselect
 
-" Avoid showing extra messages when using completion
-set shortmess+=c
- 
-" Trigger completion with <Tab>
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>" 
- 
-" Use UltiSnips as a completion engine 
-let g:completion_enable_snippet = 'UltiSnips'
+" TODO 
+" lua require('lua.lsp')
 
-lua require("lsp") 
- 
-" Code navigation shortcuts
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
  
 " Not supported by clangd (maybe needed for others) 
 " nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
  
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" function! s:check_back_space() abort
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
  
 " dignostic-nvim
-let g:diagnostic_enable_virtual_text = 1
+" let g:diagnostic_enable_virtual_text = 1
  
-" Have nice symbold inline if there is an error 
-call sign_define("LspDiagnosticsErrorSign", {"text" : "✖", "texthl" : "LspDiagnosticsError"})
-call sign_define("LspDiagnosticsWarningSign", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
-call sign_define("LspDiagnosticsInformationSign", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
-call sign_define("LspDiagnosticsHintSign", {"text" : "➤", "texthl" : "LspDiagnosticsHint"})
  
 " Visualize diagnostics
 " let g:diagnostic_enable_virtual_text = 1
@@ -808,9 +709,10 @@ call sign_define("LspDiagnosticsHintSign", {"text" : "➤", "texthl" : "LspDiagn
 
 " Set updatetime for CursorHold
 " 300ms of no cursor movement to trigger CursorHold
-set updatetime=300
+" set updatetime=300
+ 
 " Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+" autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
 " Goto previous/next diagnostic warning/error
 " nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
@@ -824,4 +726,70 @@ autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 " autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
 " \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
 
+" == setup clangd from https://github.com/neovim/nvim-lspconfig#clangd
  
+lua << EOF 
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.cmake.setup{} 
+require'lspconfig'.sumneko_lua.setup{
+    cmd = { "/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/Linux/lua-language-server", "-E", "/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua" },
+} 
+EOF 
+
+autocmd BufEnter * lua require'completion'.on_attach()
+ 
+" == LSP config from https://neovim.io/doc/user/lsp.html
+  
+" Code navigation shortcuts
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+ 
+ 
+" Have nice symbold inline if there is an error 
+call sign_define("LspDiagnosticsSignError", {"text" : "✖", "texthl" : "LspDiagnosticsError"})
+call sign_define("LspDiagnosticsSignWarning", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
+call sign_define("LspDiagnosticsSignInformation", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
+call sign_define("LspDiagnosticsSignHint", {"text" : "➤", "texthl" : "LspDiagnosticsHint"})
+ 
+" == LSP completion =================================================
+ 
+" Set completeopt to have a better completion experience
+" :help completeopt
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing extra messages when using completion
+set shortmess+=c
+ 
+" Trigger completion with <Tab>
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+ 
+" Use UltiSnips as a completion engine 
+let g:completion_enable_snippet = 'UltiSnips'
+ 
+let g:completion_enable_auto_popup = 1
+ 
+" == Formatter configuration =================================================
+
+lua << EOF 
+require('formatter').setup({
+  lua = {
+      luafmt = function()
+        return {
+          exe = "luafmt.js",
+          args = {"--indent-count", 4, "--stdin"},
+          stdin = true
+        }
+      end
+    }
+})
+EOF 
