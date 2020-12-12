@@ -1,87 +1,52 @@
 " Plugins
-call plug#begin('~/.config/nvim/bundle') 
+call plug#begin('~/.config/nvim/bundle')
 
 " ================ Navigation plugins ======================
- 
-" nerd tree
-" Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 
-" fuzzy file, buffer etc. finder 
-" Plug 'ctrlpvim/ctrlp.vim'
+" fuzzy file, buffer etc. finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
- 
-" search for code and edit it in-place 
-" Plug 'dyng/ctrlsf.vim'
- 
-" display tags in a window order by scope 
-" Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
- 
-" switch from headers to source files 
+
+" switch from headers to source files
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
 
 " Close buffer without the window
 Plug 'qpkorr/vim-bufkill'
- 
+
 " ================ Edeting plugins ======================
- 
-" Plug 'godlygeek/tabular'
-" Plug 'plasticboy/vim-markdown'
- 
+
+Plug 'ntpeters/vim-better-whitespace'
+
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
- 
-" Undo Tree 
-" Plug 'sjl/gundo.vim'
- 
-" Move lines 
+
+" Move lines
 Plug 't9md/vim-textmanip'
 
 " surround vim
 Plug 'tpope/vim-surround'
- 
-" Plug 'kana/vim-operator-user'
- 
-" Select close text object 
-" Plug 'gcmt/wildfire.vim'
- 
-" Pull in C++ function prototypes into implementation files 
-" Plug 'derekwyatt/vim-protodef', { 'for': ['c', 'cpp', 'objc'] }
- 
+
 " easy motion
 Plug 'easymotion/vim-easymotion'
- 
-" Multi line tools 
-" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
-" Markdown helpers
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
- 
-" Git Plugins 
-" Plug 'itchyny/vim-gitbranch'
-" Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-rhubarb'
-" Plug 'mhinz/vim-signify'
 
 " Snippet stuff
 Plug 'SirVer/ultisnips'
- 
+
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
- 
-" Tag side bar 
+
+" Tag side bar
 Plug 'liuchengxu/vista.vim'
- 
-" Plug 'drmingdrmer/vim-indent-lua'
-Plug 'mhartington/formatter.nvim' 
- 
-" Markdown + Pandoc 
-Plug 'vim-pandoc/vim-pandoc' 
-Plug 'vim-pandoc/vim-pandoc-syntax' 
- 
+
+" Formatting for most languages 
+Plug 'sbdchd/neoformat'
+
+" Markdown + Pandoc (Not usued currently, prefer a makefile)
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
+
 " ================ View plugins ======================
- 
+
 " indentLine
 Plug 'Yggdroot/indentLine'
 
@@ -89,41 +54,35 @@ Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 
 " ================ Color plugins ======================
- 
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'tomasr/molokai'
-" Plug 'colepeters/spacemacs-theme.vim'
-" Plug 'sheerun/vim-polyglot'
+
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'romgrk/doom-one.vim'
-Plug 'mhartington/oceanic-next' 
- 
+Plug 'mhartington/oceanic-next'
+
 " ================ Tab manager =========================
- 
-" Plug 'humiaozuzu/tabbar'
+
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'romgrk/lib.kom'
 Plug 'romgrk/barbar.nvim'
- 
+
 " ================ Linting plugins ======================
- 
+
 " Clang format
 Plug 'rhysd/vim-clang-format'
- 
+
  " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
 
 " Extensions to built-in LSP, for example, providing type inlay hints
-Plug 'tjdevries/lsp_extensions.nvim'
+" Plug 'tjdevries/lsp_extensions.nvim'
 
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
 " CMake pluging
 Plug 'jansenm/vim-cmake'
- 
+
 call plug#end()
 
 " ================ Ctrl + S to save ======================
@@ -141,23 +100,23 @@ set wildmenu
 set showcmd
 
 " ================ Column Line ======================
- 
+
 highlight ColorColumn ctermbg=gray
 set colorcolumn=120
- 
+
 " ================ Color settings======================
- 
-" Theme 
+
+" Theme
 if (has("termguicolors"))
   set termguicolors
 endif
- 
+
 " :color doom-one
 colorscheme OceanicNext
- 
-" Set font color of Error sign to white 
-:hi! CocErrorSign guifg=#ffffff 
- 
+
+" Set font color of Error sign to white
+:hi! CocErrorSign guifg=#ffffff
+
 " ================ Line numbering ==================
 
 set number relativenumber
@@ -167,10 +126,10 @@ set nu rnu
 " debugger uses its own window, so we can disable rnu when source window loses
 " focus
 autocmd BufLeave * :set number
-autocmd BufEnter * :set number relativenumber 
+autocmd BufEnter * :set number relativenumber
 function! SetRNU()
     if(mode()!='i')
-        set rnu 
+        set rnu
     endif
 endfunction
 
@@ -217,16 +176,16 @@ let mapleader = ','
 " clipboard
 " copy
 noremap <C-c> "+y
- 
+
 " paste
 " noremap <C-v> "+p
- 
+
 " cut
 noremap <C-x> "+d
- 
+
 " paste in insert mode
 " inoremap <C-v> <Esc>"+pa
- 
+
 " shift the movement keys by 1 to the right
 noremap j h
 noremap k j
@@ -246,7 +205,7 @@ noremap O O <Esc>
 " mapping that opens .vimrc in a split for quick editing
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader><leader>ev :split $MYVIMRC<CR>
- 
+
 " mapping that sources the vimrc in the current file
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
@@ -259,10 +218,10 @@ nnoremap <Tab> >>_
 nnoremap <S-Tab> <<_
 vnoremap <Tab> >>_
 vnoremap <S-Tab> <<_
- 
- 
+
+
 " ================ Window Navigation ========================
- 
+
 " remapt moving between windows
 nnoremap <leader>wj <C-w>h
 nnoremap <leader>wk <C-w>j
@@ -277,56 +236,56 @@ nnoremap <leader>wt <C-w>t
 
 " Bottom window
 nnoremap <leader>wb <C-w>b
- 
+
 " Previous window
 nnoremap <leader>wp <C-w>p
- 
+
 " ================ Window Creation/closing ========================
- 
-" Split horizontally with same file 
+
+" Split horizontally with same file
 nnoremap <leader>ws <C-w>s
 inoremap <leader>ws <C-w>s
 vnoremap <leader>ws <C-w>s
 
-" Split vertically with same file 
+" Split vertically with same file
 nnoremap <leader>wv <C-w>v
 inoremap <leader>wv <C-w>v
 nnoremap <leader>wv <C-w>v
- 
-" Split empty horizontally 
+
+" Split empty horizontally
 nnoremap <leader>wn <C-w>n
- 
+
 " close window
 nnoremap <leader>wq <C-w>q
-nnoremap <leader>wx <C-w>c 
- 
+nnoremap <leader>wx <C-w>c
+
 " ================ Window Moving ========================
- 
-" Swap windows 
+
+" Swap windows
 nnoremap <leader>wr <C-w>r
 nnoremap <leader>wR <C-w>R
 nnoremap <leader>wx <C-w>x
- 
-" Move windows in directions 
+
+" Move windows in directions
 nnoremap <leader>wJ <C-w>H
 nnoremap <leader>wK <C-w>J
 nnoremap <leader>wL <C-w>K
 nnoremap <leader>wÖ <C-w>L
- 
+
 " ================ Window Resize ========================
 
-" Make windows equal size 
+" Make windows equal size
 nnoremap <leader>we <C-w>=
- 
-" Height resize 
+
+" Height resize
 nnoremap <leader>ww <C-w>+
 nnoremap <leader>wx <C-w>-
- 
-" Width resize 
+
+" Width resize
 nnoremap <leader>wf <C-w>>
 nnoremap <leader>wa <C-w><
- 
- 
+
+
 " ================ Searching ========================
 
 " Ignorecase when searching
@@ -348,7 +307,7 @@ nnoremap <F3> :set hlsearch!<CR>
 
 " fix slow scrolling that occurs when using mouse and relative numbers
 set lazyredraw
- 
+
 " vim timeout (forgot why I need this or if I do at all)
 set ttyfast
 set ttimeoutlen=10
@@ -366,21 +325,21 @@ iab tihs this
 iab mian main
 iab funciton function
 iab funcition function
- 
-" Add dictionaries 
-set dictionary+=/usr/share/dict/british-english 
-set dictionary+=/usr/share/dict/british 
-set dictionary+=/usr/share/dict/american-english 
-set dictionary+=/usr/share/dict/american 
-set dictionary+=/usr/share/dict/words 
-set dictionary+=/usr/share/dict/german 
+
+" Add dictionaries
+set dictionary+=/usr/share/dict/british-english
+set dictionary+=/usr/share/dict/british
+set dictionary+=/usr/share/dict/american-english
+set dictionary+=/usr/share/dict/american
+set dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/german
 set dictionary+=/usr/share/dict/ngerman
 
 " ================ Misc =============================
 
 " Map Q to q => leave with :Q
 command! -bar -bang Q quit<bang>
- 
+
 " highlight matching braces
 set showmatch
 
@@ -403,7 +362,7 @@ set backspace=indent,eol,start
 " to avoid hitting:
 " 'press ENTER or type command to continue'
 " add 'silent' keyword before the command
-" 
+"
 " open a gnome-terminal with a shortcut
 noremap <leader><CR> :silent !gnome-terminal<CR>
 
@@ -414,47 +373,47 @@ set completeopt-=preview
 set formatoptions-=cro
 
 " Show the line and column number of the cursor position
-set ruler 
- 
-" Add triple slash as documentation 
+set ruler
+
+" Add triple slash as documentation
 autocmd Filetype c,cpp set comments^=:///
- 
-" Set conceallevel, to show e.g. links in markdown 
+
+" Set conceallevel, to show e.g. links in markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
- 
+
 " ================ Handle Pandoc more ealsy ==========================
- 
+
 " Compile and open output
 " nnoremap <leader><leader>g :w! \| !comp <c-r>%<CR><CR>
 " nnoremap <leader>o :!opout <c-r>%<CR><CR>
- 
+
 " ================ Plugins ==========================
 
 " ################ UtilSnips ############################
- 
+
 " let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsExpandTrigger = '<c-g><c-g>'
 let g:UltiSnipsListSnippets="<F5>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-l>" 
+let g:UltiSnipsJumpBackwardTrigger="<c-l>"
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnippets']
- 
+
 " If you want :UltiSnipsEdit to split your window.
 " let g:UltiSnipsEditSplit="vertical"
- 
+
 " ################ vim-anyfold ##########################
 
 filetype plugin indent on " required
 syntax enable             " required
- 
+
 set foldlevel=10
- 
+
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
- 
+
 " ################ vim-textmanip ##########################
- 
+
 xmap <Space>d <Plug>(textmanip-duplicate-down)
 nmap <Space>d <Plug>(textmanip-duplicate-down)
 xmap <Space>D <Plug>(textmanip-duplicate-up)
@@ -462,13 +421,13 @@ nmap <Space>D <Plug>(textmanip-duplicate-up)
 
 xmap <A-k> <Plug>(textmanip-move-down)
 nmap <A-k> <Plug>(textmanip-move-down)
- 
+
 xmap <A-l> <Plug>(textmanip-move-up)
 nmap <A-l> <Plug>(textmanip-move-up)
- 
+
 xmap <A-j> <Plug>(textmanip-move-left)
 nmap <A-j> <Plug>(textmanip-move-left)
- 
+
 xmap <A-ö> <Plug>(textmanip-move-right)
 nmap <A-ö> <Plug>(textmanip-move-right)
 
@@ -476,7 +435,7 @@ nmap <A-ö> <Plug>(textmanip-move-right)
 " toggle insert/replace with <F10>
 nmap <F10> <Plug>(textmanip-toggle-mode)
 xmap <F10> <Plug>(textmanip-toggle-mode)
- 
+
 " ################ Statusline ##########################
 
 " Always show window statuses
@@ -542,27 +501,27 @@ function! LspStatus() abort
 endfunction
 
 set statusline+=\ %{LspStatus()}
- 
+
 " ################ Wildfire.vim #########################
- 
+
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
- 
+
 " ################ vim-fswitch #########################
- 
+
 nmap <leader>fs :FSHere<cr>
- 
+
 " ################ vim-gitgutter #########################
- 
+
 set updatetime=250
 
 set signcolumn=yes
- 
+
 let g:multi_cursor_next_key='<S-n>'
 let g:multi_cursor_skip_key='<S-k>'
- 
+
 " ################ vim-multi-cursor #########################
- 
+
 " Default mapping
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
@@ -572,15 +531,15 @@ let g:multi_cursor_next_key            = '<C-n>'
 let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
- 
+
 " ################ FZF #########################
-   
-so ~/.config/nvim/plugins/fzf/init.vim 
- 
+
+so ~/.config/nvim/plugins/fzf/init.vim
+
 " ################ pandoc #########################
- 
-so ~/.config/nvim/plugins/pandoc/init.vim 
-   
+
+so ~/.config/nvim/plugins/pandoc/init.vim
+
 " ################ NERDTree #########################
 
 " shift+i (show hidden files)
@@ -617,7 +576,7 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
 
@@ -653,7 +612,7 @@ map <leader><leader>ö <Plug>(easymotion-lineforward)
 let g:python_highlight_all = 1
 
 " ====================================================================
-"  C/C++ Enhaced 
+"  C/C++ Enhaced
 " ====================================================================
 
 let g:cpp_class_scope_highlight = 1
@@ -661,11 +620,21 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_concepts_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let c_no_curly_error = 1
- 
+
 " == nvim-treesitter ====================================================
 
 lua require("treesitter-config")
- 
+
+" == vim-better-whitespace ====================================================
+
+let g:better_whitespace_enabled=1
+
+autocmd FileType Python EnableStripWhitespaceOnSave
+
+let g:strip_whitespace_confirm=0
+
+let g:current_line_whitespace_disabled_soft=1
+
 " == vist configuration =================================================
 
 " How each level is indented and what to prepend.
@@ -676,89 +645,64 @@ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 " let g:vista_icon_indent = ["▸ ", ""]
 
 " == barbar configuration =================================================
-  
+
 so ~/.config/nvim/plugins/barbar/init.vim
 
-" == LSP configuration =================================================
- 
-" setup completion-nvim 
- 
-
-" TODO 
-" lua require('lua.lsp')
-
- 
-" Not supported by clangd (maybe needed for others) 
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
- 
-" function! s:check_back_space() abort
-"     let col = col('.') - 1
-"     return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
- 
-" dignostic-nvim
-" let g:diagnostic_enable_virtual_text = 1
- 
- 
-" Visualize diagnostics
-" let g:diagnostic_enable_virtual_text = 1
-" let g:diagnostic_trimmed_virtual_text = '40'
- 
-" Don't show diagnostics while in insert mode
-" let g:diagnostic_insert_delay = 1
-
-" Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-" set updatetime=300
- 
-" Show diagnostic popup on cursor hold
-" autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
-" Goto previous/next diagnostic warning/error
-" nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
-" nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
- 
-" have a fixed column for the diagnostics to appear in
-" this removes the jitter when warnings/errors flow in
-" set signcolumn=yes
- 
-" Enable type inlay hints
-" autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-" \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
-
 " == setup clangd from https://github.com/neovim/nvim-lspconfig#clangd
+" Python setup taken from https://jdhao.github.io/2019/11/20/neovim_builtin_lsp_hands_on/
+
+lua << EOF
+local on_attach_vim = function(client)
+  require'completion'.on_attach(client)
+end
  
-lua << EOF 
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.cmake.setup{} 
+require'lspconfig'.clangd.setup { 
+    on_attach=on_attach_vim, 
+    config = { 
+        cmd = { "clangd-10 --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes" 
+        }
+    }
+} 
+require'lspconfig'.cmake.setup{ 
+    config = { 
+        filetypes = { "cmake", "CMakeLists.txt" } 
+    }
+}
 require'lspconfig'.sumneko_lua.setup{
     cmd = { "/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/Linux/lua-language-server", "-E", "/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua" },
-} 
-EOF 
+}
+
+
+require'lspconfig'.pyls.setup{
+    on_attach = on_attach_vim
+}
+EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
- 
+
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
 " == LSP config from https://neovim.io/doc/user/lsp.html
-  
+
 " Code navigation shortcuts
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gh    <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
- 
- 
-" Have nice symbold inline if there is an error 
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+
+" Have nice symbold inline if there is an error
 call sign_define("LspDiagnosticsSignError", {"text" : "✖", "texthl" : "LspDiagnosticsError"})
 call sign_define("LspDiagnosticsSignWarning", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
 call sign_define("LspDiagnosticsSignInformation", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
 call sign_define("LspDiagnosticsSignHint", {"text" : "➤", "texthl" : "LspDiagnosticsHint"})
- 
+
 " == LSP completion =================================================
- 
+
 " Set completeopt to have a better completion experience
 " :help completeopt
 " menuone: popup even when there's only one match
@@ -768,28 +712,35 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing extra messages when using completion
 set shortmess+=c
- 
+
 " Trigger completion with <Tab>
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
- 
-" Use UltiSnips as a completion engine 
-let g:completion_enable_snippet = 'UltiSnips'
- 
-let g:completion_enable_auto_popup = 1
- 
-" == Formatter configuration =================================================
 
-lua << EOF 
-require('formatter').setup({
-  lua = {
-      luafmt = function()
-        return {
-          exe = "luafmt.js",
-          args = {"--indent-count", 4, "--stdin"},
-          stdin = true
-        }
-      end
-    }
-})
-EOF 
+imap <C-x><C-k> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
+" Use UltiSnips as a completion engine
+let g:completion_enable_snippet = 'UltiSnips'
+
+let g:completion_enable_auto_popup = 1
+
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_enable_underline = 0
+let g:diagnostic_auto_popup_while_jump = 1
+let g:diagnostic_insert_delay = 1
+
+" == neoformat configuration =================================================
+
+let g:neoformat_enabled_python = ['yapf']
+
+" let g:neoformat_cpp_clangformat = {
+"     \ 'exe': 'clang-format',
+"     \ 'args': ['-style=file', '-assume-filename=' . expand('%:t'), '--'],
+" \}
+let g:neoformat_cpp_clangformat = {
+            \ 'exe': 'clang-format',
+            \ 'args': ['-style=file'],
+            \ }
+let g:neoformat_enabled_cpp = ['']
+let g:neoformat_enabled_c = ['']

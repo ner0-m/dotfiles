@@ -1,0 +1,165 @@
+snippet if "if"
+if (${1:MINGW})
+	${2:}
+endif()
+endsnippet
+
+snippet ifel "if else"
+if (${1:MINGW})
+	${2:}
+else()
+	${3:}
+endif()
+endsnippet
+
+snippet message "message"
+message(STATUS "${1:CMAKE_BUILD_TYPE}: \${$1}")
+endsnippet
+
+snippet set "set"
+set(${1:VARIABLE} ${2:VALUE})
+endsnippet
+
+snippet seto "set persistent variable"
+set(VERSION_TYPE "${1:VARIABLE}" CACHE STRING "${2:description here}" FORCE)
+endsnippet
+
+snippet obj "library object"
+add_library(${1:object} OBJECT
+	$2
+	)
+#Use with $<TARGET_OBJECTS:$1> as a source file
+endsnippet
+
+snippet lib "library"
+add_library(${1:library}
+	$2
+	)
+install(TARGETS $1 DESTINATION .)
+endsnippet
+
+snippet exe "executable"
+add_library(${1:executable}
+	$2
+	)
+install(TARGETS $1 DESTINATION .)
+endsnippet
+
+snippet bindir "${CMAKE_CURRENT_BINARY_DIR}"
+${CMAKE_CURRENT_BINARY_DIR}
+endsnippet
+
+snippet bindirtop "${CMAKE_BINARY_DIR}"
+${CMAKE_BINARY_DIR}
+endsnippet
+
+snippet bindirpro "${PROJECT_BINARY_DIR}"
+${PROJECT_BINARY_DIR}
+endsnippet
+
+
+snippet srcdir "${CMAKE_CURRENT_SOURCE_DIR}"
+${CMAKE_CURRENT_SOURCE_DIR}
+endsnippet
+
+snippet srcdirtop "${CMAKE_SOURCE_DIR}"
+${CMAKE_SOURCE_DIR}
+endsnippet
+
+snippet srcdirpro "${PROJECT_SOURCE_DIR}"
+${PROJECT_SOURCE_DIR}
+endsnippet
+
+snippet add "add_subdirectory"
+add_subdirectory(${1:source})
+endsnippet
+
+snippet inc "include_directories"
+include_directories(${2:SYSTEM} ${1:${PROJECT_SOURCE_DIR}/source})
+endsnippet
+snippet link "link_libraries"
+link_libraries(${1:library})
+endsnippet
+snippet def "add_definitions"
+add_definitions(${1:-DSOME_DEFINE})
+endsnippet
+snippet flags "target_compile_options"
+add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wunused -pedantic)
+endsnippet
+
+snippet cpp14 "set_property CXX_STANDARD 14"
+set_property(TARGET ${1:target} PROPERTY CXX_STANDARD 14)
+endsnippet
+
+snippet inct "target_include_directories"
+target_include_directories(${1:target} ${2:SYSTEM PRIVATE} ${3:${PROJECT_SOURCE_DIR}/source})
+endsnippet
+snippet linkt "target_link_libraries"
+target_link_libraries(${1:target} ${2:PRIVATE} ${3:library}})
+endsnippet
+snippet deft "target_compile_definitions"
+target_compile_definitions(${1:target} ${2:PRIVATE} ${3:-DSOME_DEFINE})
+endsnippet
+snippet flagst "target_compile_options"
+target_compile_options(${1:target} ${2:PRIVATE} ${3:-O3})
+endsnippet
+
+snippet option "add CMake option"
+option(${1:OPTION_NAME} "${2:description}" ${3:OFF})
+message(STATUS "                                          ${$1}")
+if($1)
+	$4
+endif()
+endsnippet
+
+snippet macro "new macro"
+macro(${1:macroName})
+	$2
+endmacro()
+endsnippet
+
+snippet convmacro "Add convenience targets macro"
+# Helper macro for creating convenient targets
+find_program(GDB_PATH gdb)
+macro(addConvenience TARGET)
+	add_custom_target(${TARGET}-run
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+		DEPENDS ${TARGET}
+		COMMAND ./${TARGET})
+	# convenience run gdb target
+	if(GDB_PATH)
+		add_custom_target(${TARGET}-gdb
+			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+			DEPENDS ${TARGET}
+			COMMAND ${GDB_PATH} ./${TARGET})
+	endif()
+	install(TARGETS ${TARGET} DESTINATION .)
+endmacro()
+endsnippet
+
+snippet clangsan "clang sanitizers"
+option(CLANG_ADDRESS_SAN "description" OFF)
+message(STATUS "CLANG_ADDRESS_SAN                         ${CLANG_ADDRESS_SAN}")
+if(CLANG_ADDRESS_SAN)
+	add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
+	link_libraries(-fsanitize=address -fno-omit-frame-pointer)
+endif()
+
+option(CLANG_MEMORY_SAN "description" OFF)
+message(STATUS "CLANG_MEMORY_SAN                          ${CLANG_MEMORY_SAN}")
+if(CLANG_MEMORY_SAN)
+	add_compile_options(-fsanitize=memory -fno-omit-frame-pointer)
+	link_libraries(-fsanitize=memory -fno-omit-frame-pointer)
+endif()
+
+option(CLANG_UB_SAN "description" OFF)
+message(STATUS "CLANG_UB_SAN                              ${CLANG_UB_SAN}")
+if(CLANG_UB_SAN)
+	add_compile_options(-fsanitize=undefined)
+	link_libraries(-fsanitize=undefined)
+endif()
+endsnippet
+
+snippet minreq "cmake_minimum_required"
+cmake_minimum_required (${1:3.15})
+endsnippet
