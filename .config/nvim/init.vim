@@ -7,6 +7,7 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+
 " switch from headers to source files
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
 
@@ -38,7 +39,7 @@ Plug 'honza/vim-snippets'
 " Tag side bar
 Plug 'liuchengxu/vista.vim'
 
-" Formatting for most languages 
+" Formatting for most languages
 Plug 'sbdchd/neoformat'
 
 " Markdown + Pandoc (Not usued currently, prefer a makefile)
@@ -51,7 +52,8 @@ Plug 'sbdchd/neoformat'
 Plug 'Yggdroot/indentLine'
 
 " Show git diff
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " ================ Color plugins ======================
 
@@ -74,14 +76,14 @@ Plug 'rhysd/vim-clang-format'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
 
-" Extensions to built-in LSP, for example, providing type inlay hints
-" Plug 'tjdevries/lsp_extensions.nvim'
-
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
 " CMake pluging
 Plug 'jansenm/vim-cmake'
+
+" Fuzzy finding for lsp
+Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 
 call plug#end()
 
@@ -655,17 +657,17 @@ lua << EOF
 local on_attach_vim = function(client)
   require'completion'.on_attach(client)
 end
- 
-require'lspconfig'.clangd.setup { 
-    on_attach=on_attach_vim, 
-    config = { 
-        cmd = { "clangd-10 --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes" 
+
+require'lspconfig'.clangd.setup {
+    on_attach=on_attach_vim,
+    config = {
+        cmd = { "clangd-10 --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes"
         }
     }
-} 
-require'lspconfig'.cmake.setup{ 
-    config = { 
-        filetypes = { "cmake", "CMakeLists.txt" } 
+}
+require'lspconfig'.cmake.setup{
+    config = {
+        filetypes = { "cmake", "CMakeLists.txt" }
     }
 }
 require'lspconfig'.sumneko_lua.setup{
@@ -676,6 +678,8 @@ require'lspconfig'.sumneko_lua.setup{
 require'lspconfig'.pyls.setup{
     on_attach = on_attach_vim
 }
+
+require('lspfuzzy').setup {}
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
