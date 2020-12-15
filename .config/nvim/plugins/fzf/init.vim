@@ -9,25 +9,25 @@ let $FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.cache/**' --glob '!.gi
 nnoremap <silent> <C-p> :Files<CR>
 
 " Seach in open buffers
-nmap <leader>b :Buffers<CR>
+" nmap <leader>b :Buffers<CR>
 
 " Seach in commands
-nmap <leader>c :Commands<CR>
+" nmap <leader>c :Commands<CR>
 
 " Seach tags in buffer
-nmap <leader>t :BTags<CR>
+" nmap <leader>t :BTags<CR>
 
 " Use ripgrep to seach in project
-nmap <leader>/ :Rg<CR>
+" nmap <leader>/ :Rg<CR>
 
 " Seach in git commits
-nmap <leader>gc :Commits<CR>
+" nmap <leader>gc :Commits<CR>
 
 " Git status in fzf window
-nmap <leader>gs :GFiles?<CR>
+" nmap <leader>gs :GFiles?<CR>
 
 " Seach history
-nmap <leader>sh :History/<CR>
+" nmap <leader>sh :History/<CR>
 
 " show mapping on all modes with F1
 nmap <F1> <plug>(fzf-maps-n)

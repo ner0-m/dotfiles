@@ -4,19 +4,19 @@
 
 " Magic buffer-picking mode
 nnoremap <silent> <C-d> :BufferPick<CR>
- 
+
 " Sort automatically by...
 nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
 nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
- 
+
 " Move to previous/next
 nnoremap <silent>    <leader>bp :BufferPrevious<CR>
 nnoremap <silent>    <leader>bn :BufferNext<CR>
- 
+
 " Re-order to previous/next
 nnoremap <silent>    <leader>bj :BufferMovePrevious<CR>
 nnoremap <silent>    <leader>bö :BufferMoveNext<CR>
- 
+
 " Goto buffer in position...
 nnoremap <silent>    <leader>b1 :BufferGoto 1<CR>
 nnoremap <silent>    <leader>b2 :BufferGoto 2<CR>
@@ -27,11 +27,11 @@ nnoremap <silent>    <leader>b6 :BufferGoto 6<CR>
 nnoremap <silent>    <leader>b7 :BufferGoto 7<CR>
 nnoremap <silent>    <leader>b8 :BufferGoto 8<CR>
 nnoremap <silent>    <leader>b9 :BufferGoto 9<CR>
- 
-" Close buffer 
+
+" Close buffer
 nnoremap <leader>bd :BufferClose<cr>
- 
-" Options for barbar 
+
+" Options for barbar
 
 " NOTE: This variable doesn't exist before barbar runs. Create it before
 "       setting any option.
@@ -60,7 +60,7 @@ let bufferline.semantic_letters = v:true
 " New buffer letters are assigned in this order. This order is
 " optimal for the qwerty keyboard layout but might need adjustement
 " for other layouts.
-let bufferline.letters = 
+let bufferline.letters =
   \ 'asdfjkl;ghnmxcbziowerutyqpASDFJKLGHNMXCBZIOWERUTYQP'
 
 " Sets the maximum padding width with which to surround each tab
