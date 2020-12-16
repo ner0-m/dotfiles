@@ -1,5 +1,6 @@
-# Add lua-fmt to path 
+# Add lua-fmt to path
 export PATH=$PATH:$HOME/node_modules/lua-fmt/dist/bin/
+export PATH=$PATH:$HOME/build-tool 
 
 # set Default user
 DEFAULT_USER=`whoami`
@@ -74,12 +75,15 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-        git-prompt 
+        git-prompt
 	command-not-found
 	copydir
 	copyfile
 	cp
-        dotbare 
+        dotbare
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        history-substring-search
 )
 
 	# User configuration
@@ -121,7 +125,7 @@ source /usr/share/fzf/completion.zsh
 
 export EDITOR='nvim'
 alias vim='nvim'
-export READER='okular' 
+export READER='okular'
 
 # Functions
 
@@ -130,36 +134,43 @@ mkcdir()
     mkdir -p -- "$1" &&
         cd -P -- "$1"
 }
- 
-# Aliases 
+
+# Aliases
 alias lsa="ls -al"
- 
- 
+
+
 prompt_context() {
 	if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
 		prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
 	fi
 }
- 
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
- 
+
 
 # Check if plug.vim is found, if not install it
 if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
- 
-# Set caps to excape 
+
+# Set caps to excape
 setxkbmap -option caps:escape
- 
+
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
 export DOTBARE_TREE="$HOME"
- 
-# asliases for FZF to use fd instead of find 
-export FZF_DEFAULT_COMMAND='fd --type f'
+
+# asliases for FZF to use fd instead of find
+# Filter for type file (f), also considdered hidden files, exclude build directories
+export FZF_DEFAULT_COMMAND='fd --type f --type l --exclude "build" --exclude "_build" --exclude "__pycache__"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Cache directory for CPM https://github.com/TheLartians/CPM.cmake 
+# Filter for type directory (d)
+export FZF_ALT_C_COMMAND="fd --type d . $HOME"
+
+# Cache directory for CPM https://github.com/TheLartians/CPM.cmake
 export CPM_SOURCE_CACHE=$HOME/.cache/CPM
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
