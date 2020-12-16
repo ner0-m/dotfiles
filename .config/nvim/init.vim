@@ -30,10 +30,14 @@ Plug 'scrooloose/nerdcommenter'
 Plug 't9md/vim-textmanip'
 
 " Surround words with parenthesis
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 
 " Tag side bar
 Plug 'liuchengxu/vista.vim'
+
+" Add targets TODO: tryout
+Plug 'wellle/targets.vim'
 
 "}}}
 
@@ -48,16 +52,23 @@ Plug 'mhartington/oceanic-next'
 "}}}
 
 " Viewing and apperance {{{
+" Start screen TODO tryout
+Plug 'mhinz/vim-startify'
+
+" Smooth scrolling TODO tryout
+Plug 'psliwka/vim-smoothie'
 
 " Show thin lines indicating indentation
 Plug 'Yggdroot/indentLine'
+
+" Devicons
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Show git diff
 " Plug 'airblave/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Switch tabline, as barbar sadly currently has many bugs for me
-" Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'romgrk/barbar.nvim'
 Plug 'pacha/vem-tabline'
 " }}}
@@ -102,7 +113,7 @@ Plug 'nvim-lua/completion-nvim'
 call plug#end()
 "}}}
 
- 
+
 " Keybindings {{{
 
 " General keybindings {{{
@@ -142,21 +153,31 @@ noremap <C-x> "+d
 inoremap <C-v> <Esc>"+pa
 
 " paste cplopboard in normal mode
-nnoremap <C-v> "+Pa<Esc>
+" nnoremap <C-v> "+Pa<Esc>
 " }}}
 
 " Movement keys {{{
+set scroll=10 
+ 
 " shift the movement keys by 1 to the right
 noremap j h
 noremap k j
 noremap l k
 noremap ö l
 
-" fast scrolling
-nnoremap K 10j
-nnoremap L 10k
-vnoremap K 10j
-vnoremap L 10k
+" Remap horizontal scrolling
+noremap Ö zl
+noremap J zh
+noremap <leader>ö zL
+noremap <leader>j zH
+
+
+" fast scrolling using smoothie
+map K      <Plug>(SmoothieDownwards)
+map L      <Plug>(SmoothieUpwards)
+map <C-k>      <Plug>(SmoothieForwards)
+map <C-l>      <Plug>(SmoothieBackwards)
+
 " }}}
 
 " .vimrc reload and opening {{{
@@ -538,12 +559,9 @@ highlight default link WhichKeySeperator DiffAdded
 highlight default link WhichKeyGroup     Identifier
 highlight default link WhichKeyDesc      Function
 
-" Hide status line
-" autocmd! FileType which_key
-" autocmd  FileType which_key set laststatus=0 noshowmode noruler
-"   \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
-
 " Single mappings
+let g:which_key_map['ö'] = 'Scroll right'
+let g:which_key_map['j'] = 'Scroll left'
 let g:which_key_map['d'] = [ '<Plug>(textmanip-duplicate-down)'  , 'Duplicate below' ]
 let g:which_key_map['D'] = [ '<Plug>(textmanip-duplicate-up)'    , 'Duplicate above' ]
 
@@ -581,7 +599,7 @@ let g:which_key_map.g = {
       \ 's' : [':FFiles?<CR>'     , 'Search files'],
       \ }
 
-let g:which_key_map.f = {
+let g:which_key_map.s = {
       \ 'name' : '+fuzzy',
       \ 'b' : [':Buffers<CR>'     , 'Search in buffers'],
       \ 'c' : [':Commands<CR>'    , 'Search in commands'],
@@ -714,8 +732,10 @@ let g:neoformat_enabled_cpp = ['']
 let g:neoformat_enabled_c = ['']
 
 " shortcuts for autoformatting the entire file: Ctrl+f
-autocmd FileType * inoremap <buffer><C-f> <Esc>:Neoformat<CR>a
-autocmd FileType * nnoremap <buffer><C-f> <Esc>:Neoformat<CR>
+" autocmd FileType * inoremap <buffer><C-f> <Esc>:Neoformat<CR>a
+" autocmd FileType * nnoremap <buffer><C-f> <Esc>:Neoformat<CR>
+autocmd FileType * inoremap <buffer><leader>f <Esc>:Neoformat<CR>a
+autocmd FileType * nnoremap <buffer><leader>f <Esc>:Neoformat<CR>
 " }}}
 
 " clang-format {{{
@@ -725,8 +745,14 @@ let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format_on_insert_leave = 0
 
 " shortcuts for autoformatting the entire file: Ctrl+f
-autocmd FileType c,cpp,cu,cuh inoremap <buffer><C-f> <Esc>:ClangFormat<CR>a
-autocmd FileType c,cpp,cu,cuh nnoremap <buffer><C-f> <Esc>:ClangFormat<CR>
+" autocmd FileType c,cpp,cu,cuh inoremap <buffer><C-f> <Esc>:ClangFormat<CR>a
+" autocmd FileType c,cpp,cu,cuh nnoremap <buffer><C-f> <Esc>:ClangFormat<CR>
+
+autocmd FileType c,cpp,cu,cuh inoremap <buffer><leader>f <Esc>:ClangFormat<CR>a
+autocmd FileType c,cpp,cu,cuh nnoremap <buffer><leader>f <Esc>:ClangFormat<CR>
+
+" Add entry to vim-which-key 
+let g:which_key_map['f'] = 'Format'
 " }}}
 
 " TODO: this is currently replaced by quickscope, maybe remove this soon
@@ -790,7 +816,7 @@ so ~/.config/nvim/plugins/vem-tabline/init.vim
 
 " Register lsp clients {{{
 lua << EOF
--- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua 
+-- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
 function preview_location(location, context, before_context)
   -- location may be LocationLink or Location (more useful for the former)
   context = context or 10
@@ -822,7 +848,7 @@ function preview_location_callback(_, method, result)
     floating_buf, floating_win = preview_location(result, context)
   end
 end
- 
+
 function peek_definition()
   if vim.tbl_contains(vim.api.nvim_list_wins(), floating_win) then
     vim.api.nvim_set_current_win(floating_win)
@@ -831,59 +857,59 @@ function peek_definition()
     return vim.lsp.buf_request(0, "textDocument/definition", params, preview_location_callback)
   end
 end
- 
+
 local function echo(hlgroup, msg)
   vim.cmd(string.format('echohl %s', hlgroup))
   vim.cmd(string.format('echo "[lspfuzzy] %s"', msg))
   vim.cmd('echohl None')
 end
- 
+
 -- on_attack for completion
 local on_attach_vim = function(bufnr, client)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc') 
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   require'completion'.on_attach(client)
-   
-  -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua 
+
+  -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
   local opts = { noremap=true, silent=true }
-  
+
   ---[[ With fzf-lsp, this is possible
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgd', ':Definitions<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgD', ':Declarations<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgi', ':Implementations<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgt', ':TypeDefinitions<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lr', ':References<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ls', ':DocumentSymbols<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lS', ':WorkspaceSymbols<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>la', ':CodeActions<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lA', ':RangeCodeActions<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ldd', ':Diagnostics<CR>', opts)
-  --]] 
-  
+  --]]
+
   --[[ Else we can use this again
-  echo("Hello") 
+  echo("Hello")
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lgt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ls', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  --]] 
-   
-   
+  --]]
+
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lH', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lp', '<cmd>lua peek_definition()<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-   
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ldl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ldn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ldN', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', opts)
@@ -917,8 +943,8 @@ require'lspconfig'.pyls.setup{
 
 -- setup fuzzy lsp
 -- require('lspfuzzy').setup {}
- 
--- setup lsp diagnostics 
+
+-- setup lsp diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- This will disable virtual text, like doing:
@@ -936,7 +962,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
- 
+
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -972,7 +998,7 @@ let g:which_key_map.l = {
 " }}}
 
 " Setup nice symbols for diagnostics {{{
- 
+
 call sign_define("LspDiagnosticsSignError", {"text" : "✖", "texthl" : "LspDiagnosticsError"})
 call sign_define("LspDiagnosticsSignWarning", {"text" : "⚠", "texthl" : "LspDiagnosticsWarning"})
 call sign_define("LspDiagnosticsSignInformation", {"text" : "🛈", "texthl" : "LspDiagnosticsInformation"})
