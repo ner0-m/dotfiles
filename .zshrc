@@ -174,3 +174,6 @@ export CPM_SOURCE_CACHE=$HOME/.cache/CPM
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+# Export from 'clang-format-static-bin' (https://aur.archlinux.org/packages/clang-format-static-bin/)
+export PATH="/opt/clang-format-static:$PATH"

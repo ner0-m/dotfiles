@@ -1,0 +1,4 @@
+[submodule ".config/awesome/bling"]
+	path = bling
+    url = https://github.com/Nooo37/bling
+    branch = master

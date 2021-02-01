@@ -6,7 +6,7 @@ env:
   # `tput` command
   TERM: xterm-256color
   COLORTERM: truecolor
-   
+
 colors:
   # Default colors
   primary:
@@ -48,7 +48,7 @@ font:
     # family: "Fira Mono"
     # family: "Fira Code"
     # family: "Cascadia Code"
-    style: Regular 
+    style: Regular
   bold:
     family: "Noto Sans Mono"
     # family: "Mono"
@@ -63,7 +63,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 10.0
+  size: 12.0
 
   offset:
     x: 1

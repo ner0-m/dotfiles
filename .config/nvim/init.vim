@@ -771,13 +771,6 @@ let g:indentLine_char = '¦'
 " }}}
 
 " Formater {{{
-" let g:neoformat_enabled_python = ['yapf']
-
-" let g:neoformat_enabled_cpp = ['']
-" let g:neoformat_enabled_cuda = ['']
-" let g:neoformat_enabled_c = ['']
-let g:format_debug = v:true
-
 lua << EOF
 require "format".setup {
     ["*"] = {
@@ -785,7 +778,7 @@ require "format".setup {
     },
     vim = {
         {
-            cmd = {"luafmt.js -w replace"},
+            cmd = {"lua-format -i --column-limit=180"},
             start_pattern = "^lua << EOF$",
             end_pattern = "^EOF$"
         }
@@ -794,7 +787,7 @@ require "format".setup {
         {
             cmd = {
                 function(file)
-                    return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
+                    return string.format("lua-format --column-limit %s -i %s", 180, file)
                 end
             }
         }
