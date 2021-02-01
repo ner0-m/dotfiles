@@ -3,6 +3,9 @@ call plug#begin('~/.config/nvim/bundle')
 
 " Navigation plugins{{{
 
+" Search
+Plug 'kevinhwang91/nvim-hlslens'
+
 " switch from headers to source files
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
 
@@ -30,13 +33,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 't9md/vim-textmanip'
 
 " Surround words with parenthesis
-" Plug 'tpope/vim-surround'
 Plug 'machakann/vim-sandwich'
 
 " Tag side bar
 Plug 'liuchengxu/vista.vim'
 
-" Add targets TODO: tryout
+" Give new text objects to work with TODO: tryout
 Plug 'wellle/targets.vim'
 
 "}}}
@@ -86,7 +88,7 @@ Plug 'gfanto/fzf-lsp.nvim'
 
 " Coding plugins {{{
 " Clang format
-Plug 'rhysd/vim-clang-format'
+" Plug 'rhysd/vim-clang-format'
 
 " CMake pluging
 Plug 'jansenm/vim-cmake'
@@ -98,7 +100,8 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Formatting for most languages
-Plug 'sbdchd/neoformat'
+"Plug 'sbdchd/neoformat'
+Plug 'lukas-reineke/format.nvim'
 " }}}
 
 " Neovim LSP {{{
@@ -108,6 +111,8 @@ Plug 'nvim-lua/lsp-status.nvim'
 
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
+Plug 'steelsojka/completion-buffers'
+Plug 'nvim-treesitter/completion-treesitter'
 "}}}
 
 call plug#end()
@@ -150,15 +155,15 @@ noremap <C-c> "+y
 noremap <C-x> "+d
 
 " paste clipboard in insert mode
-inoremap <C-v> <Esc>"+pa
+" inoremap <C-v> <Esc>"+pa
 
 " paste cplopboard in normal mode
 " nnoremap <C-v> "+Pa<Esc>
 " }}}
 
 " Movement keys {{{
-set scroll=10 
- 
+set scroll=10
+
 " shift the movement keys by 1 to the right
 noremap j h
 noremap k j
@@ -175,8 +180,8 @@ noremap <leader>j zH
 " fast scrolling using smoothie
 map K      <Plug>(SmoothieDownwards)
 map L      <Plug>(SmoothieUpwards)
-map <C-k>      <Plug>(SmoothieForwards)
-map <C-l>      <Plug>(SmoothieBackwards)
+" map <C-k>      <Plug>(SmoothieForwards)
+" map <C-l>      <Plug>(SmoothieBackwards)
 
 " }}}
 
@@ -595,18 +600,18 @@ let g:which_key_map.g = {
       \ 'name' : '+git',
       \ 'd' : [':Gdiffsplit<CR>' , 'Git diff split'],
       \ 'b' : [':Gblame<CR>'     , 'Git blame'],
-      \ 'c' : [':Commits<CR>'     , 'Search commits'],
-      \ 's' : [':FFiles?<CR>'     , 'Search files'],
+      \ 'c' : [':Commits<CR>'    , 'Search commits'],
+      \ 's' : [':FFiles?<CR>'    , 'Search files'],
       \ }
 
 let g:which_key_map.s = {
       \ 'name' : '+fuzzy',
-      \ 'b' : [':Buffers<CR>'     , 'Search in buffers'],
-      \ 'c' : [':Commands<CR>'    , 'Search in commands'],
-      \ 't' : [':BTags<CR>'       , 'Search in tags'],
-      \ '/' : [':Rg<CR>'          , 'Search in project'],
-      \ 'h' : [':History/<CR>'    , 'Search in history'],
-      \ 's' : [':FSHere'          , 'Switch header-source']
+      \ 'b' : [':Buffers'     , 'Search in buffers'],
+      \ 'c' : [':Commands'    , 'Search in commands'],
+      \ 't' : [':BTags'       , 'Search in tags'],
+      \ '/' : [':Rg'          , 'Search in project'],
+      \ 'h' : [':History/'    , 'Search in history'],
+      \ 's' : [':FSHere'      , 'Switch header-source']
       \ }
 
 let g:which_key_map['w'] = {
@@ -640,6 +645,31 @@ let g:which_key_map['w'] = {
 call which_key#register('<Space>', "g:which_key_map")
 " }}}
 
+" Startify {{{
+let g:startify_lists = [
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ ]
+
+"
+let g:startify_files_number = 5
+
+" Save sessions dir
+let g:startify_session_dir = '~/.config/nvim/session'
+
+" Bookmarks
+let g:startify_bookmarks = [
+      \ {'c': '~/.config/nvim/init.vim'},
+      \ '~/.zshrc',
+      \ '~/.config/awesome/',
+      \ ]
+
+" Seek to git root dir
+let g:startify_change_to_vcs_root = 1
+" }}}
+
 " UltiSnips {{{
 let g:UltiSnipsExpandTrigger = '<c-g><c-g>'
 let g:UltiSnipsListSnippets="<F7>"
@@ -647,6 +677,21 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-l>"
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnippets']
 " }}}
+
+" nvim-hlslens {{{
+lua require('hlslens').setup()
+noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>
+noremap <silent> N <Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>
+noremap * *<Cmd>lua require('hlslens').start()<CR>
+noremap # #<Cmd>lua require('hlslens').start()<CR>
+noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+noremap g# g#<Cmd>lua require('hlslens').start()<CR>
+
+" use : instead of <Cmd>
+nnoremap <silent> <leader>h :nohlsearch<CR>
+let g:which_key_map['h'] = 'Stop Search'
+" }}}
+
 " vim-textmanip {{{
 xmap <A-k> <Plug>(textmanip-move-down)
 nmap <A-k> <Plug>(textmanip-move-down)
@@ -725,20 +770,56 @@ let g:which_key_map.c = {
 let g:indentLine_char = '¦'
 " }}}
 
-" Neoformat {{{
-let g:neoformat_enabled_python = ['yapf']
+" Formater {{{
+" let g:neoformat_enabled_python = ['yapf']
 
-let g:neoformat_enabled_cpp = ['']
-let g:neoformat_enabled_c = ['']
+" let g:neoformat_enabled_cpp = ['']
+" let g:neoformat_enabled_cuda = ['']
+" let g:neoformat_enabled_c = ['']
+let g:format_debug = v:true
+
+lua << EOF
+require "format".setup {
+    ["*"] = {
+        {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
+    },
+    vim = {
+        {
+            cmd = {"luafmt.js -w replace"},
+            start_pattern = "^lua << EOF$",
+            end_pattern = "^EOF$"
+        }
+    },
+    lua = {
+        {
+            cmd = {
+                function(file)
+                    return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
+                end
+            }
+        }
+    },
+    cpp = {
+        {
+            cmd = {
+                function(file)
+                    return string.format("clang-format-10 -i -style=file %s", file)
+                end
+            }
+        }
+    },
+}
+EOF
 
 " shortcuts for autoformatting the entire file: Ctrl+f
 " autocmd FileType * inoremap <buffer><C-f> <Esc>:Neoformat<CR>a
 " autocmd FileType * nnoremap <buffer><C-f> <Esc>:Neoformat<CR>
-autocmd FileType * inoremap <buffer><leader>f <Esc>:Neoformat<CR>a
-autocmd FileType * nnoremap <buffer><leader>f <Esc>:Neoformat<CR>
+" autocmd FileType * inoremap <buffer><leader>f <Esc>:Neoformat<CR>a
+" autocmd FileType * nnoremap <buffer><leader>f <Esc>:Neoformat<CR>
+autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
 " }}}
 
-" clang-format {{{
+" TODO REMOVE: clang-format {{{
 " Clang format - auto formatting
 let g:clang_format#command = 'clang-format'
 let g:clang_format#detect_style_file = 1
@@ -748,10 +829,10 @@ let g:clang_format#auto_format_on_insert_leave = 0
 " autocmd FileType c,cpp,cu,cuh inoremap <buffer><C-f> <Esc>:ClangFormat<CR>a
 " autocmd FileType c,cpp,cu,cuh nnoremap <buffer><C-f> <Esc>:ClangFormat<CR>
 
-autocmd FileType c,cpp,cu,cuh inoremap <buffer><leader>f <Esc>:ClangFormat<CR>a
-autocmd FileType c,cpp,cu,cuh nnoremap <buffer><leader>f <Esc>:ClangFormat<CR>
+" autocmd FileType c,cpp,cu,cuh inoremap <buffer><leader>f <Esc>:ClangFormat<CR>a
+" autocmd FileType c,cpp,cuda nnoremap <buffer><leader>f <Esc>:ClangFormat<CR>
 
-" Add entry to vim-which-key 
+" Add entry to vim-which-key
 let g:which_key_map['f'] = 'Format'
 " }}}
 
@@ -921,8 +1002,10 @@ end
 require'lspconfig'.clangd.setup {
     on_attach=on_attach_vim,
     config = {
-        cmd = { "clangd-10 --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes"
-        }
+        cmd = {
+            "clangd --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes"
+        },
+        filetypes = { "c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda" },
     }
 }
 -- setup lsp for CMake
@@ -1019,7 +1102,23 @@ set shortmess+=c
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-imap <C-x><C-k> <Plug>(completion_smart_tab)
+"map <c-p> to manually trigger completion
+imap <silent> <c-p> <Plug>(completion_trigger)
+
+imap <c-j> <Plug>(completion_next_source) "use <c-j> to switch to previous completion
+imap <c-k> <Plug>(completion_prev_source) "use <c-k> to switch to next completion
+
+" non ins-complete method should be specified in 'mode'
+let g:completion_chain_complete_list = [
+    \{'complete_items': ['lsp', 'ts', 'buffer', 'snippet']},
+    \{'mode': '<c-p>'},
+    \{'mode': '<c-n>'}
+\]
+    " \{'complete_items': ['ts']},
+    " \{'complete_items': ['buffer']},
+    " \{'complete_items': ['snippet']},
+
+imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
 
 " Use UltiSnips as a completion engine

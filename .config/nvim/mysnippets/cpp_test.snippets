@@ -1,0 +1,170 @@
+# We want to overwrite everything in parent ft.
+extends cpp
+
+priority 1
+
+
+# Doctest/Catch2 test macros
+
+snippet scenario "BDD-style test case" b
+SCENARIO("${1:description}")
+{
+    ${2:}
+}
+endsnippet
+
+snippet given "BDD-style sub test case" b
+GIVEN("${1:description}")
+{
+    ${2:}
+}
+endsnippet
+
+snippet when "BDD-style WHEN case" b
+WHEN("${1:description}")
+{
+    ${2:}
+}
+endsnippet
+
+snippet then "BDD-style THEN case" b
+THEN("${1:description}")
+{
+    ${2:}
+}
+endsnippet
+ 
+#
+# templated test cases
+#
+snippet testcasetemplate "TEST_CASE_TEMPLATE macro (doctest)"
+TEST_CASE_TEMPLATE(${1:description}, ${2:type-id}, ${3:type-list})
+{
+${4}
+}
+endsnippet
+
+snippet testcasetemplatedefine "TEST_CASE_TEMPLATE_DEFINE macro"
+TEST_CASE_TEMPLATE(${1:description}, ${2:type-id}, ${3:test-id})
+{
+${4}
+}
+endsnippet
+
+snippet testcasetemplateinvoce "TEST_CASE_TEMPLATE_INVOCE macro (doctest)"
+TEST_CASE_TEMPLATE(${1:test-id}, ${2:type-list});
+endsnippet
+
+snippet testcasetemplateapply "TEST_CASE_TEMPLATE_apply macro (doctest)"
+TEST_CASE_TEMPLATE(${1:test-id}, ${2:type-tuple});
+endsnippet
+
+snippet testcasetemplateapplytuple "TEST_CASE_TEMPLATE_APPLY macro with std::tuple (doctest)"
+TEST_CASE_TEMPLATE(${1:test-id}, std::tuple<${2:type-list}>);
+endsnippet
+
+#
+# assertion macros 
+#
+
+# CHECK assertion
+snippet check "testing CHECK doctest/catch2 assert"
+CHECK(${1:expression});
+endsnippet
+
+# REQUIRE assertion
+snippet require "testing REQUIRE doctest/catch2 assert"
+REQUIRE(${1:expression});
+endsnippet
+
+# xxx_EQ assertions
+snippet checkeq "testing CHECK_EQ doctest assert"
+CHECK_EQ(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requireeq "testing REQUIRE_EQ doctest assert"
+REQUIRE_EQ(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_NE assertions
+snippet checkne "testing CHECK_NE doctest assert"
+CHECK_NE(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requirene "testing REQUIRE_NE doctest assert"
+REQUIRE_NE(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_LT assertions
+snippet checklt "testing CHECK_LT doctest assert"
+CHECK_LT(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requirelt "testing REQUIRE_LT doctest assert"
+REQUIRE_LT(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_GT assertions
+snippet checkgt "testing CHECK_GT doctest assert"
+CHECK_GT(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requiregt "testing REQUIRE_GT doctest assert"
+REQUIRE_GT(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_LE assertions
+snippet checkle "testing CHECK_LE doctest assert"
+CHECK_LE(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requirele "testing REQUIRE_LE doctest assert"
+REQUIRE_LE(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_GE assertions
+snippet checkge "testing CHECK_GE doctest assert"
+CHECK_GE(${1:lhs}, ${2:rhs});
+endsnippet
+
+snippet requirege "testing REQUIRE_GE doctest assert"
+REQUIRE_GE(${1:lhs}, ${2:rhs});
+endsnippet
+
+# xxx_UNARY assertions
+snippet checkunary "testing CHECK_UNARY doctest assert"
+CHECK_UNARY(${1:expr});
+endsnippet
+
+snippet requireunary "testing REQUIRE_UNARY doctest assert"
+REQUIRE_UNARY(${1:expr});
+endsnippet
+
+# xxx_UNARY_FALSE assertions
+snippet checkunaryfalse "testing CHECK_UNARY_FALSE doctest assert"
+CHECK_UNARY_FALSE(${1:expr});
+endsnippet
+
+snippet requireunaryfalse "testing REQUIRE_UNARY_FALSE doctest assert"
+REQUIRE_UNARY_FALSE(${1:expr});
+endsnippet
+
+#
+# Exception asserts
+#
+snippet requirethrows "CHECK_THROWS doctest/catch2 assertion"
+REQUIRE_THROWS(${1:expr});
+endsnippet
+
+snippet checkthrows "CHECK_THROWS doctest/catch2 assertion"
+CHECK_THROWS(${1:expr});
+endsnippet
+
+snippet requirethrowsas "REQUIRE_THROWS_AS doctest/catch2 assertion"
+REQUIRE_THROWS_AS(${1:expr}, ${2:exception});
+endsnippet
+
+snippet checkthrowsas "CHECK_THROWS_AS doctest/catch2 assertion"
+CHECK_THROWS_AS(${1:expr}, ${2:exception});
+endsnippet
+

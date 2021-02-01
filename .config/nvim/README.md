@@ -4,10 +4,34 @@
 
 For keybindings using the leader, just hit the leader (space) and `vim-which-key` will show it.
 
-I so often have the feeling that I sometimes don't really use the plugins I have, so write the shortcuts down
+I so often have (the feeling tat I) sometimes don't really use the plugins I have, so write the shortcuts down
 good damnit.
 
+Quickjump:
 
+- [vim-sandwhich](#vim-sandwhich)
+- [vim.target](#vim.target)
+
+##### vim-sandwich
+
+- Add: `sa{motion/textobject}{addition}`
+- Delete: ``sd{deletion}``
+- Replace: ``srb{addition}`` or ``sr{deletion}{addition}`` 
+
+- some text (this is inside) some other 
+{[(as_surrounded_text)]} 
+ 
+Special textobjects: `f` function `t` tag
+
+Other useful stuff:
+- Quick selection of text inside: ``vib`` or ``vis<some-query>``
+- Quick selection of text including surrounding: ``vab`` or ``vas<some-query>``
+
+Two counts are possible: ``[count1]{operator}[count2]{textobject}``, with the meaning of repeat the operator for count1
+times, and then the count2 is passed to the testobject. For example, calling ``2sa3w((`` turns ``foo bar baz``
+into ``((foo bar baz))`` (cursor on `f`).
+
+ 
 
 ##### vim.target
 
