@@ -36,6 +36,9 @@ Plug 'machakann/vim-sandwich'
 " Give new text objects to work with TODO: tryout
 Plug 'wellle/targets.vim'
 
+" Vimtex
+Plug 'lervag/vimtex'
+
 "}}}
 
 " Color plugins {{{
@@ -136,6 +139,17 @@ let c_no_curly_error = 1
 
 " }}}
 
+" TODO Move to config folder
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+let g:tex_conceal='abdmg'
+
+set conceallevel=1
+set concealcursor=nv
+set concealcursor=nv 
+let g:indentLine_concealcursor = 'nv'
+let g:indentLine_conceallevel = 1 
 
 " Pluging configuration and key bindings {{{
 
@@ -162,16 +176,7 @@ lua require("mykommentary")
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-" TODO what about this?
-" vim-fugitive {{{
-" fugitive mappings
-"nmap <leader>gd :Gdiffsplit<CR>
-"nmap <leader>gb :Gblame<CR>
-" }}}
-" }}}
-
 let g:fzf_lsp_preview_window = ['right:60%', 'ctrl-/']
 let g:fzf_preview_window = ['right:60%', 'ctrl-/']
- 
-tnoremap <Esc> <C-\><C-n>
- 
+
+
