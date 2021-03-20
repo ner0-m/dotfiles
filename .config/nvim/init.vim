@@ -37,7 +37,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'wellle/targets.vim'
 
 " Vimtex
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 
 "}}}
 
@@ -101,6 +101,9 @@ Plug 'glepnir/lspsaga.nvim'
 
 " Autocompletion framework for built-in LSP
 Plug 'hrsh7th/nvim-compe'
+
+" Show signature while typing
+Plug 'ray-x/lsp_signature.nvim'
 "}}}
 
 call plug#end()
@@ -147,9 +150,8 @@ let g:tex_conceal='abdmg'
 
 set conceallevel=1
 set concealcursor=nv
-set concealcursor=nv 
 let g:indentLine_concealcursor = 'nv'
-let g:indentLine_conceallevel = 1 
+let g:indentLine_conceallevel = 1
 
 " Pluging configuration and key bindings {{{
 

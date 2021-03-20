@@ -45,10 +45,34 @@ local function echo(hlgroup, msg)
     vim.cmd('echohl None')
 end
 
+
+vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
+  vim.lsp.util.focusable_float(method, function()
+    if not (result and result.contents) then
+      -- return { 'No information available' }
+      return
+    end
+    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+    if vim.tbl_isempty(markdown_lines) then
+      -- return { 'No information available' }
+      return
+    end
+    local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
+      pad_left = 1; pad_right = 1;
+    })
+    vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
+    return bufnr, winnr
+  end)
+end
+
 local M = {}
 
 -- on_attack for completion
-M.on_attach_vim = function(bufnr, client)
+M.on_attach_vim = function(client, bufnr)
+    print("Attaching client with personal on_attach")
+    require'lsp_signature'.on_attach()
+
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
@@ -110,6 +134,19 @@ M.on_attach_vim = function(bufnr, client)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ldP',
                                 '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>',
                                 opts)
+    -- Set autocommands conditional on server_capabilities
+    if client.resolved_capabilities.document_highlight then
+        vim.api.nvim_exec([[
+            hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+            augroup lsp_document_highlight
+                autocmd! * <buffer>
+                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+        ]], false)
+    end
 end
 
 -- Maybe replace the default handler below with this
