@@ -20,6 +20,9 @@ Plug 'liuchengxu/vim-which-key'
 
 " Editing  related plugins {{{
 
+" Highlight word under cursor
+Plug 'RRethy/vim-illuminate'
+
 " Show whitespaces in red, and add command to remove trailing
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -178,7 +181,5 @@ lua require("mykommentary")
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-let g:fzf_lsp_preview_window = ['right:60%', 'ctrl-/']
-let g:fzf_preview_window = ['right:60%', 'ctrl-/']
 
-
+let g:Illuminate_delay = 500

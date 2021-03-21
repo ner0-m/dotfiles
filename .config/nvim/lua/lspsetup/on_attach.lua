@@ -73,6 +73,14 @@ M.on_attach_vim = function(client, bufnr)
     print("Attaching client with personal on_attach")
     require'lsp_signature'.on_attach()
 
+    -- Attach cursor under word highlight
+    require 'illuminate'.on_attach(client)
+
+    -- reset colors as they are overritten somewher
+    vim.api.nvim_command [[ hi LspReferenceText cterm=standout gui=standout ]]
+    vim.api.nvim_command [[ hi LspReferenceRead cterm=standout gui=standout ]]
+    vim.api.nvim_command [[ hi LspReferenceWrite cterm=standout gui=standout ]]
+
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
@@ -137,9 +145,6 @@ M.on_attach_vim = function(client, bufnr)
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
         vim.api.nvim_exec([[
-            hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-            hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-            hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
             augroup lsp_document_highlight
                 autocmd! * <buffer>
                 autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()

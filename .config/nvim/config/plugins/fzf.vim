@@ -17,11 +17,9 @@ vmap <F1> <plug>(fzf-maps-x)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" Empty value to disable preview window altogether
-let g:fzf_preview_window = ''
-
 " Always enable preview window on the right with 60% width
 let g:fzf_preview_window = ['right:60%', 'ctrl-/']
+let g:fzf_lsp_preview_window = ['right:60%', 'ctrl-/']
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
