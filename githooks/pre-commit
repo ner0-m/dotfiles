@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Get hooks path from git config
+globalhooks=$(git config --global --get core.hooksPath)
+globalhooks="${globalhooks/#\~/$HOME}"
+
+if [ -n "$globalhooks" ]; then
+    # run all hooks in the global pre commit folder 
+    for hook in $globalhooks/pre-commit.d/*; do
+        bash $hook
+        RESULT=$?
+        if [ $RESULT != 0 ]; then
+            echo "pre-commit.d/$hook returned non-zero: $RESULT, abort commit"
+            exit $RESULT
+        fi
+    done
+fi
+
+# Run local pre commits
+if [ -e ./.git/hooks/pre-commit ]; then
+    ./.git/hooks/pre-commit "$@"
+else
+    exit 0
+fi

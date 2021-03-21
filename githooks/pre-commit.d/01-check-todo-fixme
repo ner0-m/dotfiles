@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# An hook script to verify changes to be committed do not contain
+# any 'FIXME:' comments. Called by "git commit" with no arguments.
+#
+# The hook should exit with non-zero status after issuing an appropriate
+# message if it stops the commit.
+#
+# To bypass this hook, use the "--no-verify" parameter when committing.
+
+# Redirect output to stderr.
+exec 1>&2
+
+# Define colors
+RED='\033[0;33m'
+NC='\033[0m'
+
+# Define what term will be searched for.
+SEARCH_TERM_FIXME="FIXME:"
+SEARCH_TERM_TODO="TODO:"
+
+changes=$(git diff --cached | grep -E "^\+" | grep -v '+++ b/' | cut -c 2-)
+# Check for the presence of the SEARCH_TERM in updated files.
+if [[ ${changes} == *$SEARCH_TERM_FIXME* ]] || [[ ${changes} == *$SEARCH_TERM_TODO* ]]
+then
+	printf "[pre-commit] ${RED}Warning:${NC} Found ${SEARCH_TERM_FIXME} | ${SEARCH_TERM_TODO} in attempted commit.\n"
+	exit 0
+fi
