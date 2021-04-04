@@ -6,6 +6,7 @@ require"format".setup {
     ["*"] = {
         {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
     },
+    cmake = {{cmd = {"cmake-format -i"}}},
     vim = {{cmd = {"lua-format -i --column-limit=120"}, start_pattern = "^lua << EOF$", end_pattern = "^EOF$"}},
     lua = {
         {

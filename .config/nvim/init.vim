@@ -39,9 +39,7 @@ Plug 'machakann/vim-sandwich'
 " Give new text objects to work with TODO: tryout
 Plug 'wellle/targets.vim'
 
-" Vimtex
-" Plug 'lervag/vimtex'
-
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 "}}}
 
 " Color plugins {{{
@@ -49,6 +47,8 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'romgrk/doom-one.vim'
 Plug 'mhartington/oceanic-next'
+
+Plug 'norcalli/nvim-colorizer.lua'
 "}}}
 
 " Viewing and apperance {{{
@@ -181,5 +181,7 @@ lua require("mykommentary")
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-
 let g:Illuminate_delay = 500
+
+" enable built-in doxygen syntax highlighting
+let g:load_doxygen_syntax=1
