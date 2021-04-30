@@ -48,6 +48,7 @@ Plug 'folke/tokyonight.nvim'
 
 " Viewing and apperance {{{
 " Plug 'mhinz/vim-startify'
+Plug 'glepnir/dashboard-nvim' 
 
 " Smooth scrolling
 " Plug 'psliwka/vim-smoothie'
@@ -93,8 +94,10 @@ Plug 'lukas-reineke/format.nvim'
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'glepnir/lspsaga.nvim'
 
+" Plugin for vscode like pcitrograms
+Plug 'onsails/lspkind-nvim'
+ 
 " Autocompletion framework for built-in LSP
 Plug 'hrsh7th/nvim-compe'
 
@@ -177,3 +180,5 @@ let g:Illuminate_delay = 500
 
 " enable built-in doxygen syntax highlighting
 let g:load_doxygen_syntax=1
+
+let g:dashboard_default_executive ='fzf'
