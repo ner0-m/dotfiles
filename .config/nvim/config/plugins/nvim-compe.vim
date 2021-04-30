@@ -1,4 +1,4 @@
-set completeopt=menu,menuone,noselect
+set completeopt=menuone,noselect
 
 lua << EOF
 require'compe'.setup({
@@ -11,10 +11,15 @@ require'compe'.setup({
     source_timeout = 200,
     incomplete_delay = 400,
     allow_prefix_unmatch = false,
+    documentation = true;
+    max_abbr_width = 100;
+    max_kind_width = 100;
+    max_menu_width = 100;
     source = {
         buffer = { priority = 10 },
         vsnip = { priority = 100 } ,
         nvim_lsp = { priority = 1000},
+        nvim_lua = { priority = 200},
         spell = { priority = 5 },
         treesitter = true,
         path = true,
