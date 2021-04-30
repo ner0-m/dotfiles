@@ -35,7 +35,7 @@ Plug 'machakann/vim-sandwich'
 " Give new text objects to work with TODO: tryout
 Plug 'wellle/targets.vim'
 
-" Generate doxygen documentation 
+" Generate doxygen documentation
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 "}}}
 
@@ -48,11 +48,11 @@ Plug 'folke/tokyonight.nvim'
 
 " Viewing and apperance {{{
 " Plug 'mhinz/vim-startify'
-Plug 'glepnir/dashboard-nvim' 
+Plug 'glepnir/dashboard-nvim'
 
 " Smooth scrolling
 " Plug 'psliwka/vim-smoothie'
-Plug 'karb94/neoscroll.nvim' 
+Plug 'karb94/neoscroll.nvim'
 
 " Show thin lines indicating indentation
 Plug 'Yggdroot/indentLine'
@@ -97,7 +97,7 @@ Plug 'nvim-lua/lsp-status.nvim'
 
 " Plugin for vscode like pcitrograms
 Plug 'onsails/lspkind-nvim'
- 
+
 " Autocompletion framework for built-in LSP
 Plug 'hrsh7th/nvim-compe'
 
