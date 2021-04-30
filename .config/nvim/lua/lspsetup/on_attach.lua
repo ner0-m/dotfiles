@@ -71,7 +71,14 @@ local M = {}
 -- on_attack for completion
 M.on_attach_vim = function(client, bufnr)
     print("Attaching client with personal on_attach")
-    require'lsp_signature'.on_attach()
+
+    -- Setup nice function signature
+    require'lsp_signature'.on_attach({
+        bind = true,
+        handler_opts = {
+            border = "single"
+        }
+    })
 
     -- Attach cursor under word highlight
     require 'illuminate'.on_attach(client)
