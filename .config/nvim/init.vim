@@ -23,9 +23,6 @@ Plug 'liuchengxu/vim-which-key'
 " Highlight word under cursor
 Plug 'RRethy/vim-illuminate'
 
-" Show whitespaces in red, and add command to remove trailing
-Plug 'ntpeters/vim-better-whitespace'
-
 " nerd commenter
 " Plug 'scrooloose/nerdcommenter'
 Plug 'b3nj5m1n/kommentary'
@@ -60,13 +57,15 @@ Plug 'Yggdroot/indentLine'
 
 " Devicons
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
 
 " Statusline plugin
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+" Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'hoob3rt/lualine.nvim'
 
 " Show git diff
 " Plug 'airblave/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
 " Switch tabline, as barbar sadly currently has many bugs for me
 Plug 'pacha/vem-tabline'
