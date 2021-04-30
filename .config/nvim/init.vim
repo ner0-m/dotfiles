@@ -60,15 +60,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 
 " Statusline plugin
-" Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'hoob3rt/lualine.nvim'
 
-" Show git diff
-" Plug 'airblave/vim-gitgutter'
-" Plug 'tpope/vim-fugitive'
-
-" Switch tabline, as barbar sadly currently has many bugs for me
-Plug 'pacha/vem-tabline'
+" Tabline plugin
+Plug 'romgrk/barbar.nvim'
 " }}}
 
 " Fuzzy finder {{{
@@ -129,7 +124,7 @@ lua require("statusline")
 
 " Language specific settings {{{
 " Python {{{
-le}}}t g:python_highlight_all = 1
+let g:python_highlight_all = 1
 " }}}
 
 " C++ {{{
@@ -161,12 +156,11 @@ source ~/.config/nvim/config/plugins/vim-vsnip.vim
 source ~/.config/nvim/config/plugins/nvim-hlslens.vim
 source ~/.config/nvim/config/plugins/vim-textmanip.vim
 source ~/.config/nvim/config/plugins/fzf.vim
-" source ~/.config/nvim/config/plugins/nerdcommenter.vim
 source ~/.config/nvim/config/plugins/indentLine.vim
 source ~/.config/nvim/config/plugins/vim-easymotion.vim
 source ~/.config/nvim/config/plugins/vim-better-whitespace.vim
 source ~/.config/nvim/config/plugins/lsp-diagnostics.vim
-source ~/.config/nvim/config/plugins/vem-tabline.vim
+source ~/.config/nvim/config/plugins/barbar.vim
 source ~/.config/nvim/config/plugins/nvim-compe.vim
 
 lua require("format-nvim")
