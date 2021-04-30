@@ -12,6 +12,19 @@ Quickjump:
 - [vim-sandwhich](#vim-sandwhich)
 - [vim.target](#vim.target)
 
+##### Scrolling
+
+There are different keybindings to scroll multiple lines up or down:
+
+These are all down and up respectivly, sorted by range from long to short
+- Ctrl + f and Ctrl + b
+- Ctrl + d and Ctrl + u
+- Ctrl + e and Ctrl + y
+
+Calling `zz` will center on the current line. `zb` and `zt` will move the window up and down, without
+moving the cursor from the line.
+
+
 ##### vim-sandwich
 
 - Add: `sa{motion/textobject}{addition}`

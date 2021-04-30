@@ -24,10 +24,9 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'RRethy/vim-illuminate'
 
 " nerd commenter
-" Plug 'scrooloose/nerdcommenter'
 Plug 'b3nj5m1n/kommentary'
 
-" Move lines
+" Move lines up and down
 Plug 't9md/vim-textmanip'
 
 " Surround words with parenthesis
@@ -36,6 +35,7 @@ Plug 'machakann/vim-sandwich'
 " Give new text objects to work with TODO: tryout
 Plug 'wellle/targets.vim'
 
+" Generate doxygen documentation 
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 "}}}
 
@@ -47,10 +47,11 @@ Plug 'folke/tokyonight.nvim'
 "}}}
 
 " Viewing and apperance {{{
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 
 " Smooth scrolling
-Plug 'psliwka/vim-smoothie'
+" Plug 'psliwka/vim-smoothie'
+Plug 'karb94/neoscroll.nvim' 
 
 " Show thin lines indicating indentation
 Plug 'Yggdroot/indentLine'
@@ -118,7 +119,6 @@ source ~/.config/nvim/config/colors.vim
 " }}}
 
 " Statusline {{{
-" source ~/.config/nvim/config/statusline.vim
 lua require("statusline")
 " }}}
 
@@ -167,6 +167,7 @@ lua require("format-nvim")
 lua require("treesitter-config")
 lua require("lspsetup")
 lua require("mykommentary")
+lua require("scroll")
 
 " shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>

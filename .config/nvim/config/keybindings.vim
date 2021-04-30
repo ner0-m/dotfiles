@@ -57,10 +57,8 @@ noremap <leader>j zH
 
 
 " fast scrolling using smoothie
-map K      <Plug>(SmoothieDownwards)
-map L      <Plug>(SmoothieUpwards)
-" map <C-k>      <Plug>(SmoothieForwards)
-" map <C-l>      <Plug>(SmoothieBackwards)
+" map K 10k 
+" map L 10l
 
 " }}}
 
