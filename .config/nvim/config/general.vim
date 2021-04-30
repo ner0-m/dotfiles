@@ -70,7 +70,7 @@ set ignorecase
 set incsearch
 
 " When searching try to be smart about cases
-" set smartcase
+set smartcase
 
 " Highlight search results
 set hlsearch
@@ -84,9 +84,6 @@ set ttyfast
 set timeoutlen=300
 " }}}
 " Spelling {{{
-
-" Activate spelling
-set spell
 
 " Abbreviations
 iab wiht with
@@ -138,11 +135,22 @@ set formatoptions-=cro
 set ruler
 
 " Add triple slash as documentation
-autocmd Filetype c,cpp set comments^=:///
+augroup cpp
+    autocmd!
+    autocmd FileType c,cpp setlocal comments-=:// comments+=://!,:///,:// spell
+    autocmd FileType cpp setlocal matchpairs+=<:>
+augroup END
 
 " Set conceallevel, to show e.g. links in markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
-"let g:conceallevel = 0
+
+augroup vimrc_todo
+    au!
+    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX)/
+          \ containedin=.*Comment,vimCommentTitle
+augroup END
+hi def link MyTodo Todo
+
 " }}}
 
