@@ -70,7 +70,7 @@ local M = {}
 
 -- on_attack for completion
 M.on_attach_vim = function(client, bufnr)
-    print("Attaching client with personal on_attach")
+    -- print("Attaching client with personal on_attach")
 
     -- Setup nice function signature
     require'lsp_signature'.on_attach({
