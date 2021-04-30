@@ -7,6 +7,6 @@ endif
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 
-" :color doom-one
-colorscheme OceanicNext
+let g:tokyonight_style = "night"
+colorscheme tokyonight
 

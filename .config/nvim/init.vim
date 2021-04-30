@@ -45,10 +45,8 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 " Color plugins {{{
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'romgrk/doom-one.vim'
-Plug 'mhartington/oceanic-next'
 
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'folke/tokyonight.nvim'
 "}}}
 
 " Viewing and apperance {{{
