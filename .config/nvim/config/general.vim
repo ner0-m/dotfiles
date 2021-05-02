@@ -54,6 +54,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 " }}}
+ 
 " Start scrolling when we're 16 lines away from margins
 set scrolloff=16
 

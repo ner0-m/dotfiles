@@ -1,16 +1,20 @@
-" Plugins {{{
+" Plugins 
 call plug#begin('~/.config/nvim/bundle')
 
 " Navigation plugins{{{
-
 " Search
 Plug 'kevinhwang91/nvim-hlslens'
 
-" switch from headers to source files
-Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp', 'objc'] }
-
 " Move forward and backward in line
 Plug 'unblevable/quick-scope'
+
+" 
+Plug 'nvim-lua/plenary.nvim' 
+
+" Dependency for gitsigns 
+Plug 'nvim-lua/plenary.nvim' 
+" Git plugin
+Plug 'lewis6991/gitsigns.nvim' 
 
 "}}}
 
@@ -32,7 +36,7 @@ Plug 't9md/vim-textmanip'
 " Surround words with parenthesis
 Plug 'machakann/vim-sandwich'
 
-" Give new text objects to work with TODO: tryout
+" Give new text objects to work with
 Plug 'wellle/targets.vim'
 
 " Generate doxygen documentation
@@ -47,11 +51,9 @@ Plug 'folke/tokyonight.nvim'
 "}}}
 
 " Viewing and apperance {{{
-" Plug 'mhinz/vim-startify'
-Plug 'glepnir/dashboard-nvim'
+Plug 'mhinz/vim-startify'
 
 " Smooth scrolling
-" Plug 'psliwka/vim-smoothie'
 Plug 'karb94/neoscroll.nvim'
 
 " Show thin lines indicating indentation
@@ -106,7 +108,7 @@ Plug 'ray-x/lsp_signature.nvim'
 "}}}
 
 call plug#end()
-"}}}
+
 
 
 " Keybindings {{{
@@ -125,19 +127,6 @@ source ~/.config/nvim/config/colors.vim
 lua require("statusline")
 " }}}
 
-" Language specific settings {{{
-" Python {{{
-let g:python_highlight_all = 1
-" }}}
-
-" C++ {{{
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_concepts_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let c_no_curly_error = 1
-" }}}
-
 " }}}
 
 " TODO Move to config folder
@@ -153,7 +142,7 @@ let g:indentLine_conceallevel = 1
 
 " Pluging configuration and key bindings {{{
 
-source ~/.config/nvim/config/plugins/vim-which-key.vim
+" source ~/.config/nvim/config/plugins/vim-which-key.vim
 source ~/.config/nvim/config/plugins/vim-startify.vim
 source ~/.config/nvim/config/plugins/vim-vsnip.vim
 source ~/.config/nvim/config/plugins/nvim-hlslens.vim
@@ -171,6 +160,7 @@ lua require("treesitter-config")
 lua require("lspsetup")
 lua require("mykommentary")
 lua require("scroll")
+lua require("git")
 
 " shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
@@ -178,7 +168,6 @@ autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 let g:Illuminate_delay = 500
 
-" enable built-in doxygen syntax highlighting
-let g:load_doxygen_syntax=1
+nnoremap <leader>ss :ClangdSwitchSourceHeader<CR>
 
-let g:dashboard_default_executive ='fzf'
+let g:sneak#label = 1

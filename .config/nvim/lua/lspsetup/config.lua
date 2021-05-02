@@ -8,6 +8,9 @@ require'lspconfig'.clangd.setup {
             "clangd --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes"
         },
         filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"}
+    },
+    handlers = {
+        ["textDocument/symbolInfo"] = print("Oh my god"),
     }
 }
 -- setup lsp for CMake
