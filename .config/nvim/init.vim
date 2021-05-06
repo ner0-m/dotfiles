@@ -8,11 +8,9 @@ Plug 'kevinhwang91/nvim-hlslens'
 " Move forward and backward in line
 Plug 'unblevable/quick-scope'
 
-" 
-Plug 'nvim-lua/plenary.nvim' 
-
 " Dependency for gitsigns 
 Plug 'nvim-lua/plenary.nvim' 
+ 
 " Git plugin
 Plug 'lewis6991/gitsigns.nvim' 
 
@@ -20,6 +18,9 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Misc {{{
 Plug 'liuchengxu/vim-which-key'
+
+" Autocorrection plugin
+Plug 'sedm0784/vim-you-autocorrect' 
 " }}}
 
 " Editing  related plugins {{{
@@ -142,7 +143,7 @@ let g:indentLine_conceallevel = 1
 
 " Pluging configuration and key bindings {{{
 
-" source ~/.config/nvim/config/plugins/vim-which-key.vim
+source ~/.config/nvim/config/plugins/vim-which-key.vim
 source ~/.config/nvim/config/plugins/vim-startify.vim
 source ~/.config/nvim/config/plugins/vim-vsnip.vim
 source ~/.config/nvim/config/plugins/nvim-hlslens.vim
