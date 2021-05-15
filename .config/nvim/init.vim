@@ -155,6 +155,7 @@ source ~/.config/nvim/config/plugins/vim-better-whitespace.vim
 source ~/.config/nvim/config/plugins/lsp-diagnostics.vim
 source ~/.config/nvim/config/plugins/barbar.vim
 source ~/.config/nvim/config/plugins/nvim-compe.vim
+source ~/.config/nvim/config/plugins/vim-you-autocorrect.vim
 
 lua require("format-nvim")
 lua require("treesitter-config")
