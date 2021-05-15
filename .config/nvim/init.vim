@@ -1,6 +1,6 @@
 " Plugins 
 call plug#begin('~/.config/nvim/bundle')
-
+ 
 " Navigation plugins{{{
 " Search
 Plug 'kevinhwang91/nvim-hlslens'
@@ -30,6 +30,9 @@ Plug 'RRethy/vim-illuminate'
 
 " nerd commenter
 Plug 'b3nj5m1n/kommentary'
+
+" Todo plugin
+Plug 'folke/todo-comments.nvim' 
 
 " Move lines up and down
 Plug 't9md/vim-textmanip'
@@ -163,6 +166,7 @@ lua require("lspsetup")
 lua require("mykommentary")
 lua require("scroll")
 lua require("git")
+lua require("todo")
 
 " shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
