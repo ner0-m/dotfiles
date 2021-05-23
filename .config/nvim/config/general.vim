@@ -147,12 +147,5 @@ augroup END
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
-augroup vimrc_todo
-    au!
-    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX)/
-          \ containedin=.*Comment,vimCommentTitle
-augroup END
-hi def link MyTodo Todo
-
 " }}}
 

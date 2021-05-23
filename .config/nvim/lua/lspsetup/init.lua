@@ -4,12 +4,21 @@ require('lspsetup.config')
 
 require('lspkind').init({})
 
-local util = require 'lspconfig/util'
-function _G.ClangdSymboldInfo(bufnr)
-    bufnr = util.validate_bufnr(bufnr)
-    local params = { vim.lsp.util.make_position_params() }
-    map = vim.lsp.buf_request_sync(bufnr, 'textDocument/symbolInfo', vim.lsp.util.make_position_params())
-    print(vim.inspect(map)) 
-    print(map["result"]) 
-    print(map.containerName) 
+-- I really hope that I can get something working when
+-- https://reviews.llvm.org/D102148 is merged in to trunk of LLVM
+-- That would be super awesome
+-- These specific inlay hints, are not can't be implemented the way
+-- I want it, until https://github.com/neovim/neovim/pull/9496
+-- is merged and it doesn't look like people are working on it rn
+
+--[[
+local M = {}
+local inlay_hints = require('lspsetup.inlayHints')
+
+M.inlay_hints = function(opts)
+    print("Setting up inlay_hints")
+    vim.lsp.buf_request(0, 'clangd/inlayHints', inlay_hints.get_params(), inlay_hints.get_callback(opts))
 end
+
+return M
+]]

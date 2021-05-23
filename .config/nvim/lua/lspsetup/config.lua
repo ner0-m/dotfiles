@@ -3,20 +3,39 @@ local on_attach = require("lspsetup.on_attach").on_attach_vim;
 
 require'lspconfig'.clangd.setup {
     on_attach = on_attach,
-    config = {
-        cmd = {
-            "clangd --background-index --clang-tidy --header-insertion=never --header-insertion-decorator --suggest-missing-includes"
-        },
-        filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"}
-    },
-    handlers = {
-        ["textDocument/symbolInfo"] = print("Oh my god"),
-    }
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+    };
+    filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"},
 }
+
+-- Keep this around to experiment with nwer versions of clangd :^)
+--[[
+require'lspconfig'.clangd.setup {
+    on_attach = on_attach,
+    cmd = {
+        "/home/david/src/llvm-project/build/bin/clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--inlay-hints",
+        "--cross-file-rename",
+        "--log=verbose",
+    };
+    filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"},
+}
+]]
+
 -- setup lsp for CMake
 require'lspconfig'.cmake.setup {
     on_attach = on_attach,
-    config = {filetypes = {"cmake", "CMakeLists.txt"}}
+    filetypes = {"cmake"},
+    init_options = {
+        buildDirectory = {"_build/release-clang"},
+    },
 }
 -- setup lsp for lua
 require'lspconfig'.sumneko_lua.setup {
@@ -30,7 +49,6 @@ require'lspconfig'.sumneko_lua.setup {
 
 -- setup lsp for python https://jdhao.github.io/2019/11/20/neovim_builtin_lsp_hands_on/
 require'lspconfig'.pyls.setup {on_attach = on_attach_vim}
-
 
 local util = require 'lspconfig/util'
 local root_pattern = util.root_pattern("main.tex", ".git")

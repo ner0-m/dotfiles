@@ -18,6 +18,7 @@ require"format".setup {
             }
         }
     },
+    python = {{cmd = {"yapf -i"}}}, 
     cpp = {{cmd = {clangformat}}},
     cuda = {{cmd = {clangformat}}}
 }
