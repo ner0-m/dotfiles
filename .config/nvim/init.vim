@@ -177,3 +177,6 @@ let g:Illuminate_delay = 500
 nnoremap <leader>ss :ClangdSwitchSourceHeader<CR>
 
 let g:sneak#label = 1
+
+autocmd CursorHold,CursorHoldI *.cpp :lua require'lspsetup'.inlay_hints{ only_current_line = true }
+autocmd CursorHold,CursorHoldI *.h :lua require'lspsetup'.inlay_hints{ only_current_line = true }

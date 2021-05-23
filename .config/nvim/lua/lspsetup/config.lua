@@ -1,6 +1,7 @@
 -- setup lsp clangd from https://github.com/neovim/nvim-lspconfig#clangd
 local on_attach = require("lspsetup.on_attach").on_attach_vim;
-
+ 
+--[[
 require'lspconfig'.clangd.setup {
     on_attach = on_attach,
     cmd = {
@@ -8,12 +9,14 @@ require'lspconfig'.clangd.setup {
         "--background-index",
         "--clang-tidy",
         "--header-insertion=iwyu",
+        "--completion-style=detailed", -- find out if you prefer this or bundled
     };
     filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"},
 }
+--]] 
 
 -- Keep this around to experiment with nwer versions of clangd :^)
---[[
+---[[
 require'lspconfig'.clangd.setup {
     on_attach = on_attach,
     cmd = {
@@ -27,7 +30,7 @@ require'lspconfig'.clangd.setup {
     };
     filetypes = {"c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda"},
 }
-]]
+--]]
 
 -- setup lsp for CMake
 require'lspconfig'.cmake.setup {

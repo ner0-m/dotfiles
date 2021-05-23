@@ -51,17 +51,16 @@ inlay_hints.get_callback = function(opts)
   opts = opts or {}
 
   local highlight = opts.highlight or "Comment"
-  local prefix = opts.prefix or " > "
+  local prefix = opts.prefix or " " --" > "
   local aligned = opts.aligned or false
 
-  local enabled = opts.enabled or {"parameter"}
+  local enabled = opts.enabled or {"type"}
 
   local only_current_line = opts.only_current_line
   if only_current_line == nil then only_current_line = false end
 
   return function(err, _, result, _, bufnr)
     -- I'm pretty sure this only happens for unsupported items.
-    print("Inlay hints Error: ", err)
     if err or type(result) == 'number' then
       return
     end
@@ -89,11 +88,6 @@ inlay_hints.get_callback = function(opts)
     end
 
     for _, hint in ipairs(result) do
-        print(dump(hint)) 
-        print("Kind: ", dump(hint.kind)) 
-        print("Hint store: ", dump(hint_store)) 
-        print("Enabled: ", dump(enabled)) 
-        print("in_list(enabled): ", dump(in_list(enabled)(hint.kind))) 
       local finish = hint.range["end"].line
       if not hint_store[finish] and in_list(enabled)(hint.kind) then
         hint_store[finish] = hint
@@ -106,7 +100,6 @@ inlay_hints.get_callback = function(opts)
     end
 
     local display_virt_text = function(hint)
-        print(hint)
       local end_line = hint.range["end"].line
 
       -- Check for any existing / more important virtual text on the line.
@@ -116,11 +109,12 @@ inlay_hints.get_callback = function(opts)
       if not vim.tbl_isempty(existing_virt_text) then return end
 
       local text
+      local label = string.sub(hint.label, 3)
       if aligned then
         local line_length = #vim.api.nvim_buf_get_lines(bufnr, end_line, end_line + 1, false)[1]
-        text = string.format("%s %s", (" "):rep(longest_line - line_length), prefix .. hint.label)
+        text = string.format("%s %s", (" "):rep(longest_line - line_length), prefix .. label)
       else
-        text = prefix .. hint.label
+        text = prefix .. label
       end
       vim.api.nvim_buf_set_virtual_text(bufnr, inlay_hints_ns, end_line, {{text, highlight}}, {})
     end
