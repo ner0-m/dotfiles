@@ -46,7 +46,7 @@ local function echo(hlgroup, msg)
 end
 
 
-vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
+--[[ vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
   vim.lsp.util.focusable_float(method, function()
     if not (result and result.contents) then
       -- return { 'No information available' }
@@ -64,7 +64,7 @@ vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
     vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
     return bufnr, winnr
   end)
-end
+end ]]
 
 local M = {}
 
@@ -75,12 +75,31 @@ M.on_attach_vim = function(client, bufnr)
     -- Setup nice function signature
     require'lsp_signature'.on_attach({
         bind = true,
+        doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
+                       -- set to 0 if you DO NOT want any API comments be shown
+                       -- This setting only take effect in insert mode, it does not affect signature help in normal
+                       -- mode, 10 by default
+
+        floating_window = true,  -- show hint in a floating window, set to false for virtual text only mode
+        hint_enable = true,      -- virtual hint enable
+        hint_prefix = "🐼 ",     -- Panda for parameter
+        hint_scheme = "String",
+        use_lspsaga = false,     -- set to true if you want to use lspsaga popup
+        hi_parameter = "Search", -- how your parameter will be highlight
+        max_height = 12,         -- max height of signature floating_window, if content is more than max_height, you can scroll down
+                                 -- to view the hiding contents
+        max_width = 120,         -- max_width of signature floating_window, line will be wrapped if exceed max_width
         handler_opts = {
+            border = "shadow"    -- double, single, shadow, none
+        },
+        extra_trigger_chars = {"(", "," } -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+        --[[ handler_opts = {
             border = "single"
-        }
+        }, ]]
+
     })
-    
-    -- short cuts 
+
+    -- short cuts
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -97,7 +116,7 @@ M.on_attach_vim = function(client, bufnr)
     -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
     local opts = {noremap = true, silent = true}
 
-    -- LSP keybindings 
+    -- LSP keybindings
     buf_set_keymap('n', '<leader>lgd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', '<leader>lgD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', '<leader>lgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
