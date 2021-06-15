@@ -6,7 +6,7 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'kevinhwang91/nvim-hlslens'
 
 " Move forward and backward in line
-Plug 'unblevable/quick-scope'
+" Plug 'unblevable/quick-scope'
 
 " Dependency for gitsigns 
 Plug 'nvim-lua/plenary.nvim' 
@@ -42,6 +42,9 @@ Plug 'machakann/vim-sandwich'
 
 " Give new text objects to work with
 Plug 'wellle/targets.vim'
+ 
+" TODO: Trying this new motion plugin 
+Plug 'ggandor/lightspeed.nvim' 
 
 " Generate doxygen documentation
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -149,6 +152,7 @@ let g:indentLine_conceallevel = 1
 source ~/.config/nvim/config/plugins/vim-which-key.vim
 source ~/.config/nvim/config/plugins/vim-startify.vim
 source ~/.config/nvim/config/plugins/vim-vsnip.vim
+source ~/.config/nvim/config/plugins/vim-sandwich.vim
 source ~/.config/nvim/config/plugins/nvim-hlslens.vim
 source ~/.config/nvim/config/plugins/vim-textmanip.vim
 source ~/.config/nvim/config/plugins/fzf.vim
@@ -180,3 +184,8 @@ let g:sneak#label = 1
 
 autocmd CursorHold,CursorHoldI *.cpp :lua require'lspsetup'.inlay_hints{ only_current_line = true }
 autocmd CursorHold,CursorHoldI *.h :lua require'lspsetup'.inlay_hints{ only_current_line = true }
+
+lua require'lightspeed'.opts['highlight_unique_chars'] = true
+
+nmap s <Plug>Lightspeed_s
+nmap S <Plug>Lightspeed_S

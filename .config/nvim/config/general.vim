@@ -4,8 +4,8 @@ set wildmenu
 set showcmd
 
 " Column Line {{{
-highlight ColorColumn ctermbg=gray
-set colorcolumn=120
+" highlight ColorColumn ctermbg=gray
+set colorcolumn=100
 " }}}
 
 " Folding {{{
