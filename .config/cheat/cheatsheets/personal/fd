@@ -1,0 +1,35 @@
+# Simple search for a file which includes netflix
+fd netflix
+
+# Regular expression search, search for entries that start with x and end with rc
+fd '^x.*rc$' 
+
+# Specifying the root directory as the second argument
+fd passwd /etc 
+
+# Search for a particular file extension, also include a search pattern
+fd -e md readme
+
+# Include (H)idden and (I)gnored files
+fd -HI pre-commit 
+
+# Format all C++ header and source files using clang-format
+fd -e cpp -e h -x clang-format -i
+
+# Open all files in single instance of editor
+fd -g 'test_*.py' -X vim 
+
+# Convert all jpg files to png files using placeholders, {.} is the filename without extension
+fd -e jpg -x convert {} {.}.png 
+
+# Exclude specific directory
+fd -E /mnt/external-drive ... 
+
+# Exclude a certain file type
+fd -E '*.bak' ... 
+ 
+# List all files recursively 
+fd
+
+# List all files recursively in a given directory
+fd . fd/tests 
