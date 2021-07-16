@@ -54,22 +54,22 @@ let g:which_key_map.b = {
       \ }
 
 " Git keybindings
-let g:which_key_map.g = {
-      \ 'name' : '+git',
-      \ 'd' : [':Gdiffsplit<CR>' , 'Git diff split'],
-      \ 'b' : [':Gblame<CR>'     , 'Git blame'],
-      \ 'c' : [':Commits<CR>'    , 'Search commits'],
-      \ 's' : [':FFiles?<CR>'    , 'Search files'],
-      \ }
+" let g:which_key_map.g = {
+"       \ 'name' : '+git',
+"       \ 'd' : [':Gdiffsplit<CR>' , 'Git diff split'],
+"       \ 'b' : [':Gblame<CR>'     , 'Git blame'],
+"       \ 'c' : [':Commits<CR>'    , 'Search commits'],
+"       \ 's' : [':FFiles?<CR>'    , 'Search files'],
+"       \ }
 
-" Search and jump bindings
+" " Search and jump bindings
+"       \ 'b' : [':Buffers'     , 'Search in buffers'],
+"       \ 'c' : [':Commands'    , 'Search in commands'],
+"       \ 't' : [':BTags'       , 'Search in tags'],
+"       \ '/' : [':Rg'          , 'Search in project'],
+"       \ 'h' : [':History/'    , 'Search in history'],
 let g:which_key_map.s = {
       \ 'name' : '+fuzzy',
-      \ 'b' : [':Buffers'     , 'Search in buffers'],
-      \ 'c' : [':Commands'    , 'Search in commands'],
-      \ 't' : [':BTags'       , 'Search in tags'],
-      \ '/' : [':Rg'          , 'Search in project'],
-      \ 'h' : [':History/'    , 'Search in history'],
       \ 's' : [':FSHere'      , 'Switch header-source']
       \ }
 

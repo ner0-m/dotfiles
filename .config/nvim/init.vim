@@ -1,6 +1,6 @@
-" Plugins 
+" Plugins
 call plug#begin('~/.config/nvim/bundle')
- 
+
 " Navigation plugins{{{
 " Search
 Plug 'kevinhwang91/nvim-hlslens'
@@ -8,11 +8,11 @@ Plug 'kevinhwang91/nvim-hlslens'
 " Move forward and backward in line
 " Plug 'unblevable/quick-scope'
 
-" Dependency for gitsigns 
-Plug 'nvim-lua/plenary.nvim' 
- 
+" Dependency for gitsigns
+Plug 'nvim-lua/plenary.nvim'
+
 " Git plugin
-Plug 'lewis6991/gitsigns.nvim' 
+Plug 'lewis6991/gitsigns.nvim'
 
 "}}}
 
@@ -20,7 +20,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'liuchengxu/vim-which-key'
 
 " Autocorrection plugin
-Plug 'sedm0784/vim-you-autocorrect' 
+Plug 'sedm0784/vim-you-autocorrect'
 " }}}
 
 " Editing  related plugins {{{
@@ -32,7 +32,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'b3nj5m1n/kommentary'
 
 " Todo plugin
-Plug 'folke/todo-comments.nvim' 
+Plug 'folke/todo-comments.nvim'
 
 " Move lines up and down
 Plug 't9md/vim-textmanip'
@@ -42,9 +42,9 @@ Plug 'machakann/vim-sandwich'
 
 " Give new text objects to work with
 Plug 'wellle/targets.vim'
- 
-" TODO: Trying this new motion plugin 
-Plug 'ggandor/lightspeed.nvim' 
+
+" TODO: Trying this new motion plugin
+Plug 'ggandor/lightspeed.nvim'
 
 " Generate doxygen documentation
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -75,16 +75,14 @@ Plug 'hoob3rt/lualine.nvim'
 
 " Tabline plugin
 Plug 'romgrk/barbar.nvim'
+
+" Code outline window
+Plug 'simrat39/symbols-outline.nvim'
 " }}}
 
 " Fuzzy finder {{{
-
-" fuzzy file, buffer etc. finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" Fuzzy finding for lsp
-Plug 'gfanto/fzf-lsp.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope.nvim' " Depends on popup.nvim and plenary.nvim
 " }}}
 
 " Coding plugins {{{
@@ -155,7 +153,7 @@ source ~/.config/nvim/config/plugins/vim-vsnip.vim
 source ~/.config/nvim/config/plugins/vim-sandwich.vim
 source ~/.config/nvim/config/plugins/nvim-hlslens.vim
 source ~/.config/nvim/config/plugins/vim-textmanip.vim
-source ~/.config/nvim/config/plugins/fzf.vim
+" source ~/.config/nvim/config/plugins/fzf.vim
 source ~/.config/nvim/config/plugins/indentLine.vim
 source ~/.config/nvim/config/plugins/vim-easymotion.vim
 source ~/.config/nvim/config/plugins/vim-better-whitespace.vim
@@ -163,6 +161,9 @@ source ~/.config/nvim/config/plugins/lsp-diagnostics.vim
 source ~/.config/nvim/config/plugins/barbar.vim
 source ~/.config/nvim/config/plugins/nvim-compe.vim
 source ~/.config/nvim/config/plugins/vim-you-autocorrect.vim
+source ~/.config/nvim/config/plugins/symbols-outline.vim
+source ~/.config/nvim/config/plugins/lightspeed.vim
+source ~/.config/nvim/config/plugins/illuminate.vim
 
 lua require("format-nvim")
 lua require("treesitter-config")
@@ -171,21 +172,11 @@ lua require("mykommentary")
 lua require("scroll")
 lua require("git")
 lua require("todo")
+lua require("telescope-setup")
 
 " shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType * nnoremap <buffer><leader>f <Esc>:Format<CR>
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-let g:Illuminate_delay = 500
-
-nnoremap <leader>ss :ClangdSwitchSourceHeader<CR>
-
-let g:sneak#label = 1
-
 autocmd CursorHold,CursorHoldI *.cpp :lua require'lspsetup'.inlay_hints{ only_current_line = true }
 autocmd CursorHold,CursorHoldI *.h :lua require'lspsetup'.inlay_hints{ only_current_line = true }
-
-lua require'lightspeed'.opts['highlight_unique_chars'] = true
-
-nmap s <Plug>Lightspeed_s
-nmap S <Plug>Lightspeed_S

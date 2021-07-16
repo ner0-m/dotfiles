@@ -39,39 +39,10 @@ function peek_definition()
     end
 end
 
-local function echo(hlgroup, msg)
-    vim.cmd(string.format('echohl %s', hlgroup))
-    vim.cmd(string.format('echo "[lspfuzzy] %s"', msg))
-    vim.cmd('echohl None')
-end
-
-
---[[ vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
-  vim.lsp.util.focusable_float(method, function()
-    if not (result and result.contents) then
-      -- return { 'No information available' }
-      return
-    end
-    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-    if vim.tbl_isempty(markdown_lines) then
-      -- return { 'No information available' }
-      return
-    end
-    local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
-      pad_left = 1; pad_right = 1;
-    })
-    vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
-    return bufnr, winnr
-  end)
-end ]]
-
 local M = {}
 
 -- on_attack for completion
 M.on_attach_vim = function(client, bufnr)
-    -- print("Attaching client with personal on_attach")
-
     -- Setup nice function signature
     require'lsp_signature'.on_attach({
         bind = true,
@@ -96,7 +67,6 @@ M.on_attach_vim = function(client, bufnr)
         --[[ handler_opts = {
             border = "single"
         }, ]]
-
     })
 
     -- short cuts
@@ -117,16 +87,8 @@ M.on_attach_vim = function(client, bufnr)
     local opts = {noremap = true, silent = true}
 
     -- LSP keybindings
-    buf_set_keymap('n', '<leader>lgd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', '<leader>lgD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', '<leader>lgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<leader>lgt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-
-    buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-    buf_set_keymap('n', '<leader>lS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-
-    buf_set_keymap('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', '<leader>lgD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 
     buf_set_keymap('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '<leader>lH', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -138,6 +100,7 @@ M.on_attach_vim = function(client, bufnr)
     buf_set_keymap('n', '<leader>ldN', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', opts)
     buf_set_keymap('n', '<leader>ldp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', '<leader>ldP', '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', opts)
+
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
         vim.api.nvim_exec([[
@@ -149,25 +112,6 @@ M.on_attach_vim = function(client, bufnr)
         ]], false)
     end
 end
-
--- Maybe replace the default handler below with this
-lsp_workspace_symbols = function()
-    local input = vim.fn.input('Query: ')
-    vim.api.nvim_command('normal :esc<CR>')
-    if not input or #input == 0 then return end
-    require'fzf_lsp'.workspace_symbol_call { query = input }
-end
-
-vim.lsp.handlers["textDocument/codeAction"] = require'fzf_lsp'.code_action_handler
-vim.lsp.handlers["textDocument/definition"] = require'fzf_lsp'.definition_handler
-vim.lsp.handlers["textDocument/declaration"] = require'fzf_lsp'.declaration_handler
-vim.lsp.handlers["textDocument/typeDefinition"] = require'fzf_lsp'.type_definition_handler
-vim.lsp.handlers["textDocument/implementation"] = require'fzf_lsp'.implementation_handler
-vim.lsp.handlers["textDocument/references"] = require'fzf_lsp'.references_handler
-vim.lsp.handlers["textDocument/documentSymbol"] = require'fzf_lsp'.document_symbol_handler
-vim.lsp.handlers["workspace/symbol"] = require'fzf_lsp'.workspace_symbol_handler
-vim.lsp.handlers["callHierarchy/incomingCalls"] = require'fzf_lsp'.incoming_calls_handler
-vim.lsp.handlers["callHierarchy/outgoingCalls"] = require'fzf_lsp'.outgoing_calls_handler
 
 return M
 

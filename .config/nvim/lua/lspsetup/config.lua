@@ -51,7 +51,7 @@ require'lspconfig'.sumneko_lua.setup {
 }
 
 -- setup lsp for python https://jdhao.github.io/2019/11/20/neovim_builtin_lsp_hands_on/
-require'lspconfig'.pyls.setup {on_attach = on_attach_vim}
+-- require'lspconfig'.pyls.setup {on_attach = on_attach_vim}
 
 local util = require 'lspconfig/util'
 local root_pattern = util.root_pattern("main.tex", ".git")
