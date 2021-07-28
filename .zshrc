@@ -1,6 +1,7 @@
 # Add lua-fmt to path
 export PATH=$PATH:$HOME/node_modules/lua-fmt/dist/bin/
 export PATH=$PATH:$HOME/build-tool 
+export PATH=$PATH:$HOME/.cargo/bin
 
 # set Default user
 DEFAULT_USER=`whoami`
@@ -124,8 +125,8 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
 export EDITOR='nvim'
-alias vim='nvim'
 export READER='okular'
+alias vim='nvim'
 
 # Functions
 
@@ -136,8 +137,16 @@ mkcdir()
 }
 
 # Aliases
+alias ls="lsd" 
+alias l="ls -l" 
+alias la="ls -a"
 alias lsa="ls -al"
+alias lla="ls -la"
+alias lt="ls --tree" 
 
+alias z="zoxide"
+ 
+alias plz="sudo" 
 
 prompt_context() {
 	if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
@@ -146,6 +155,7 @@ prompt_context() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey '^P' fzf-file-widget 
 
 
 # Check if plug.vim is found, if not install it
@@ -160,6 +170,12 @@ setxkbmap -option caps:escape
 # alias dotfiles='/usr/bin/git --git-dir /home/david/.dotfiles/ --work-tree=/home/david'
 export DOTBARE_DIR="$HOME/.dotfiles"
 export DOTBARE_TREE="$HOME"
+
+alias db="dotbare"
+alias dbst="dotbare status"
+alias dba="dotbare add"
+alias dbc="dotbare commit"
+alias dbp="dotbare push"
 
 # asliases for FZF to use fd instead of find
 # Filter for type file (f), also considdered hidden files, exclude build directories
@@ -177,3 +193,9 @@ bindkey '^[[B' history-substring-search-down
 
 # Export from 'clang-format-static-bin' (https://aur.archlinux.org/packages/clang-format-static-bin/)
 export PATH="/opt/clang-format-static:$PATH"
+
+# Create completion for lab 
+source <(lab completion zsh)
+
+# Add zoxide to shell 
+eval "$(zoxide init zsh)"
