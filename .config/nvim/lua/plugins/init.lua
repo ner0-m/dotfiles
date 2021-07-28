@@ -1,0 +1,8 @@
+require("plugins.treesitter-config")
+require("plugins.format-nvim")
+require("plugins.mykommentary")
+require("plugins.scroll")
+require("plugins.git")
+require("plugins.todo")
+require("plugins.telescope-setup")
+require("plugins.neorg") 

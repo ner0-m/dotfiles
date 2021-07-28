@@ -33,19 +33,6 @@ noremap <C-x> "+d
 
 " Movement keys {{{
 set scroll=10
-
-" shift the movement keys by 1 to the right
-noremap j h
-noremap k j
-noremap l k
-noremap ö l
-
-" Remap horizontal scrolling
-noremap Ö zl
-noremap J zh
-noremap <leader>ö zL
-noremap <leader>j zH
-
 " }}}
 
 " .vimrc reload and opening {{{
@@ -70,5 +57,31 @@ vnoremap <Tab> >>_
 vnoremap <S-Tab> <<_
 " }}}
 
+" Window bindings {{{
+nnoremap <leader>wp <C-w>p
+nnoremap <leader>wt <C-w>t
+"TODO: this one is wrong
+nnoremap <leader>wb <C-w>t
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>ws <C-w>s
+nnoremap <leader>wv <C-w>v
+nnoremap <leader>wn <C-w>n
+nnoremap <leader>wn <C-w>n
+nnoremap <leader>wq <C-w>q
+nnoremap <leader>wr <C-w>r
+nnoremap <leader>wR <C-w>R
+nnoremap <leader>wH <C-w>H
+nnoremap <leader>wJ <C-w>J
+nnoremap <leader>wK <C-w>K
+nnoremap <leader>wL <C-w>L
+nnoremap <leader>we <C-w>=
+nnoremap <leader>ww <C-w>+
+nnoremap <leader>wx <C-w>-
+nnoremap <leader>wf <C-w>>
+nnoremap <leader>wy <C-w><
+" }}}
 " }}} General
 

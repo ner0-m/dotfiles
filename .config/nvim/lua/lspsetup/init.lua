@@ -1,9 +1,8 @@
-require('lspsetup.on_attach')
-require('lspsetup.diagnostics')
-require('lspsetup.config')
+require("lspsetup.on_attach")
+require("lspsetup.diagnostics")
+require("lspsetup.config")
 
-require('lspkind').init({})
-
+require("lspkind").init({})
 
 vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { noremap = true })
 
@@ -17,10 +16,15 @@ vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { no
 
 ---[[
 local M = {}
-local inlay_hints = require('lspsetup.inlayHints')
+local inlay_hints = require("lspsetup.inlayHints")
 
 M.inlay_hints = function(opts)
-    vim.lsp.buf_request(0, 'clangd/inlayHints', inlay_hints.get_params(), inlay_hints.get_callback(opts))
+	vim.lsp.buf_request(
+		0,
+		"clangd/inlayHints",
+		inlay_hints.get_params(),
+		inlay_hints.get_callback(opts)
+	)
 end
 
 return M

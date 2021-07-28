@@ -22,6 +22,7 @@ require'compe'.setup({
         nvim_lua = { priority = 200},
         spell = { priority = 5 },
         treesitter = true,
+        neorg = true, 
         path = true,
         calc = true,
         nvim_lua = false,
