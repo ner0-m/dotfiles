@@ -43,7 +43,8 @@ Plug 'wellle/targets.vim'
 Plug 'ggandor/lightspeed.nvim'
 
 " Tree sitter!
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 "}}}
 
 
@@ -112,10 +113,14 @@ Plug 'ray-x/lsp_signature.nvim'
 
 call plug#end()
 
+" Leader mapping {{{
+" Besure that space is not mapped
+nnoremap <SPACE> <Nop>
 
-" Keybindings {{{
-source ~/.config/nvim/config/keybindings.vim
-" }}} Keybindings
+" set the leader key to space
+let mapleader = ' '
+" }}}
+
 
 " Settings {{{
 source ~/.config/nvim/config/general.vim
@@ -164,3 +169,105 @@ autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold,CursorHoldI *.cpp :lua require'lspsetup'.inlay_hints{ only_current_line = true }
 autocmd CursorHold,CursorHoldI *.h :lua require'lspsetup'.inlay_hints{ only_current_line = true }
+
+" Keybindings {
+
+" Copy and cut to clipboard {{{
+noremap <C-x> "+d
+" }}}
+
+" Movement keys {{{
+set scroll=10
+" }}}
+" Ctrl + S to save {{{
+nnoremap <C-s>      :update<cr>
+vnoremap <C-s> <C-c>:update<cr>
+inoremap <C-s> <Esc>:update<cr>
+" }}}
+
+" stay in normal mode for o and O {{{
+noremap o o <Esc>
+noremap O O <Esc>
+" }}}
+
+" Paste _ registry
+vnoremap <leader>p "_dP
+
+" Copy
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+" Copy till end of file
+nnoremap <leader>Y gg"+yG
+" Cut
+nnoremap <leader>d "+d
+vnoremap <leader>d "+d
+" Delete line storing into _ register
+nnoremap <leader>dd "_d
+vnoremap <leader>dd "_d
+
+
+" Make Y consistent with D and C {{{
+nnoremap Y y$
+" }}}
+
+" Keep cursor centered {{{
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+" }}}
+
+" Undo break points {{{
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+inoremap ( (<c-g>u
+inoremap ) )<c-g>u
+inoremap [ [<c-g>u
+inoremap ] ]<c-g>u
+inoremap { {<c-g>u
+inoremap } }<c-g>u
+" }}}
+" Moveing text {{{
+" Move in visual mode
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" Move in insert mode (seems broken?)
+inoremap <c-j> <esc>:m .+2<CR>==
+inoremap <c-k> <esc>:m .-2<CR>==
+" Move in normal mode
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+" }}}
+
+" Window bindings I just hate the <C-w>... {{{
+nnoremap <leader>wp <C-w>p
+nnoremap <leader>wt <C-w>t
+"TODO: this one is wrong
+nnoremap <leader>wb <C-w>t
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>ws <C-w>s
+nnoremap <leader>wv <C-w>v
+nnoremap <leader>wn <C-w>n
+nnoremap <leader>wn <C-w>n
+nnoremap <leader>wq <C-w>q
+nnoremap <leader>wr <C-w>r
+nnoremap <leader>wR <C-w>R
+nnoremap <leader>wH <C-w>H
+nnoremap <leader>wJ <C-w>J
+nnoremap <leader>wK <C-w>K
+nnoremap <leader>wL <C-w>L
+nnoremap <leader>we <C-w>=
+nnoremap <leader>ww <C-w>+
+nnoremap <leader>wx <C-w>-
+nnoremap <leader>wf <C-w>>
+nnoremap <leader>wy <C-w><
+" }}}
+
+" Use Exc to leave terminal {{{
+tnoremap <Esc> <C-\><C-n>
+" }}}
+" }
