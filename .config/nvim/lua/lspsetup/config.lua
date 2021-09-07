@@ -15,6 +15,9 @@ require'lspconfig'.clangd.setup {
 }
 --]]
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
 -- Keep this around to experiment with nwer versions of clangd :^)
 ---[[
 require("lspconfig").clangd.setup({
@@ -29,6 +32,7 @@ require("lspconfig").clangd.setup({
 		"--log=verbose",
 	},
 	filetypes = { "c", "cpp", "objc", "objcpp", "cu", "cuh", "cuda" },
+	capabilities = capabilities,
 })
 --]]
 
@@ -39,6 +43,7 @@ require("lspconfig").cmake.setup({
 	init_options = {
 		buildDirectory = { "_build/release-clang" },
 	},
+	capabilities = capabilities,
 })
 -- setup lsp for lua
 require("lspconfig").sumneko_lua.setup({
@@ -47,6 +52,19 @@ require("lspconfig").sumneko_lua.setup({
 		"/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/Linux/lua-language-server",
 		"-E",
 		"/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua",
+	},
+	settings = {
+		diagnostics = {
+			globals = { "vim" },
+			disable = { "lowercase-global" },
+		},
+		workspace = {
+			library = {
+				[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+				[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+			},
+		},
+		capabilities = capabilities,
 	},
 })
 

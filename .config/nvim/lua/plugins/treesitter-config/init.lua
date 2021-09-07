@@ -1,5 +1,3 @@
--- Ensure neorg is installed as well
-
 local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
 parser_configs.norg = {
@@ -9,7 +7,7 @@ parser_configs.norg = {
 		branch = "main",
 	},
 }
- 
+
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 	highlight = { -- Highlight module
@@ -28,5 +26,13 @@ require("nvim-treesitter.configs").setup({
 			scope_incremental = "<C-m>",
 			node_decremental = "<C-r>",
 		},
+	},
+	playground = {
+		enable = true,
+		disable = {},
+		keymaps = {
+			open = "gtd", -- Opens the playground for current buffer (if applicable)
+		},
+		updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
 	},
 })

@@ -40,12 +40,34 @@ end
 
 -- File pickers
 map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+
+-- File picker with only test files
+map(
+	"n",
+	"<leader>ft",
+	'<cmd>lua require("telescope.builtin").find_files({find_command = {"fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_"}})<cr>',
+	opts
+)
+
+-- Pick only CMake files
+map(
+	"n",
+	"<leader>fm",
+	'<cmd>lua require(\'telescope.builtin\').find_files({find_command = {"fd", ".cmake$|CMakeLists.txt", "-E=build/", "--no-ignore"}})<cr>',
+	opts
+)
+
 -- Search cwd with rg
 map("n", "<leader>f/", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 -- Search word under cursor in cwd
 map("n", "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", opts)
--- Search in file with rb 
-map("n", "<leader>fi", "<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>", opts)
+-- Search in file with rb
+map(
+	"n",
+	"<leader>fi",
+	"<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>",
+	opts
+)
 
 -- Vim pickers
 map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
@@ -84,3 +106,11 @@ map("n", "<leader>gst", '<cmd>lua require("telescope.builtin").git_status()<cr>'
 
 -- List pickers
 map("n", "<leader>fbi", '<cmd>lua require("telescope.builtin").builtin()<cr>', opts)
+
+-- Find files in Neovim config
+map(
+	"n",
+	"<leader>fn",
+	'<cmd>lua require("telescope.builtin").find_files({cwd="~/.config/nvim", file_ignore_patterns={"bundle"}})<cr>',
+	opts
+)

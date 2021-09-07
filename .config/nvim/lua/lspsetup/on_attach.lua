@@ -49,7 +49,7 @@ local M = {}
 -- on_attack for completion
 M.on_attach_vim = function(client, bufnr)
 	-- Setup nice function signature
-	require("lsp_signature").on_attach({
+	--[[ require("lsp_signature").on_attach({
 		bind = true,
 		doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
 		-- set to 0 if you DO NOT want any API comments be shown
@@ -69,21 +69,19 @@ M.on_attach_vim = function(client, bufnr)
 			border = "shadow",    -- double, single, shadow, none
 		},
 		extra_trigger_chars = { "(", "," }, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-		--[[ handler_opts = {
-            border = "single"
-        }, ]]
-	})
+	}) ]]
 
 	-- short cuts
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
+
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
 	end
 
 	-- Attach cursor under word highlight
-	require("illuminate").on_attach(client)
+	-- require("illuminate").on_attach(client)
 
 	-- reset colors as they are overritten somewher
 	vim.api.nvim_command([[ hi LspReferenceText cterm=standout gui=standout ]])
