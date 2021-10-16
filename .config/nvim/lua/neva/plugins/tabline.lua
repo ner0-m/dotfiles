@@ -24,9 +24,9 @@ map("n", "<leader>b0", ":BufferLast<CR>", opts)
 -- Close buffer
 map("n", "<leader>bc", ":BufferClose<CR>", opts)
 
--- s for select 
+-- s for select
 map("n", "<leader>bs", ":BufferPick<CR>", opts)
- 
+
 -- Sort automatically by...
 map("n", "<leader>bb", ":BufferOrderByBufferNumber<CR>", opts)
 map("n", "<leader>bd", ":BufferOrderByDirectory<CR>", opts)

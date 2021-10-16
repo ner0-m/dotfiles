@@ -1,6 +1,6 @@
-require("neva.lsp.on_attach")
-require("neva.lsp.diagnostics")
-require("neva.lsp.config")
+require "neva.lsp.on_attach"
+require "neva.lsp.diagnostics"
+require "neva.lsp.config"
 
 vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { noremap = true })
 
@@ -14,15 +14,10 @@ vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { no
 
 ---[[
 local M = {}
-local inlay_hints = require("neva.lsp.inlayHints")
+local inlay_hints = require "neva.lsp.inlayHints"
 
 M.inlay_hints = function(opts)
-	vim.lsp.buf_request(
-		0,
-		"clangd/inlayHints",
-		inlay_hints.get_params(),
-		inlay_hints.get_callback(opts)
-	)
+    vim.lsp.buf_request(0, "clangd/inlayHints", inlay_hints.get_params(), inlay_hints.get_callback(opts))
 end
 
 return M

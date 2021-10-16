@@ -1,1 +1,1 @@
-require("git-worktree").setup({})
+require("git-worktree").setup {}

@@ -1,3 +1,3 @@
-require("lightspeed").setup({
-	highlight_unique_chars = true,
-})
+require("lightspeed").setup {
+    highlight_unique_chars = true,
+}
