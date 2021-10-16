@@ -17,6 +17,8 @@ require("telescope").setup({
 			},
 		},
 
+		path_display = { "smart" },
+
 		mappings = {
 			i = {
 				["<C-q>"] = actions.send_to_qflist,
@@ -32,6 +34,8 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzy_native")
+-- require("telescope").load_extension("git_worktree")
+-- require("telescope").load_extension("packer")
 
 local opts = { noremap = true }
 local function map(...)
@@ -68,6 +72,8 @@ map(
 	"<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>",
 	opts
 )
+-- Search quickfixlist
+map("n", "<leader>fq", "<cmd>lua require('telescope.builtin').quickfix()<cr>", opts)
 
 -- Vim pickers
 map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
@@ -112,5 +118,20 @@ map(
 	"n",
 	"<leader>fn",
 	'<cmd>lua require("telescope.builtin").find_files({cwd="~/.config/nvim", file_ignore_patterns={"bundle"}})<cr>',
+	opts
+)
+
+-- git-worktree mappings for telescope
+map(
+	"n",
+	"<leader>gw",
+	'<cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<cr>',
+	opts
+)
+
+map(
+	"n",
+	"<leader>gwc",
+	'<cmd>lua require("telescope").extensions.git_worktree.create_git_worktree()<cr>',
 	opts
 )

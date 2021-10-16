@@ -1,5 +1,5 @@
 -- setup lsp clangd from https://github.com/neovim/nvim-lspconfig#clangd
-local on_attach = require("lspsetup.on_attach").on_attach_vim
+local on_attach = require("neva.lsp.on_attach").on_attach_vim
 
 --[[
 require'lspconfig'.clangd.setup {
@@ -54,17 +54,23 @@ require("lspconfig").sumneko_lua.setup({
 		"/home/david/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua",
 	},
 	settings = {
-		diagnostics = {
-			globals = { "vim" },
-			disable = { "lowercase-global" },
-		},
-		workspace = {
-			library = {
-				[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-				[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+		Lua = {
+			diagnostics = {
+				globals = { "vim", "use" },
+				disable = { "lowercase-global" },
 			},
+			workspace = {
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+			capabilities = capabilities,
 		},
-		capabilities = capabilities,
 	},
 })
 

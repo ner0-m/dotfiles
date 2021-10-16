@@ -1,10 +1,6 @@
-require("lsp_signature").setup()
-
-require("lspsetup.on_attach")
-require("lspsetup.diagnostics")
-require("lspsetup.config")
-
-require("lspkind").init({})
+require("neva.lsp.on_attach")
+require("neva.lsp.diagnostics")
+require("neva.lsp.config")
 
 vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { noremap = true })
 
@@ -18,7 +14,7 @@ vim.api.nvim_set_keymap("n", "<leader>ss", ":ClangdSwitchSourceHeader<cr>", { no
 
 ---[[
 local M = {}
-local inlay_hints = require("lspsetup.inlayHints")
+local inlay_hints = require("neva.lsp.inlayHints")
 
 M.inlay_hints = function(opts)
 	vim.lsp.buf_request(

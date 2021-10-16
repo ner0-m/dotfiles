@@ -6,20 +6,14 @@ nnoremap <SPACE> <Nop>
 let mapleader = ' '
 " }}}
 
-lua require("plugins.load")
-lua require("plugins")
+lua require("neva.plugins")
 
 " Settings {{{
 source ~/.config/nvim/config/general.vim
 " }}}
 
 lua require("colors")
-lua require("statusline")
-lua require("lspsetup")
 lua require("globals")
-
-" TODO: I have to do this
-" source ~/.config/nvim/config/plugins/vim-you-autocorrect.vim
 
 " Key bindings {{{
 " shortcuts for autoformatting the entire file: Ctrl+f
@@ -144,5 +138,7 @@ nnoremap <leader>qp :cprevious<CR>
 nnoremap <leader>qc :cclose<CR>
 " }}}
 
-"
-" }
+" Reload current luafile
+nnoremap <leader>xl :luafile %<CR>
+
+"}}}
