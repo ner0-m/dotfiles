@@ -7,6 +7,9 @@ return require("packer").startup(function()
     -- Nicer search
     use {
         "kevinhwang91/nvim-hlslens",
+        config = function()
+            require "neva.plugins.hlslens"
+        end,
     }
 
     -- TODO: just try it  for now
@@ -58,14 +61,7 @@ return require("packer").startup(function()
     use {
         "b3nj5m1n/kommentary",
         config = function()
-            require("kommentary.config").use_extended_mappings()
-            require("kommentary.config").configure_language("cpp", {
-                single_line_comment_string = "//",
-                prefer_single_line_comments = true,
-            })
-            require("kommentary.config").configure_language("lua", {
-                prefer_single_line_comments = true,
-            })
+            require "neva.plugins.kommentary"
         end,
         event = "BufEnter",
     }
