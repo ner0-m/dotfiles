@@ -34,6 +34,7 @@ DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
+unset PROMPT_COMMAND 
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -45,7 +46,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -147,6 +148,10 @@ alias lt="ls --tree"
 alias z="zoxide"
  
 alias plz="sudo" 
+
+# Android connection via go-mtpfs
+alias android-connect="go-mtpfs ~/cell/mnt"
+alias android-disconnect="fusermount -u ~/cell/mnt" 
 
 prompt_context() {
 	if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
