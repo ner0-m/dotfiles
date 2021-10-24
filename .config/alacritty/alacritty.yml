@@ -16,7 +16,7 @@ colors:
     cyan:    '0x7dcfff'
     white:   '0xa9b1d6'
 
-  # # Bright colors
+  # Bright colors
   bright:
     black:   '0x55565E'
     red:     '0xf7768e'
@@ -27,41 +27,32 @@ colors:
     cyan:    '0x7dcfff'
     white:   '0xc0caf5'
 
-  # indexed_colors:
-  #   - { index: 16, color: '0xff9e64' }
-  #   - { index: 17, color: '0xdb4b4b' }
-
 background_opacity: 1.00
 
 font:
   normal:
-    family: "monospace"
-    # family: "Source Code Pro"
-    # family: "Iosevka Light"
-    family: "Noto Sans Mono"
-    # family: "JetBrains Mono"
-    # family: "Fira Mono"
-    # family: "Fira Code"
-    # family: "Cascadia Code"
+    # family: "NotoSansMono"
+    family: "JetBrainsMono Nerd Font"
     style: Regular
   bold:
-    family: "Noto Sans Mono"
+    # family: "Noto Sans Mono"
+    family: "JetBrainsMono Nerd Font"
     # family: "Mono"
     style: Bold
   italic:
-    family: "Noto Sans Mono"
-    # family: "Mono"
+    # family: "Noto Sans Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Italic
   bold_italic:
-    family: "Noto Sans Mono"
-    # family: "Mono"
+    # family: "Noto Sans Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Bold Italic
 
   # Point size
   size: 12.0
 
   offset:
-    x: 1
+    x: 0
     y: 0
   glyph_offset:
     x: 0
@@ -95,4 +86,4 @@ key_bindings:
   - { key: C, mods: Control|Shift, action: Copy }
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Equals, mods: Control, action: IncreaseFontSize }
-#  - { key: J, mods: Control, action: SpawnNewInstance }
+  # - { key: N, mods: Control, action: SpawnNewInstance }
