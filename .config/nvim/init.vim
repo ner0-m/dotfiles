@@ -7,6 +7,7 @@ let mapleader = ' '
 " }}}
 
 lua require("neva.plugins")
+lua require("neva.build")
 
 " Settings {{{
 source ~/.config/nvim/config/general.vim
@@ -14,7 +15,7 @@ source ~/.config/nvim/config/general.vim
 
 lua require("colors")
 lua require("globals")
-
+ 
 " Key bindings {{{
 " shortcuts for autoformatting the entire file: Ctrl+f
 autocmd FileType * nnoremap <buffer><leader>xf <Esc>:Format<CR>

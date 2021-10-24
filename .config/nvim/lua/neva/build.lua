@@ -1,36 +1,17 @@
-local job = require "plenary.job"
+local opts = { noremap = true }
 
-local M = {}
-
-local function is_elsa(path)
-    local found = path:find "elsa"
-    return type(found) == "number" and found > 0
+local function map(keybind, command)
+    vim.api.nvim_set_keymap("n", keybind, command, opts)
 end
 
-function M.elsa_build(path, branch, target)
-    if is_elsa(path) then
-        target = target or vim.fn.input "Test target: "
-        job
-            :new({
-                command = "tmux-windowizer",
-                cwd = path,
-                args = { branch, "make", "build", target },
-            })
-            :sync()
-    end
-end
+local elsa = require "neva.elsa.build"
 
-function M.elsa_test(path, branch, target)
-    if is_elsa(path) then
-        target = target or vim.fn.input "Test target: "
-        job
-            :new({
-                command = "tmux-windowizer",
-                cwd = path,
-                args = { branch, "make", "test", target },
-            })
-            :sync()
-    end
-end
+-- Put testing current file on stronges finger!
+map("<leader>xj", "<cmd>lua require('neva.elsa.build').test_current_file()<cr>")
+map("<leader>xk", "<cmd>lua require('neva.elsa.build').test()<cr>")
 
-return M
+-- Build with clang explicitly
+map("<leader>xcj", "<cmd>lua require('neva.elsa.build').test_current_file({ build_options = { CXX = 'clang++' }})<cr>")
+
+-- Build with gcc explicitly
+map("<leader>xgj", "<cmd>lua require('neva.elsa.build').test_current_file({ build_options = { CXX = 'g++' }})<cr>")

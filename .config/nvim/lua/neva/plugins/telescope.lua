@@ -27,7 +27,7 @@ require("telescope").setup {
     },
     extensions = {
         fzy_native = {
-            override_generic_sorter = false,
+            override_generic_sorter = true,
             override_file_sorter = true,
         },
     },
@@ -35,78 +35,73 @@ require("telescope").setup {
 
 require("telescope").load_extension "fzy_native"
 -- require("telescope").load_extension("git_worktree")
-require("telescope").load_extension("packer")
 
 local opts = { noremap = true }
-local function map(...)
-    vim.api.nvim_set_keymap(...)
+
+local function map(keybind, command)
+    vim.api.nvim_set_keymap("n", keybind, command, opts)
 end
 
 -- File pickers
-map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+map("<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>")
 
 -- File picker with only test files
 map(
-    "n",
     "<leader>ft",
-    '<cmd>lua require("telescope.builtin").find_files({find_command = {"fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_"}})<cr>',
-    opts
+    '<cmd>lua require("telescope.builtin").find_files({find_command = {"fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_"}})<cr>'
 )
 
 -- Pick only CMake files
 map(
-    "n",
     "<leader>fm",
-    '<cmd>lua require(\'telescope.builtin\').find_files({find_command = {"fd", ".cmake$|CMakeLists.txt", "-E=build/", "--no-ignore"}})<cr>',
-    opts
+    '<cmd>lua require(\'telescope.builtin\').find_files({find_command = {"fd", ".cmake$|CMakeLists.txt", "-E=build/", "--no-ignore"}})<cr>'
 )
 
 -- Search cwd with rg
-map("n", "<leader>f/", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+map("<leader>f/", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 -- Search word under cursor in cwd
-map("n", "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", opts)
+map("<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>")
 -- Search in file with rb
-map("n", "<leader>fi", "<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>", opts)
+map("<leader>fi", "<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>")
 -- Search quickfixlist
-map("n", "<leader>fq", "<cmd>lua require('telescope.builtin').quickfix()<cr>", opts)
+map("<leader>fq", "<cmd>lua require('telescope.builtin').quickfix()<cr>")
 
 -- Vim pickers
-map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
-map("n", "<leader>fo", "<cmd>lua require('telescope.builtin').oldfiles()<cr>", opts)
-map("n", "<leader>fc", "<cmd>lua require('telescope.builtin').commands()<cr>", opts)
-map("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-map("n", "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", opts)
-map("n", "<leader><leader>fc", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
-map("n", "<leader><leader>fs", "<cmd>lua require('telescope.builtin').search_history()<cr>", opts)
+map("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
+map("<leader>fo", "<cmd>lua require('telescope.builtin').oldfiles()<cr>")
+map("<leader>fc", "<cmd>lua require('telescope.builtin').commands()<cr>")
+map("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+map("<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>")
+map("<leader><leader>fc", "<cmd>lua require('telescope.builtin').command_history()<cr>")
+map("<leader><leader>fs", "<cmd>lua require('telescope.builtin').search_history()<cr>")
 
 -- LSP pickers
-map("n", "<leader>lgr", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
-map("n", "<leader>ls", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>", opts)
-map("n", "<leader>lS", "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>", opts)
-map("n", "<leader>la", "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", opts)
-map("n", "<leader>lgi", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>", opts)
-map("n", "<leader>lgd", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", opts)
-map("n", "<leader>ldw", "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>", opts)
-map("n", "<leader>ldd", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>", opts)
+map("<leader>lgr", "<cmd>lua require('telescope.builtin').lsp_references()<cr>")
+map("<leader>ls", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>")
+map("<leader>lS", "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>")
+map("<leader>la", "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>")
+map("<leader>lgi", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>")
+map("<leader>lgd", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>")
+map("<leader>ldw", "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>")
+map("<leader>ldd", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>")
 
 -- Git pickers
-map("n", "<leader>gc", '<cmd>lua require("telescope.builtin").git_commits()<cr>', opts)
-map("n", "<leader>gb", '<cmd>lua require("telescope.builtin").git_branches()<cr>', opts)
-map("n", "<leader>gcb", '<cmd>lua require("telescope.builtin").git_bcommits()<cr>', opts)
-map("n", "<leader>gst", '<cmd>lua require("telescope.builtin").git_status()<cr>', opts)
+map("<leader>gc", '<cmd>lua require("telescope.builtin").git_commits()<cr>')
+map("<leader>gb", '<cmd>lua require("telescope.builtin").git_branches()<cr>')
+map("<leader>gcb", '<cmd>lua require("telescope.builtin").git_bcommits()<cr>')
+map("<leader>gst", '<cmd>lua require("telescope.builtin").git_status()<cr>')
 
 -- List pickers
-map("n", "<leader>fbi", '<cmd>lua require("telescope.builtin").builtin()<cr>', opts)
+map("<leader>fbi", '<cmd>lua require("telescope.builtin").builtin()<cr>')
 
 -- Find files in Neovim config
 map(
-    "n",
+
     "<leader>fn",
-    '<cmd>lua require("telescope.builtin").find_files({cwd="~/.config/nvim", file_ignore_patterns={"bundle"}})<cr>',
-    opts
+    '<cmd>lua require("telescope.builtin").find_files({cwd="~/.config/nvim", file_ignore_patterns={"bundle"}})<cr>'
 )
 
 -- git-worktree mappings for telescope
-map("n", "<leader>gw", '<cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<cr>', opts)
+map("<leader>gw", '<cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<cr>')
 
-map("n", "<leader>gwc", '<cmd>lua require("telescope").extensions.git_worktree.create_git_worktree()<cr>', opts)
+map("<leader>gwc", '<cmd>lua require("telescope").extensions.git_worktree.create_git_worktree()<cr>')

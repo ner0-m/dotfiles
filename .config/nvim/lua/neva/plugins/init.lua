@@ -57,11 +57,10 @@ return require("packer").startup(function()
         event = "BufEnter",
     }
 
-    -- TODO: Replace with Comment.nvim
     use {
-        "b3nj5m1n/kommentary",
+        "numToStr/Comment.nvim",
         config = function()
-            require "neva.plugins.kommentary"
+            require("Comment").setup()
         end,
         event = "BufEnter",
     }
@@ -197,14 +196,11 @@ return require("packer").startup(function()
     --     end,
     -- }
 
-    -- use "nvim-lua/popup.nvim"
-
     use {
         "nvim-telescope/telescope.nvim",
         requires = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope-fzy-native.nvim",
-            "nvim-telescope/telescope-packer.nvim",
         },
         config = function()
             require "neva.plugins.telescope"
@@ -243,19 +239,34 @@ return require("packer").startup(function()
 
     use {
         "hrsh7th/nvim-cmp",
+        config = function()
+            require "neva.plugins.nvim-cmp"
+        end,
+    }
+
+    use {
+        "hrsh7th/cmp-buffer",
         requires = {
-            "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-calc",
             "ray-x/cmp-treesitter",
             "f3fora/cmp-spell",
-            -- "saadparwaiz1/cmp_luasnip",
             "onsails/lspkind-nvim",
+            -- "saadparwaiz1/cmp_luasnip",
         },
         config = function()
             require "neva.plugins.nvim-cmp"
         end,
+        after = "nvim-cmp",
+    }
+
+    use {
+        "~/src/nvim_plugins/cmp-git",
+        config = function()
+            require("cmp_git").setup()
+        end,
+        after = "nvim-cmp",
     }
 end)

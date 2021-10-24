@@ -20,6 +20,7 @@ cmp.setup {
     sources = {
         { name = "nvim_lsp", priority = 10 },
         { name = "nvim_lua", priority = 10 },
+        { name = "cmp_git", priority = 10 },
         { name = "spell", priority = 3, keyword_length = 5 },
         { name = "treesitter", priority = 3 },
         { name = "buffer", priority = 2, keyword_length = 5 },
