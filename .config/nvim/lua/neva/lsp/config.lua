@@ -113,7 +113,7 @@ require("lspconfig").texlab.setup {
         },
         forwardSearch = {
             executable = "zathura",
-            args = { "--synctex-forward", "%l:1:%f", "%p" },
+            args = { "--synctex-forward", "%l:1:%f", "%p"},
             onSave = true,
         },
         lint = {

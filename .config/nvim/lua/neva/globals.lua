@@ -1,3 +1,6 @@
+require("neva.plugins") 
+require("neva.build")
+ 
 P = function(v)
     print(vim.inspect(v))
     return v

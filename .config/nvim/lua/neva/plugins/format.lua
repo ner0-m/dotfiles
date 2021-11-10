@@ -10,7 +10,6 @@ require("format").setup {
     vim = {
         {
             cmd = {
-                -- "stylua --indent-type Spaces --column-width 100 --line-endings Unix --indent-width 4",
                 "stylua",
             },
             start_pattern = "^lua << EOF$",
@@ -20,7 +19,6 @@ require("format").setup {
     lua = {
         {
             cmd = {
-                -- "stylua --indent-type Spaces --column-width 100 --line-endings Unix --indent-width 4",
                 "stylua",
             },
         },
@@ -29,3 +27,13 @@ require("format").setup {
     cpp = { { cmd = { clangformat } } },
     cuda = { { cmd = { clangformat } } },
 }
+
+local opts = { noremap = true }
+
+local function map(keybind, command)
+    require("neva.utils").nmap(keybind, command, opts)
+end
+
+-- save file and format
+map("<leader>xf", "<cmd>up<cr><cmd>FormatWrite<cr>")
+map("<leader>xF", "<cmd>up<cr><cmd>Format<cr>")

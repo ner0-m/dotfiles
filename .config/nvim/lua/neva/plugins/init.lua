@@ -156,46 +156,6 @@ return require("packer").startup(function()
         end,
     }
 
-    -- NOTE: This is used so rarly, maybe just remove it? or auto open, such that I use it
-    -- use {
-    --     "simrat39/symbols-outline.nvim",
-    --     keys = { "<leader>tt", "<leader>tc", "<leader>to" },
-    --     config = function()
-    --         local map = require("utils").keymap
-    --         local opts = { noremap = true }
-
-    --         map("n", "<leader>tt", "<cmd>lua require'symbols-outline'.toggle_outline()<cr>", opts)
-
-    --         symbols_open = function()
-    --             local symbols = require "symbols-outline"
-
-    --             local cur_buf = nil
-    --             if symbols.state.code_win == nil then
-    --                 cur_buf = vim.api.nvim_get_current_win()
-    --             else
-    --                 cur_buf = symbols.state.code_win
-    --             end
-
-    --             symbols.open_outline()
-    --             vim.fn.win_gotoid(cur_buf)
-
-    --             print("Code buffer number: ", cur_buf)
-    --         end
-
-    --         symbols_close = function()
-    --             require("symbols-outline").close_outline()
-    --             -- vim.api.nvim_command("wincmd p")
-    --         end
-
-    --         map("n", "<leader>to", "<cmd>lua symbols_open()<cr>", opts)
-    --         map("n", "<leader>tc", "<cmd>lua symbols_close()<cr>", opts)
-
-    --         vim.g.symbols_outline = {
-    --             auto_preview = false,
-    --         }
-    --     end,
-    -- }
-
     use {
         "nvim-telescope/telescope.nvim",
         requires = {
@@ -250,8 +210,6 @@ return require("packer").startup(function()
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
-            "hrsh7th/cmp-calc",
-            "ray-x/cmp-treesitter",
             "f3fora/cmp-spell",
             "onsails/lspkind-nvim",
             -- "saadparwaiz1/cmp_luasnip",
@@ -264,9 +222,18 @@ return require("packer").startup(function()
 
     use {
         "~/src/nvim_plugins/cmp-git",
+        requires = "nvim-lua/plenary.nvim",
         config = function()
-            require("cmp_git").setup()
+            require("cmp_git").setup {}
         end,
         after = "nvim-cmp",
+    }
+
+    use {
+        "rcarriga/nvim-notify",
+    }
+
+    use {
+        "tweekmonster/startuptime.vim",
     }
 end)

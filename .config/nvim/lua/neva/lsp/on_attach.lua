@@ -1,5 +1,9 @@
 -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
 function preview_location(location, context, before_context)
+     
+     
+     
+     
     -- location may be LocationLink or Location (more useful for the former)
     context = context or 10
     before_context = before_context or 5

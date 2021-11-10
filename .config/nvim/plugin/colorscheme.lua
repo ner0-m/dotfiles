@@ -8,4 +8,4 @@ vim.cmd [[colorscheme tokyonight]]
 
 -- Unset the spelling as it's read in tokyonight and that just looks aweful
 vim.cmd [[hi clear SpellBad]]
-vim.cmd [[hi SpellBad gui=underline]]
+vim.cmd [[hi SpellBad gui=underline]] 

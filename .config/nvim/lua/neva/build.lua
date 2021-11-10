@@ -1,10 +1,8 @@
 local opts = { noremap = true }
-
+ 
 local function map(keybind, command)
-    vim.api.nvim_set_keymap("n", keybind, command, opts)
+    require("neva.utils").nmap(keybind, command, opts) 
 end
-
-local elsa = require "neva.elsa.build"
 
 -- Put testing current file on stronges finger!
 map("<leader>xj", "<cmd>lua require('neva.elsa.build').test_current_file()<cr>")
