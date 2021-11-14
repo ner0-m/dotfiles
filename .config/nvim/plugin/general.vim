@@ -2,6 +2,7 @@
 set path+=**
 set wildmenu
 set showcmd
+set mouse+=a
 
 " Column Line {{{
 " highlight ColorColumn ctermbg=gray
