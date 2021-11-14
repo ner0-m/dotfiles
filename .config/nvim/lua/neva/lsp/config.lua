@@ -69,9 +69,9 @@ require("lspconfig").sumneko_lua.setup {
             telemetry = {
                 enable = false,
             },
-            capabilities = capabilities,
         },
     },
+    capabilities = capabilities,
 }
 
 -- setup lsp for python https://jdhao.github.io/2019/11/20/neovim_builtin_lsp_hands_on/
@@ -88,36 +88,34 @@ require("lspconfig").texlab.setup {
         local filename = util.path.is_absolute(fname) and fname or util.path.join(vim.loop.cwd(), fname)
         return root_pattern(filename) or util.path.dirname(filename)
     end,
+    capabilities = capabilities,
     settings = {
-        bibtex = {
-            formatting = {
-                lineLength = 120,
-            },
-        },
-        latex = {
-            root_dir = ".",
-            build = {
-                args = {
-                    "-pdf",
-                    "-quiet",
-                    "-interaction=nonstopmode",
-                    "-shell-escape",
-                    "-outdir=build",
-                    "main",
+        texlab = {
+            latex = {
+                root_dir = ".",
+                build = {
+                    args = {
+                        "-pdf",
+                        "-quiet",
+                        "-interaction=nonstopmode",
+                        "-shell-escape",
+                        "-outdir=build",
+                        "main",
+                    },
+                    -- args = {},
+                    executable = "make",
+                    onSave = false,
+                    outputDirectory = { "./build" },
                 },
-                -- args = {},
-                executable = "make",
-                onSave = false,
-                outputDirectory = { "./build" },
             },
-        },
-        forwardSearch = {
-            executable = "zathura",
-            args = { "--synctex-forward", "%l:1:%f", "%p"},
-            onSave = true,
-        },
-        lint = {
-            onChange = true,
+            forwardSearch = {
+                executable = "zathura",
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
+                onSave = true,
+            },
+            lint = {
+                onChange = true,
+            },
         },
     },
 }

@@ -60,7 +60,7 @@ return require("packer").startup(function()
     use {
         "numToStr/Comment.nvim",
         config = function()
-            require("Comment").setup()
+            require "neva.plugins.comment"
         end,
         event = "BufEnter",
     }
@@ -101,7 +101,6 @@ return require("packer").startup(function()
         config = function()
             require "neva.plugins.treesitter"
         end,
-        event = "BufEnter",
     }
 
     use {
@@ -139,11 +138,12 @@ return require("packer").startup(function()
 
     use {
         "famiu/feline.nvim",
-        after = "tokyonight.nvim",
+        after = { "nvim-gps", "tokyonight.nvim" },
         requires = {
             { "kyazdani42/nvim-web-devicons" },
         },
         config = function()
+            print "I'm here in packer"
             require "neva.statusline"
         end,
     }
@@ -177,7 +177,12 @@ return require("packer").startup(function()
     --     end,
     -- }
 
-    -- use "L3MON4D3/LuaSnip"
+    use {
+        "L3MON4D3/LuaSnip",
+        config = function()
+            require "neva.plugins.luasnip"
+        end,
+    }
 
     use {
         "lukas-reineke/format.nvim",
@@ -212,7 +217,7 @@ return require("packer").startup(function()
             "hrsh7th/cmp-path",
             "f3fora/cmp-spell",
             "onsails/lspkind-nvim",
-            -- "saadparwaiz1/cmp_luasnip",
+            "saadparwaiz1/cmp_luasnip",
         },
         config = function()
             require "neva.plugins.nvim-cmp"

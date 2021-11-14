@@ -13,7 +13,7 @@ filetype plugin indent on " required
 syntax enable             " required
 
 " For vim files fold on marker
-:autocmd FileType vim setlocal foldmethod=marker
+autocmd FileType vim setlocal foldmethod=marker
 
 set foldlevel=10
 
@@ -51,7 +51,7 @@ set autoread
 autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 " }}}
- 
+
 " Start scrolling when we're 16 lines away from margins
 set scrolloff=16
 
@@ -61,9 +61,6 @@ if &encoding != 'utf-8'
 endif
 
 " Searching {{{
-" Ignorecase when searching
-set ignorecase
-
 " incremental search - Vim starts searching when we start typing
 set incsearch
 
@@ -80,7 +77,7 @@ set lazyredraw
 " vim timeout (forgot why I need this or if I do at all)
 set ttyfast
 set timeoutlen=300
-set updatetime=300 
+set updatetime=300
 " }}}
 " Spelling {{{
 
@@ -127,11 +124,8 @@ set backspace=indent,eol,start
 " disable preview window
 set completeopt-=preview
 
-" disable auto commenting after enter
-set formatoptions-=cro
-
-" Show the line and column number of the cursor position
-set ruler
+" Do not automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+autocmd FileType * setlocal formatoptions-=o
 
 " Add triple slash as documentation
 augroup cpp
@@ -146,3 +140,8 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " }}}
 
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END

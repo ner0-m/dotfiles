@@ -2,7 +2,6 @@ local actions = require "telescope.actions"
 
 require("telescope").setup {
     defaults = {
-        file_sorter = require("telescope.sorters").get_fzy_sorter,
         color_devicons = true,
 
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -17,11 +16,19 @@ require("telescope").setup {
             },
         },
 
+        scroll_strategy = "cycle",
+        selection_strategy = "reset",
+
         path_display = { "smart" },
+
+        -- These just look nicer then >
+        prompt_prefix = "❯ ",
+        selection_caret = "❯ ",
 
         mappings = {
             i = {
                 ["<C-q>"] = actions.send_to_qflist,
+                ["<C-y>"] = actions.select_default,
             },
         },
     },
@@ -43,28 +50,31 @@ local function map(keybind, command)
 end
 
 -- File pickers
-map("<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>")
+map("<C-p>", "<cmd>lua require('neva.plugins.telescope.fns').quick_find_files()<cr>")
+map("<leader>p", "<cmd>lua require('neva.plugins.telescope.fns').find_files()<cr>")
 
 -- File picker with only test files
-map(
-    "<leader>ft",
-    '<cmd>lua require("telescope.builtin").find_files({find_command = {"fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_"}})<cr>'
-)
+map("<leader>ft", "<cmd>lua require('neva.plugins.telescope.fns').find_test_files()<cr>")
 
 -- Pick only CMake files
-map(
-    "<leader>fm",
-    '<cmd>lua require(\'telescope.builtin\').find_files({find_command = {"fd", ".cmake$|CMakeLists.txt", "-E=build/", "--no-ignore"}})<cr>'
-)
+map("<leader>fm", "<cmd>lua require('neva.plugins.telescope.fns').find_cmake_files()<cr>")
 
 -- Search cwd with rg
 map("<leader>f/", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
+
 -- Search word under cursor in cwd
 map("<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>")
--- Search in file with rb
+
+-- Fuzzy find in current buffer
+map("<leader>/", "<cmd>lua require('neva.plugins.telescope.fns').fuzzy_search_cur_buf()<cr>")
+
+-- Search in file with rg
 map("<leader>fi", "<cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>")
+
 -- Search quickfixlist
 map("<leader>fq", "<cmd>lua require('telescope.builtin').quickfix()<cr>")
+
+map("<leader>fp", "<cmd>lua require('neva.plugins.telescope.fns').grep_prompt()<cr>")
 
 -- Vim pickers
 map("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
@@ -79,7 +89,7 @@ map("<leader><leader>fs", "<cmd>lua require('telescope.builtin').search_history(
 map("<leader>lgr", "<cmd>lua require('telescope.builtin').lsp_references()<cr>")
 map("<leader>ls", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>")
 map("<leader>lS", "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>")
-map("<leader>la", "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>")
+map("<leader>la", "<cmd>lua require('neva.plugins.telescope.fns').code_actions()<cr>")
 map("<leader>lgi", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>")
 map("<leader>lgd", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>")
 map("<leader>ldw", "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>")

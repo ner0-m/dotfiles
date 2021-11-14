@@ -1,11 +1,8 @@
 " Leader mapping {{{
 " Besure that space is not mapped
 nnoremap <SPACE> <Nop>
-
-" set the leader key to space
-let mapleader = ' '
 " }}}
- 
+
 " Keybindings {
 
 " Copy and cut to clipboard {{{
@@ -22,8 +19,8 @@ vnoremap <leader>s <C-c>:update<cr>
 " }}}
 
 " stay in normal mode for o and O {{{
-noremap o o <Esc>
-noremap O O <Esc>
+noremap <leader>o o <Esc>
+noremap <leader>O O <Esc>
 " }}}
 
 " Paste _ registry
@@ -71,11 +68,11 @@ inoremap } }<c-g>u
 " Move in visual mode
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
- 
+
 " Move in insert mode (seems broken?)
 inoremap <c-j> <esc>:m .+1<CR>==
 inoremap <c-k> <esc>:m .-1<CR>==
- 
+
 " Move in normal mode
 nnoremap <leader>j :m .+1<CR>==
 nnoremap <leader>k :m .-2<CR>==

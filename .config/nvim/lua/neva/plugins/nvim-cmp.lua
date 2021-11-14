@@ -73,38 +73,65 @@ local cpp_cmp_filter_underscore = function(entry1, entry2)
     end
 end
 
--- print(string.find("std::__invoke_memfun_deref", "std::__"))
+local luasnip = require "luasnip"
+
+local replace_termcodes = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 cmp.setup {
-    -- snippet = {
-    --     expand = function(args)
-    --         require("luasnip").lsp_expand(args.body)
-    --     end,
-    -- },
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
     mapping = {
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
+
+        ["<C-space>"] = cmp.mapping.complete(),
+
         ["<C-y>"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-        },
-        ["<C-q>"] = cmp.mapping.confirm {
+            -- behavior = cmp.ConfirmBehavior.Insert,
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         },
 
-        ["<C-space>"] = cmp.mapping.complete(),
+        ["<C-j>"] = cmp.mapping(function()
+            if require("luasnip").expand_or_jumpable() then
+                vim.fn.feedkeys(replace_termcodes "<Plug>luasnip-expand-or-jump", "")
+            end
+        end, {
+            "i",
+            "s",
+        }),
+
+        -- This works for now, but it's so ugly p.q
+        -- ["<C-q>"] = cmp.mapping(function(fallback)
+        --     if luasnip and luasnip.expand_or_jumpable() then
+        --         luasnip.expand_or_jump()
+        --     else
+        --         fallback()
+        --     end
+        -- end, {
+        --     "i",
+        --     "c",
+        -- }),
+
+        -- ["<C-q>"] = cmp.mapping.confirm {
+        --     behavior = cmp.ConfirmBehavior.Replace,
+        --     select = true,
+        -- },
     },
     sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "cmp_git" },
+        { name = "luasnip" },
         { name = "spell", keyword_length = 5 },
         { name = "buffer", keyword_length = 5 },
         { name = "path", keyword_length = 5 },
-        -- { name = "luasnip", priority = 1 },
     },
     formatting = {
         format = require("lspkind").cmp_format {
@@ -115,7 +142,7 @@ cmp.setup {
                 nvim_lsp = "[LSP]",
                 nvim_lua = "[api]",
                 path = "[path]",
-                -- luasnip = "[snip]",
+                luasnip = "[snip]",
                 gh_issues = "[issues]",
                 cmp_git = "[git]",
             },

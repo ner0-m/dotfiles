@@ -1,7 +1,7 @@
 local opts = { noremap = true }
- 
+
 local function map(keybind, command)
-    require("neva.utils").nmap(keybind, command, opts) 
+	require("neva.utils").nmap(keybind, command, opts)
 end
 
 -- Put testing current file on stronges finger!
