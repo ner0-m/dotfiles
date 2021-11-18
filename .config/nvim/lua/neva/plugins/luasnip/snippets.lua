@@ -61,13 +61,50 @@ snippets.tex = make {
         snippet = {
             t { "\\bm{X}" },
             i(0)
-        },
+       },
         name = "Vector space X",
     },
+    vsxm = {
+        snippet = {
+            t { "$\\bm{X}$" },
+            i(0)
+        },
+        name = "Vector space X (including math eviorment)",
+    },
+    N = {
+        snippet = {
+            t { "\\mathbb{N}" },
+            i(0)
+        },
+        name = "Space of natural numbers",
+    },
+    C = {
+        snippet = {
+            t { "\\mathbb{C}" },
+            i(0)
+        },
+        name = "Space of complex numbers",
+    },
+    R = {
+        snippet = {
+            t { "\\mathbb{R}" },
+            i(0)
+        },
+        name = "Space of real numbers",
+    },
+    K = {
+        snippet = {
+            t { "\\mathbb{K}" },
+            i(0)
+        },
+        name = "Field K",
+    },
+
     norm = {
         snippet = single_wrap "norm",
         name = "norm",
     },
+
     normp = {
         snippet = {
             t { "\\norm{" },
@@ -77,6 +114,7 @@ snippets.tex = make {
         },
         name = "norm",
     },
+
     normq = {
         snippet = {
             t { "\\norm{" },
@@ -86,6 +124,7 @@ snippets.tex = make {
         },
         name = "norm",
     },
+
     norminf = {
         snippet = {
             t { "\\norm{" },
@@ -94,6 +133,24 @@ snippets.tex = make {
             i(0),
         },
         name = "norm",
+    },
+    innerproduct_dots = {
+        snippet = {
+            t { "\\langle\\cdot,\\cdot\\rangle" },
+            i(0),
+        },
+        name = "Snippet for inner product with cdots in the middle",
+    },
+    innerproduct = {
+        snippet = {
+            t { "\\langle" },
+            i(1),
+            t { ", " },
+            i(2),
+            t { "\\rangle" },
+            i(0),
+        },
+        name = "Snippet for inner product",
     },
 
     seqxj = {
@@ -120,6 +177,26 @@ snippets.tex = make {
             i(0),
         },
         name = "Sequence for n in natural numbers",
+    },
+
+    eq = {
+        snippet = {
+            t { "\\[ " },
+            i(1),
+            t { " \\] " },
+            i(0),
+        },
+        name = "Math equation enviorment",
+    },
+
+    set = {
+        snippet = {
+            t { "\\{ " },
+            i(1),
+            t { " \\} " },
+            i(0),
+        },
+        name = "Set enviorment",
     },
 
     ["$"] = {

@@ -94,20 +94,22 @@ require("lspconfig").texlab.setup {
             latex = {
                 root_dir = ".",
                 build = {
-                    args = {
-                        "-pdf",
-                        "-quiet",
-                        "-interaction=nonstopmode",
-                        "-shell-escape",
-                        "-outdir=build",
-                        "main",
-                    },
+                    -- args = {
+                    --     "-pdf",
+                    --     "-quiet",
+                    --     "-interaction=nonstopmode",
+                    --     "-shell-escape",
+                    --     "-outdir=build",
+                    --     "-synctex=1",
+                    --     "main",
+                    -- },
                     -- args = {},
                     executable = "make",
-                    onSave = false,
+                    onSave = true,
                     outputDirectory = { "./build" },
                 },
             },
+            chktex = { onOpenAndSave = true, onEdit = false },
             forwardSearch = {
                 executable = "zathura",
                 args = { "--synctex-forward", "%l:1:%f", "%p" },

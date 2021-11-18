@@ -143,7 +143,6 @@ return require("packer").startup(function()
             { "kyazdani42/nvim-web-devicons" },
         },
         config = function()
-            print "I'm here in packer"
             require "neva.statusline"
         end,
     }
