@@ -3,6 +3,7 @@ set path+=**
 set wildmenu
 set showcmd
 set mouse+=a
+set wildignorecase
 
 " Column Line {{{
 " highlight ColorColumn ctermbg=gray
@@ -64,6 +65,9 @@ endif
 " Searching {{{
 " incremental search - Vim starts searching when we start typing
 set incsearch
+
+" ignore case
+set ignorecase
 
 " When searching try to be smart about cases
 set smartcase

@@ -100,4 +100,6 @@ nnoremap <leader>qc :cclose<CR>
 " Reload current luafile
 nnoremap <leader>xl :luafile %<CR>
 
-"}}}
+" Scroll second window without chaning cursor (note only works with 2 windows!) 
+nnoremap <M-PageDown> <C-w>p<C-d><C-w>p
+nnoremap <M-PageUp> <C-w>p<C-u><C-w>p
