@@ -6,15 +6,28 @@ require("neorg").setup {
         ["core.norg.dirman"] = { -- Manage your directories with Neorg
             config = {
                 workspaces = {
-                    my_workspace = "~/neorg",
+                    my_workspace = "~/src/notes",
+                    uni = "~/src/notes/uni",
+                    thesis = "~/src/notes/thesis",
+                    gtd = "~/src/notes/gtd",
                 },
             },
         },
-        ["core.keybinds"] = {
+        ["core.gtd.base"] = {
             config = {
-                default_keybindgs = true, -- Generate the default keybindings
-                norg_leader = "<leader>", -- This is the deffault if unspecified
+                workspace = "gtd",
             },
-        }, -- Configure core.keybinds
+        },
+        ["core.norg.completion"] = {
+            config = {
+                engine = "nvim-cmp", -- We current support nvim-compe and nvim-cmp only
+            },
+        },
+        ["core.keybinds"] = { -- Configure core.keybinds
+            config = {
+                default_keybinds = true, -- Generate the default keybinds
+                neorg_leader = "<Leader>o", -- This is the default if unspecified
+            },
+        },
     },
 }

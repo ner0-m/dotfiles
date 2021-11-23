@@ -45,10 +45,11 @@ return require("packer").startup(function()
 
     use {
         "vhyrro/neorg",
-        ft = "norg",
+        -- ft = "norg",
         config = function()
-            requires "neva.plugins.neorg"
+            require "neva.plugins.neorg"
         end,
+        branch = "unstable",
         requires = "nvim-lua/plenary.nvim",
     }
 

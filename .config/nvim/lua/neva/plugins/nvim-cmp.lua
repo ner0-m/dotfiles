@@ -129,6 +129,7 @@ cmp.setup {
         { name = "nvim_lua" },
         { name = "cmp_git" },
         { name = "luasnip" },
+        { name = "neorg" },
         { name = "spell", keyword_length = 5 },
         { name = "buffer", keyword_length = 5 },
         { name = "path", keyword_length = 5 },

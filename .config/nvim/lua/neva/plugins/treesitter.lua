@@ -2,14 +2,14 @@ local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
 parser_configs.norg = {
     install_info = {
-        url = "https://github.com/vhyrro/tree-sitter-norg",
-        files = { "src/parser.c" },
-        branch = "main",
+        url = "https://github.com/nvim-neorg/tree-sitter-norg",
+        files = { "src/parser.c", "src/scanner.cc" },
+        branch = "main"
     },
 }
 
 require("nvim-treesitter.configs").setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     highlight = { -- Highlight module
         enable = true, -- false will disable the whole extension
         use_languagetree = true, -- Use this to enable language injection (this is very unstable)

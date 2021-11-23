@@ -2,23 +2,24 @@ local luasnip = require "luasnip"
 
 local snippets = {}
 
-local snippet = luasnip.s
+local s = luasnip.snippet
 
-local c = luasnip.c -- choice node
-local f = luasnip.f -- function node
-local i = luasnip.i -- insert node
-local t = luasnip.t -- text node
-local d = luasnip.d -- dynamic node
+local sn = luasnip.snippet_node
+local c = luasnip.choice_node
+local f = luasnip.function_node
+local i = luasnip.insert_node
+local t = luasnip.text_node
+local d = luasnip.dynamic_node
 
 local make = function(tbl)
     local result = {}
     for k, v in pairs(tbl) do
-        table.insert(result, (snippet({ trig = k, name = v.name, dscr = v.desc }, v.snippet or v)))
+        local snip = s({ trig = k, name = v.name, dscr = v.desc, regTrig = v.regTrig }, v.snippet or v)
+        table.insert(result, snip)
     end
 
     return result
 end
-
 local function single_wrap(name)
     return {
         t { "\\" .. name .. "{" },
@@ -28,17 +29,47 @@ local function single_wrap(name)
     }
 end
 
+local subscript = function(pos)
+    pos = pos or 1
+    return t { "_{" }, i(pos, "subscript"), t { "}" }
+end
+
+local supscript = function(pos)
+    pos = pos or 1
+    return t { "_{" }, i(pos, "supscript"), t { "}" }
+end
+
+local opt_subscript = function(pos)
+    return c(pos, {
+        t "",
+        sn(nil, { subscript(1) }),
+    })
+end
+
+local opt_superscript = function(pos)
+    return c(pos, {
+        t "",
+        sn(nil, { supscript(1) }),
+    })
+end
+
 local function special_begin(env)
     return {
-        t { "\\begin{" .. env .. "}", "\t" },
-        i(1),
+        t { "\\begin{" .. env .. "}" },
+        c(1, {
+            -- Order is important, sn(...) first would cause infinite loop of expansion.
+            t "",
+            sn(nil, { t { "[" }, i(1, env .. " heading"), t { "]" } }),
+        }),
+        t { "", "\t" },
+        i(2),
         t { "", "\\end{" .. env .. "}" },
         i(0),
     }
 end
 
 snippets.all = make {
-    iff = {
+    ["iff"] = {
         snippet = {
             t { "if and only if" },
         },
@@ -46,62 +77,89 @@ snippets.all = make {
     },
 }
 
+-- snippets.all = make {
+-- }
+
 snippets.tex = make {
     mathbb = {
         snippet = single_wrap "mathbb",
         name = "mathbb",
         desc = { "## Blackboard bold", "", "Usually used for set such a the set of real or complex numbers" },
     },
+
     bm = {
         snippet = single_wrap "bm",
         name = "Bold math",
         desc = { "## Access bold symbols in maths mode", "", "Note: Requires \\usepackage{bm} to work" },
     },
-    vsx = {
-        snippet = {
-            t { "\\bm{X}" },
-            i(0)
-       },
-        name = "Vector space X",
+
+    ["vs(%a)"] = {
+        snippet = f(function(_, snip)
+            return "\\bm{" .. string.upper(snip.captures[1]) .. "}"
+        end, {}),
+        name = "Single charachter vector spaces",
+        regTrig = true,
     },
-    vsxm = {
-        snippet = {
-            t { "$\\bm{X}$" },
-            i(0)
-        },
-        name = "Vector space X (including math eviorment)",
+
+    ["vsm(%a)"] = {
+        snippet = f(function(_, snip)
+            return "$\\bm{" .. string.upper(snip.captures[1]) .. "}$"
+        end, {}),
+        name = "Single charachter vector spaces with math surrounding",
+        regTrig = true,
     },
-    N = {
-        snippet = {
-            t { "\\mathbb{N}" },
-            i(0)
-        },
-        name = "Space of natural numbers",
+
+    ["mbb(%a)"] = {
+        snippet = f(function(_, snip)
+            return "\\mathbb{" .. string.upper(snip.captures[1]) .. "}"
+        end, {}),
+        name = "Blackboard bold for single charachters",
+        regTrig = true,
     },
-    C = {
+
+    ["%u"] = {
         snippet = {
-            t { "\\mathbb{C}" },
-            i(0)
+            c(1, {
+                sn(nil, {
+                    t { "\\bm{" },
+                    f(function(_, snip)
+                        return snip.snippet.trigger
+                    end, {}),
+                    t { "}" },
+                    i(1),
+                }),
+                sn(nil, {
+                    t { "\\mathbb{" },
+                    f(function(_, snip)
+                        return snip.snippet.trigger
+                    end, {}),
+                    t { "}" },
+                    i(1),
+                }),
+                sn(nil, {
+                    t { "\\mathcal{" },
+                    f(function(_, snip)
+                        return snip.snippet.trigger
+                    end, {}),
+                    t { "}" },
+                    i(1),
+                }),
+            }),
+            i(0),
         },
-        name = "Space of complex numbers",
-    },
-    R = {
-        snippet = {
-            t { "\\mathbb{R}" },
-            i(0)
-        },
-        name = "Space of real numbers",
-    },
-    K = {
-        snippet = {
-            t { "\\mathbb{K}" },
-            i(0)
-        },
-        name = "Field K",
+        name = "Typical single letter math enviorments",
+        regTrig = true,
     },
 
     norm = {
-        snippet = single_wrap "norm",
+        snippet = {
+            t { "\\norm{" },
+            i(1),
+            t { "}" },
+            opt_subscript(2),
+            opt_superscript(3),
+            i(0),
+        },
         name = "norm",
     },
 
@@ -136,14 +194,15 @@ snippets.tex = make {
     },
     innerproduct_dots = {
         snippet = {
-            t { "\\langle\\cdot,\\cdot\\rangle" },
+            t { "\\langle \\cdot, \\cdot \\rangle" },
             i(0),
         },
         name = "Snippet for inner product with cdots in the middle",
     },
+
     innerproduct = {
         snippet = {
-            t { "\\langle" },
+            t { "\\langle " },
             i(1),
             t { ", " },
             i(2),
@@ -207,6 +266,22 @@ snippets.tex = make {
             i(0),
         },
         name = "inline math",
+    },
+
+    ["!="] = {
+        snippet = {
+            t { "\\neq" },
+            i(0),
+        },
+        name = "Not equal to",
+    },
+
+    [":="] = {
+        snippet = {
+            t { "\\coloneqq" },
+            i(0),
+        },
+        name = "Defined as",
     },
 
     ["<="] = {
@@ -292,7 +367,7 @@ snippets.tex = make {
         name = "Sum of n to plus infinity",
     },
 
-    sum_hton = {
+    sum_jton = {
         snippet = {
             t { "\\sum_{j=1}^{n}" },
             i(0),
@@ -318,6 +393,89 @@ snippets.tex = make {
         },
         name = "One over",
     },
+
+    inf = {
+        snippets = {
+            t { "\\infty" },
+            i(0),
+        },
+        name = "Infinity",
+    },
+
+    ["."] = {
+        snippet = {
+            t { "\\cdot" },
+            i(0),
+        },
+        name = "Single middle dot as placeholder in math enviorments",
+    },
+
+    ["..."] = {
+        snippet = {
+            t { "\\dots" },
+            i(0),
+        },
+        name = "Tripple dots",
+    },
+
+    ["L("] = {
+        snippet = {
+            t { "L(" },
+            i(1),
+            t { ", " },
+            i(2),
+            t { ")" },
+            i(0),
+        },
+        name = "Tripple dots",
+    },
+
+    ["_"] = {
+        snippet = {
+            t { "_{" },
+            i(1, "subscript"),
+            t { "}" },
+            i(0),
+        },
+        name = "Subscript",
+    },
+
+    ["^"] = {
+        snippet = {
+            t { "^{" },
+            i(1, "supscript"),
+            t { "}" },
+            i(0),
+        },
+        name = "Supscript",
+    },
+
+    sup = {
+        snippet = {
+            t { "\\sup" },
+            opt_subscript(1),
+            i(0),
+        },
+        name = "Supremum",
+    },
+
+    lim = {
+        snippet = {
+            t { "\\lim" },
+            opt_subscript(1),
+            i(0),
+        },
+        name = "Limes",
+    },
+
+    --[[
+    snippets for:
+    * forall x in X
+    * lim
+    * inverse of operator
+    * item[i)]
+
+    --]]
 }
 
 return snippets

@@ -7,10 +7,27 @@ local function prequire(...)
 end
 
 local luasnip = prequire "luasnip"
+local types = require "luasnip.util.types"
 
 luasnip.config.set_config {
     history = true,
     updateevents = "TextChanged,TextChangedI",
+    -- ext_opts = {
+    --     [types.choiceNode] = {
+    --         active = {
+    --             virt_text = { { "●", "GruvboxOrange" } },
+    --         },
+    --     },
+    --     [types.insertNode] = {
+    --         active = {
+    --             virt_text = { { "●", "GruvboxBlue" } },
+    --         },
+    --     },
+    -- },
 }
+
+-- TODO: These mabe should be different, idc yet
+vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
+vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
 luasnip.snippets = require "neva.plugins.luasnip.snippets"
