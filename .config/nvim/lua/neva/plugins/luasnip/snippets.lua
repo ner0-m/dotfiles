@@ -395,7 +395,7 @@ snippets.tex = make {
     },
 
     inf = {
-        snippets = {
+        snippet = {
             t { "\\infty" },
             i(0),
         },
@@ -471,11 +471,19 @@ snippets.tex = make {
     --[[
     snippets for:
     * forall x in X
-    * lim
+    * abs
+    * (n|j|i|k) \in \mathbb{N}
     * inverse of operator
     * item[i)]
+    * choise for \ell space and \Ell space
 
     --]]
+}
+
+snippets.latex = snippets.tex
+
+snippets.cpp = {
+    s({trig = "for"}, t { "For something"} )
 }
 
 return snippets
