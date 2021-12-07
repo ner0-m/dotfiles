@@ -217,6 +217,6 @@ table.insert(components.inactive[1], comps.file.type)
 table.insert(components.inactive[1], {})
 
 require("feline").setup {
-    -- components = components,
-    -- vi_mode_colors = vi_mode_colors,
+    components = components,
+    vi_mode_colors = vi_mode_colors,
 }

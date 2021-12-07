@@ -6,11 +6,12 @@ require("neorg").setup {
         ["core.norg.dirman"] = { -- Manage your directories with Neorg
             config = {
                 workspaces = {
-                    my_workspace = "~/src/notes",
                     uni = "~/src/notes/uni",
-                    thesis = "~/src/notes/thesis",
+                    thesis = "~/src/thesis/notes",
                     gtd = "~/src/notes/gtd",
+                    zettel = "~/src/notes/zettel",
                 },
+                index = "inbox.norg"
             },
         },
         ["core.gtd.base"] = {
@@ -29,5 +30,15 @@ require("neorg").setup {
                 neorg_leader = "<Leader>o", -- This is the default if unspecified
             },
         },
+        ["core.integrations.telescope"] = {}, -- Enable the telescope module
+        ["core.zettelkasten"] = {
+            config = {
+                workspace = "zettel",
+                id_generator = "timestamp"
+            },
+        },
+    },
+    logger = {
+        level = "info",
     },
 }

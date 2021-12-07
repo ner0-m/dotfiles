@@ -3,40 +3,45 @@ local M = {}
 local builtin = require "telescope.builtin"
 local themes = require "telescope.themes"
 
-local minimal_dropdown_opts = themes.get_dropdown {
-    previewer = false,
-    shorten_path = false,
+local open_dir = function(config)
+    local opt = require('telescope.themes').get_ivy (config)
 
-    layout_config = {
-        width = 0.5,
-    },
-}
+    vim.tbl_deep_extend("force", opt, config)
+    
+    -- ONLY when it's specifically set to false (nil doesn't count)
+    if config.previewer == false then
+        print("Table has previewer")
+        opt.previewer = false
+    end
+     
+    builtin.find_files(opt)
+end
 
-M.find_files = builtin.find_files
+M.find_files = function()
+    open_dir({ title = "Find files" })
+end
 
 M.quick_find_files = function()
-    builtin.find_files(minimal_dropdown_opts)
+    open_dir({ title="Qucik file finder", previewer = false })
 end
 
 M.find_test_files = function()
-    require("telescope.builtin").find_files {
-        find_command = { "fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_" },
-    }
+    open_dir ({ 
+        title = "Find test files",
+        find_command = { "fd", "-t", "f", "-E=.git", "-E=build/", "--no-ignore", "test_" }
+    })
 end
 
 M.find_cmake_files = function()
-    require("telescope.builtin").find_files {
+    open_dir ({ 
+        title = "Find CMake files",
         find_command = { "fd", ".cmake$|CMakeLists.txt", "-E=build/", "--no-ignore" },
-    }
+    })
 end
 
 M.fuzzy_search_cur_buf = function()
-    local opts = themes.get_dropdown {
+    local opts = themes.get_ivy {
         previewer = false,
-        layout_config = {
-            height = 0.9,
-            width = 0.8,
-        },
     }
     builtin.current_buffer_fuzzy_find(opts)
 end

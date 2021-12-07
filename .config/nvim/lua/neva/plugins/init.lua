@@ -44,13 +44,14 @@ return require("packer").startup(function()
     }
 
     use {
-        "vhyrro/neorg",
+        -- "vhyrro/neorg",
+        "~/src/nvim_plugins/neorg",
         -- ft = "norg",
         config = function()
             require "neva.plugins.neorg"
         end,
         branch = "unstable",
-        requires = "nvim-lua/plenary.nvim",
+        requires = {"nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
     }
 
     use {
@@ -178,7 +179,8 @@ return require("packer").startup(function()
     -- }
 
     use {
-        "L3MON4D3/LuaSnip",
+        -- "L3MON4D3/LuaSnip",
+        "~/src/nvim_plugins/LuaSnip",
         config = function()
             require "neva.plugins.luasnip"
         end,
@@ -235,10 +237,10 @@ return require("packer").startup(function()
     }
 
     use {
-        "rcarriga/nvim-notify",
+        "tweekmonster/startuptime.vim",
     }
 
     use {
-        "tweekmonster/startuptime.vim",
+        "danymat/neogen",
     }
 end)
