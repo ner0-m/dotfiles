@@ -24,7 +24,7 @@ luasnip.config.set_config {
     --         },
     --     },
     -- },
-    ft_func = require("luasnip.extras.filetype_functions").from_pos_or_filetype
+    -- ft_func = require("luasnip.extras.filetype_functions").from_pos_or_filetype
 }
 
 -- TODO: These mabe should be different, idc yet

@@ -158,15 +158,15 @@ return require("packer").startup(function()
         end,
     }
 
-    -- use {
-    --     "ThePrimeagen/git-worktree.nvim",
-    --     requires = {
-    --         "nvim-lua/plenary.nvim",
-    --     },
-    --     config = function()
-    --         require "neva.git-worktree"
-    --     end,
-    -- }
+    use {
+        "ThePrimeagen/git-worktree.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            require "neva.plugins.git-worktree"
+        end,
+    }
 
     use {
         "L3MON4D3/LuaSnip",
@@ -215,7 +215,8 @@ return require("packer").startup(function()
     }
 
     use {
-        "~/src/nvim_plugins/cmp-git",
+        "~/src/nvim_plugins/cmp-git/",
+        -- "petertriho/cmp-git",
         requires = "nvim-lua/plenary.nvim",
         config = function()
             require("cmp_git").setup {}
