@@ -1,9 +1,5 @@
 -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
 function preview_location(location, context, before_context)
-     
-     
-     
-     
     -- location may be LocationLink or Location (more useful for the former)
     context = context or 10
     before_context = before_context or 5
@@ -54,14 +50,17 @@ local M = {}
 M.on_attach_vim = function(client, bufnr)
     -- short cuts
     local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
+        -- vim.api.nvim_buf_set_keymap(bufnr, ...)
+        vim.keymap.set(..., { buffer = bufnr })
     end
 
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
 
-    require("lsp_signature").on_attach()
+    require("lsp_signature").on_attach({
+        toggle_key = "<C-f>",
+    }, bufnr)
 
     -- Attach cursor under word highlight
     require("illuminate").on_attach(client)
@@ -71,25 +70,29 @@ M.on_attach_vim = function(client, bufnr)
     vim.api.nvim_command [[ hi LspReferenceRead cterm=standout gui=standout ]]
     vim.api.nvim_command [[ hi LspReferenceWrite cterm=standout gui=standout ]]
 
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+    -- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- taken from https://gitlab.com/SanchayanMaity/dotfiles/-/blob/master/nvim/.config/nvim/lua/lsp.lua
-    local opts = { noremap = true, silent = true }
+    local opts = { noremap = true, silent = true, buffer = bufnr }
 
     -- LSP keybindings
-    buf_set_keymap("n", "<leader>lgt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-    buf_set_keymap("n", "<leader>lgD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.keymap.set("n", "<leader>lgt", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "<leader>lgD", vim.lsp.buf.declaration, opts)
 
-    buf_set_keymap("n", "<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    buf_set_keymap("n", "<leader>lH", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-    buf_set_keymap("n", "<leader>lp", "<cmd>lua peek_definition()<CR>", opts)
-    buf_set_keymap("n", "<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>lH", vim.lsp.buf.signature_help, opts)
+    vim.keymap.set("n", "<leader>lp", peek_definition, opts)
+    vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, opts)
 
-    buf_set_keymap("n", "<leader>ldl", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-    buf_set_keymap("n", "<leader>ldn", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-    buf_set_keymap("n", "<leader>ldN", "<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>", opts)
-    buf_set_keymap("n", "<leader>ldp", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-    buf_set_keymap("n", "<leader>ldP", "<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>", opts)
+    vim.keymap.set("n", "<leader>ldl", function()
+        vim.diagnostic.open_float(0, { scope = "line", border = "single" })
+    end, opts)
+    vim.keymap.set("n", "<leader>ldn", function()
+        vim.diagnostic.goto_next { float = { border = "single" } }
+    end, opts)
+    vim.keymap.set("n", "<leader>ldp", function()
+        vim.diagnostic.goto_prev { float = { border = "single" } }
+    end, opts)
 
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then

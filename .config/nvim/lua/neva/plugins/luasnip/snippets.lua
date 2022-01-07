@@ -482,8 +482,61 @@ snippets.tex = make {
 
 snippets.latex = snippets.tex
 
-snippets.cpp = {
-    s({trig = "for"}, t { "For something"} )
+snippets.cpp = make {
+    pragma = {
+        snippet = {
+            t { "#pragma once" },
+            i(0),
+        },
+        name = "Pragma include guard",
+    },
+
+    include = {
+        snippet = {
+            t { '#include "' },
+            i(1),
+            t { '"' },
+            i(0),
+        },
+        name = "Include",
+    },
+
+    namespace = {
+        snippet = {
+            t { "namespace " },
+            i(1),
+            t { "", "{", "" },
+            i(0),
+            t { "", "}" },
+        },
+        name = "namespace",
+    },
+
+    class = {
+        snippet = {
+            t { "class " },
+            i(1),
+            t { "", "{", "" },
+            i(0),
+            t { "", "};" },
+        },
+        name = "class snippet",
+    },
+
+    ["/**"] = {
+        snippet = {
+            t { "/**", " * @brief " },
+            i(1),
+            t { "", "*/" },
+            i(0),
+        },
+        name = "Doxygen string",
+    },
 }
+
+-- snippets.cpp = {
+--     s({trig = "pragma"}, t { "#pragma once"} )
+--     s({trig = "for"}, t { "For something"} )
+-- }
 
 return snippets

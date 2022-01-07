@@ -1,40 +1,14 @@
-clangformat = function(file)
-    return string.format("clang-format-10 -i -style=file %s", file)
-end
-
-require("format").setup {
-    ["*"] = {
-        { cmd = { "sed -i 's/[ \t]*$//'" } }, -- remove trailing whitespace
+require("null-ls").setup {
+    sources = {
+        require("null-ls").builtins.formatting.stylua,
+        require("null-ls").builtins.completion.spell,
+        require("null-ls").builtins.code_actions.gitsigns,
     },
-    cmake = { { cmd = { "cmake-format -i" } } },
-    vim = {
-        {
-            cmd = {
-                "stylua",
-            },
-            start_pattern = "^lua << EOF$",
-            end_pattern = "^EOF$",
-        },
-    },
-    lua = {
-        {
-            cmd = {
-                "stylua",
-            },
-        },
-    },
-    python = { { cmd = { "yapf -i" } } },
-    cpp = { { cmd = { clangformat } } },
-    cuda = { { cmd = { clangformat } } },
-    tex = { { cmd = { "latexindent -m -w -l style.yaml" } } },
 }
 
-local opts = { noremap = true }
+require("neva.utils").map("n", "<leader>xf", "<cmd>lua vim.lsp.buf.formatting()<cr>", { noremap = true })
+require("neva.utils").map("v", "<leader>xf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", { noremap = true })
 
-local function map(keybind, command)
-    require("neva.utils").nmap(keybind, command, opts)
-end
-
--- save file and format
-map("<leader>xf", "<cmd>up<cr><cmd>FormatWrite<cr>")
-map("<leader>xF", "<cmd>up<cr><cmd>Format<cr>")
+-- if vim.tbl_contains(vim.lsp.buf_get_clients(), "sumneko_lua") then
+--     print("I've got it")
+-- end

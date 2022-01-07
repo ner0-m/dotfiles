@@ -149,3 +149,11 @@ augroup END
 
 " See https://stackoverflow.com/a/7811402
 nnoremap gO :!xdg-open <cfile><CR>
+
+" Prefer Latex over plaintex
+let g:tex_flavor = "latex"
+
+" Set indentation for private, protected and public keyword
+" see https://stackoverflow.com/a/7623017 and comments
+set cindent
+set cinoptions=g0

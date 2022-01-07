@@ -1,15 +1,32 @@
--- setup lsp diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	-- This will disable virtual text, like doing:
-	-- let g:diagnostic_enable_virtual_text = 0
-	virtual_text = {
-		spacing = 8,
-	},
-})
+local utils = require "neva.utils"
+local config = require "neva.config"
+local icons = require "neva.icons"
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = icons.error, Warn = icons.warn, Hint = icons.hint, Info = icons.info }
 
 for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
+
+-- set up vim.diagnostics
+-- vim.diagnostic.config opts
+vim.diagnostic.config(utils.merge({
+    underline = true,
+    signs = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        border = config.border,
+        focusable = false,
+        header = { icons.debug .. " Diagnostics:", "Normal" },
+        source = "always",
+    },
+    virtual_text = {
+        spacing = 4,
+        source = "always",
+        severity = {
+            min = vim.diagnostic.severity.HINT,
+        },
+    },
+}, config.diagnostic or {}))

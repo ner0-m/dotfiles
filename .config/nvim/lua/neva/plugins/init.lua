@@ -30,7 +30,6 @@ return require("packer").startup(function()
         config = function()
             require "neva.plugins.gitsigns"
         end,
-        event = "BufEnter",
     }
 
     -- TODO: This has to be configured maybe? Maybe use it?
@@ -179,18 +178,19 @@ return require("packer").startup(function()
     -- }
 
     use {
-        -- "L3MON4D3/LuaSnip",
-        "~/src/nvim_plugins/LuaSnip",
+        "L3MON4D3/LuaSnip",
         config = function()
             require "neva.plugins.luasnip"
         end,
     }
 
     use {
-        "lukas-reineke/format.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+        -- "lukas-reineke/format.nvim",
         config = function()
             require "neva.plugins.format"
         end,
+        requires = "nvim-lua/plenary.nvim",
         event = "BufEnter",
     }
 
