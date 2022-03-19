@@ -27,25 +27,23 @@ colors:
     cyan:    '0x7dcfff'
     white:   '0xc0caf5'
 
-background_opacity: 1.00
-
 font:
   normal:
     # family: "NotoSansMono"
-    family: "JetBrainsMono Nerd Font"
+    family: "FiraMono Nerd Font"
     style: Regular
   bold:
-    # family: "Noto Sans Mono"
-    family: "JetBrainsMono Nerd Font"
+    # family: "JetBrainsMono Nerd Font"
+    family: "FiraMono Nerd Font"
     # family: "Mono"
     style: Bold
   italic:
-    # family: "Noto Sans Mono"
-    family: "JetBrainsMono Nerd Font"
+    # family: "JetBrainsMono Nerd Font"
+    family: "FiraMono Nerd Font"
     style: Italic
   bold_italic:
-    # family: "Noto Sans Mono"
-    family: "JetBrainsMono Nerd Font"
+    # family: "JetBrainsMono Nerd Font"
+    family: "FiraMono Nerd Font"
     style: Bold Italic
 
   # Point size
