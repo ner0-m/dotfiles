@@ -43,19 +43,11 @@ return require("packer").startup(function()
     }
 
     use {
-        -- "vhyrro/neorg",
-        "~/src/nvim_plugins/neorg",
-        -- ft = "norg",
+        "vhyrro/neorg",
         config = function()
             require "neva.plugins.neorg"
         end,
-        branch = "unstable",
-        requires = {"nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
-    }
-
-    use {
-        "RRethy/vim-illuminate",
-        event = "BufEnter",
+        requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
     }
 
     use {
@@ -75,12 +67,19 @@ return require("packer").startup(function()
     }
 
     -- TODO: Maybe replace with mini.nvim
+    -- init.lua
     use {
-        "blackCauldron7/surround.nvim",
+        "lukas-reineke/indent-blankline.nvim",
         config = function()
-            require "neva.plugins.surround"
+            require "neva.plugins.indent-blankline"
         end,
-        event = "BufEnter",
+    }
+
+    use {
+        "echasnovski/mini.nvim",
+        config = function()
+            require "neva.plugins.mini"
+        end,
     }
 
     use {
@@ -120,15 +119,6 @@ return require("packer").startup(function()
     }
 
     use {
-        "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require("indent_blankline").setup {
-                buftype_exclude = { "terminal" },
-            }
-        end,
-    }
-
-    use {
         "SmiteshP/nvim-gps",
         requires = "nvim-treesitter/nvim-treesitter",
         config = function()
@@ -161,6 +151,7 @@ return require("packer").startup(function()
         requires = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope-fzy-native.nvim",
+            -- "rudism/telescope-dict.nvim", -- TODO: Use it and add keymapping
         },
         config = function()
             require "neva.plugins.telescope"
@@ -186,12 +177,7 @@ return require("packer").startup(function()
 
     use {
         "jose-elias-alvarez/null-ls.nvim",
-        -- "lukas-reineke/format.nvim",
-        config = function()
-            require "neva.plugins.format"
-        end,
         requires = "nvim-lua/plenary.nvim",
-        event = "BufEnter",
     }
 
     use {
@@ -243,4 +229,36 @@ return require("packer").startup(function()
     use {
         "danymat/neogen",
     }
+
+    use {
+        "petertriho/nvim-scrollbar",
+        config = function()
+            require "neva.plugins.scrollbar"
+        end,
+    }
+
+    -- use {
+    --     "folke/zen-mode.nvim",
+    --     config = function()
+    --         require("zen-mode").setup {
+    --             -- your configuration comes here
+    --             -- or leave it empty to use the default settings
+    --             -- refer to the configuration section below
+    --         }
+    --     end,
+    --     cmd = "ZenMode",
+    -- }
+
+    -- TODO: Integrate https://www.reddit.com/r/neovim/comments/rz4yxj/using_neovim_and_lua_as_a_wordprocessor/
+    -- * https://github.com/rhysd/vim-grammarous
+    -- * https://github.com/vigoux/LanguageTool.nvim
+    -- * https://github.com/emacs-grammarly/lsp-grammarly
+    -- * https://github.com/brymer-meneses/grammar-guard.nvim
+    -- * https://github.com/valentjn/ltex-ls
+    -- * null-ls
+    -- ** https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#vale
+    -- https://docs.errata.ai/vale/about
+    -- ** https://github.com/btford/write-good -- null_ls.builtins.diagnostics.write_good,
+    -- ** https://www.nongnu.org/chktex/ -- null_ls.builtins.diagnostics.chktex
+    --
 end)

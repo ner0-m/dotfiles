@@ -4,7 +4,10 @@ local config = {
     border = "rounded",
     lsp = {
         servers = {
-            clangd = true,
+            -- clangd = true,
+            clangd = {
+                format = false,
+            },
             cmake = true,
             sumneko_lua = {
                 format = false,

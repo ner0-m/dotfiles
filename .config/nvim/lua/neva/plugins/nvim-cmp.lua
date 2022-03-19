@@ -130,6 +130,7 @@ cmp.setup {
         { name = "cmp_git" },
         { name = "luasnip" },
         { name = "neorg" },
+        { name = "dictionary", keyword_length = 2 },
         { name = "spell", keyword_length = 5 },
         { name = "buffer", keyword_length = 5 },
         { name = "path", keyword_length = 5 },

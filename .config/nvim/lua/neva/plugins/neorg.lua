@@ -11,7 +11,7 @@ require("neorg").setup {
                     gtd = "~/src/notes/gtd",
                     zettel = "~/src/notes/zettel",
                 },
-                index = "inbox.norg"
+                index = "inbox.norg",
             },
         },
         ["core.gtd.base"] = {
@@ -31,14 +31,15 @@ require("neorg").setup {
             },
         },
         ["core.integrations.telescope"] = {}, -- Enable the telescope module
-        ["core.zettelkasten"] = {
-            config = {
-                workspace = "zettel",
-                id_generator = "timestamp"
-            },
-        },
+        ["core.norg.qol.toc"] = {},
+        -- ["core.zettelkasten"] = {
+        --     config = {
+        --         workspace = "zettel",
+        --         id_generator = "timestamp"
+        --     },
+        -- },
     },
-    logger = {
-        level = "info",
-    },
+    -- logger = {
+    --     level = "info",
+    -- },
 }

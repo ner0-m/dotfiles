@@ -19,7 +19,7 @@ require("telescope").setup {
         scroll_strategy = "cycle",
         selection_strategy = "reset",
 
-        path_display = { "smart" },
+        path_display = { "shorten" },
 
         -- These just look nicer then >
         prompt_prefix = "❯ ",

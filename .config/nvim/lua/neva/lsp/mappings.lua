@@ -40,6 +40,9 @@ function M.init(client, bufnr)
     if client.name == "clangd" then
         buf_map(bufnr, "n", "<leader>lw", ":ClangdSwitchSourceHeader<cr>")
     end
+
+    buf_map(bufnr, "n", "<leader>xf", vim.lsp.buf.formatting)
+    buf_map(bufnr, "v", "<leader>xf", vim.lsp.buf.range_formatting)
 end
 
 return M

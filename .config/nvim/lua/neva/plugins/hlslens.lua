@@ -19,3 +19,6 @@ map("g*", "g*<Cmd>lua require('hlslens').start()<CR>", opts)
 map("g#", "g#<Cmd>lua require('hlslens').start()<CR>", opts)
 
 vim.cmd [[nnoremap <silent> <leader>h :noh<CR>]]
+
+-- Integrate with nvim-scrollbar
+require("scrollbar.handlers.search").setup()

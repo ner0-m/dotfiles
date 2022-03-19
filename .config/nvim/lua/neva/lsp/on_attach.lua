@@ -62,10 +62,7 @@ M.on_attach_vim = function(client, bufnr)
         toggle_key = "<C-f>",
     }, bufnr)
 
-    -- Attach cursor under word highlight
-    require("illuminate").on_attach(client)
-
-    -- reset colors as they are overritten somewher
+    -- reset colors as they are overritten somewhere
     vim.api.nvim_command [[ hi LspReferenceText cterm=standout gui=standout ]]
     vim.api.nvim_command [[ hi LspReferenceRead cterm=standout gui=standout ]]
     vim.api.nvim_command [[ hi LspReferenceWrite cterm=standout gui=standout ]]

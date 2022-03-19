@@ -15,9 +15,6 @@ function M.on_attach(client, bufnr)
         toggle_key = "<C-f>",
     }, bufnr)
 
-    -- Attach cursor under word highlight
-    require("illuminate").on_attach(client)
-
     local can_format = config.lsp.can_client_format(client.name)
     client.resolved_capabilities.document_formatting = can_format
     client.resolved_capabilities.document_range_formatting = can_format
