@@ -8,7 +8,9 @@ local config = {
             clangd = {
                 format = false,
             },
-            cmake = true,
+            cmake = {
+                false,
+            },
             sumneko_lua = {
                 format = false,
             },
@@ -28,7 +30,7 @@ function config.lsp.can_client_format(client_name)
         return (config.lsp.servers[client_name].format == true)
     end
 
-    return true
+    return false
 end
 
 return config
