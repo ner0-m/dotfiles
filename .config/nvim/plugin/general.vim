@@ -157,3 +157,7 @@ let g:tex_flavor = "latex"
 " see https://stackoverflow.com/a/7623017 and comments
 set cindent
 set cinoptions=g0
+
+" set global statusbar
+set laststatus=3
+highlight WinSeparator guibg=None
